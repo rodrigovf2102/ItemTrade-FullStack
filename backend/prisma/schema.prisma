@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  token  String
+  User   User   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique @db.VarChar(100)
+  password   String      @db.VarChar(100)
+  Enrollment Enrollment?
+  Session    Session[]
+}
+
+model Enrollment {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(200)
+  CPF             String            @unique @db.VarChar(11)
+  userId          Int               @unique
+  balance         Int?              @default(0)
+  enrollmentUrl   String            @unique
+  freezedBalance  Int?              @default(0)
+  User            User              @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Item            Item[]
+  Message         Message[]
+  Payments        Payments[]
+  TradeAsBuyer    Trade[]           @relation("Trade_buyerEnrollmentIdToEnrollment")
+  TradeAsSeller   Trade[]           @relation("Trade_sellerEnrollmentIdToEnrollment")
+  TradeAvaliation TradeAvaliation[]
+}
+
+model Game {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique @db.VarChar(100)
+  gameUrl String   @unique
+  Item    Item[]
+  Server  Server[]
+}
+
+model Item {
+  id           Int        @id @default(autoincrement())
+  name         String     @db.VarChar(100)
+  price        Int
+  amount       Int
+  itemUrl      String
+  serverId     Int
+  enrollmentId Int
+  gameId       Int
+  itemType     ITEMTYPE
+  inTrade      Boolean?   @default(false)
+  Enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Game         Game       @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Server       Server     @relation(fields: [serverId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Trade        Trade[]
+}
+
+model Server {
+  id     Int    @id @default(autoincrement())
+  gameId Int
+  name   String @db.VarChar(50)
+  Item   Item[]
+  Game   Game   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Payments {
+  id                   Int        @id @default(autoincrement())
+  creditCardLastDigits String     @db.VarChar(4)
+  cardIssuer           String     @db.VarChar(40)
+  cardName             String     @db.VarChar(100)
+  enrollmentId         Int
+  paymentHash          String
+  value                Int
+  Enrollment           Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Message {
+  id           Int            @id @default(autoincrement())
+  text         String
+  date         DateTime?      @default(now()) @db.Timestamptz(6)
+  enrollmentId Int
+  Enrollment   Enrollment     @relation(fields: [enrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  TradeMessage TradeMessage[]
+}
+
+model Trade {
+  id                 Int               @id @default(autoincrement())
+  sellerEnrollmentId Int
+  buyerEnrollmentId  Int
+  sellerStatus       TRADESTATUS?      @default(INCOMPLETE)
+  buyerStatus        TRADESTATUS?      @default(INCOMPLETE)
+  tradeStatus        TRADESTATUS?      @default(INCOMPLETE)
+  itemId             Int
+  EnrollmentBuyer    Enrollment        @relation("Trade_buyerEnrollmentIdToEnrollment", fields: [buyerEnrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Item               Item              @relation(fields: [itemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  EnrollmentSeller   Enrollment        @relation("Trade_sellerEnrollmentIdToEnrollment", fields: [sellerEnrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  TradeAvaliation    TradeAvaliation[]
+  TradeMessage       TradeMessage[]
+}
+
+model TradeAvaliation {
+  id           Int           @id @default(autoincrement())
+  tradeType    OPERATIONTYPE
+  tradeStatus  TRADESTATUS?  @default(INCOMPLETE)
+  enrollmentId Int
+  tradeId      Int?
+  Enrollment   Enrollment    @relation(fields: [enrollmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Trade        Trade?        @relation(fields: [tradeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model TradeMessage {
+  id        Int     @id @default(autoincrement())
+  messageId Int
+  tradeId   Int
+  Message   Message @relation(fields: [messageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Trade     Trade   @relation(fields: [tradeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum ITEMTYPE {
+  Dinheiro
+  Equipamento
+  Recurso
+  Utilizavel
+  Raros
+  Outros
+  Todos
+}
+
+enum OPERATIONTYPE {
+  PURCHASE
+  SALE
+}
+
+enum TRADESTATUS {
+  COMPLETE
+  INCOMPLETE
+  WAITING
+}
