@@ -1,0 +1,48 @@
+version: "3"
+services:
+  front_end:
+    build: ./frontend
+    container_name: front_end
+    volumes:
+      - build_react:/var/www/html
+    depends_on:
+      - back_end
+
+  banco:
+    image: postgres
+    container_name: banco
+    ports:
+      - 2345:5432
+    env_file:
+      - ./backend/.env
+    volumes:
+      - volume_banco:/var/lib/postgresql/data
+
+  back_end:
+    build: ./backend
+    container_name: back_end
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/usr/src
+      - /usr/src/node_modules
+    entrypoint: dockerize -wait tcp://banco:5432 -timeout 20s docker-entrypoint.sh
+    command: "npm run start"
+    depends_on:
+      - banco
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - build_react:/var/www/html
+    depends_on:
+      - front_end
+
+volumes:
+  build_react:
+  volume_banco:
