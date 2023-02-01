@@ -11,14 +11,14 @@ const item_repository_1 = __importDefault(require("../repositories/item-reposito
 const server_repository_1 = __importDefault(require("../repositories/server-repository"));
 async function getItems(serverId, itemType, filter, itemId) {
     let items;
-    if (serverId === 0)
-        serverId = undefined;
     if (!isNaN(itemId) && itemId !== 0 && itemId) {
         items = await item_repository_1.default.findItemsById(itemId);
         return items;
     }
     if (isNaN(serverId) || serverId === undefined)
         throw (0, errors_1.defaultError)("ServerNotFound");
+    if (serverId === 0)
+        serverId = undefined;
     if (!itemType || itemType === "undefined" || itemType === "Todos")
         itemType = "";
     if (filter === "undefined")

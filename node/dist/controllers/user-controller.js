@@ -19,7 +19,6 @@ async function usersPost(req, res) {
         if (error.detail === "DuplicatedEmail") {
             return res.status(http_status_1.default.CONFLICT).send(error.detail);
         }
-        console.log(error);
         return res.status(http_status_1.default.BAD_REQUEST).send(error);
     }
 }
