@@ -1,34 +1,34 @@
 version: "3"
 services:
-  front_end:
+  app_react:
     build: ./frontend
-    container_name: front_end
+    container_name: app_react
     volumes:
       - build_react:/var/www/html
     depends_on:
-      - back_end
+      - app_node
 
   banco:
-    image: postgres
+    image: postgres:13
     container_name: banco
     ports:
       - 2345:5432
     env_file:
-      - ./backend/.env
+      - ./node/.env
     volumes:
       - volume_banco:/var/lib/postgresql/data
 
-  back_end:
-    build: ./backend
-    container_name: back_end
+  app_node:
+    build: ./node
+    container_name: app_node
     ports:
       - 5000:5000
     env_file:
-      - ./backend/.env
+      - ./node/.env
     volumes:
-      - ./backend:/usr/src
-      - /usr/src/node_modules
-    entrypoint: dockerize -wait tcp://banco:5432 -timeout 20s docker-entrypoint.sh
+      - ./node:/usr/src
+      - ./node/node_modules:/usr/src/node_modules
+    entrypoint: dockerize -wait tcp://banco:5432 -timeout 40s docker-entrypoint.sh
     command: "npm run start"
     depends_on:
       - banco
@@ -41,7 +41,7 @@ services:
     volumes:
       - build_react:/var/www/html
     depends_on:
-      - front_end
+      - app_react
 
 volumes:
   build_react:

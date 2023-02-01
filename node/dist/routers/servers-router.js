@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.serversRouter = void 0;
+const express_1 = require("express");
+const schemas_1 = require("../schemas");
+const middlewares_1 = require("../middlewares");
+const controllers_1 = require("../controllers");
+const authentication_middleware_1 = require("../middlewares/authentication-middleware");
+const serversRouter = (0, express_1.Router)();
+exports.serversRouter = serversRouter;
+serversRouter.get("/:gameId", controllers_1.getServers);
+serversRouter.post("/", (0, middlewares_1.validateBody)(schemas_1.serverSchema), authentication_middleware_1.authenticateToken, controllers_1.postServer);

@@ -10,6 +10,7 @@ export async function getItems(req: Request, res: Response) {
     const serverId = Number(req.params.serverId);
     const filter = req.query.filter as string;
     const itemId = Number(req.query.itemId);
+
     const items = await itemsService.getItems(serverId, itemType, filter, itemId);
     return res.status(httpStatus.OK).send(items);
   } catch (error) {

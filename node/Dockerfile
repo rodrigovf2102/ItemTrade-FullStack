@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:19
 
 WORKDIR /usr/src
 
@@ -8,7 +8,7 @@ EXPOSE 5000
 
 RUN npm i
 
-COPY . .
+COPY . ./usr/src
 
 RUN npx prisma generate
 

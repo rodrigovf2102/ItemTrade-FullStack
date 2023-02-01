@@ -1,27 +1,30 @@
 export default function errorMessagesAll(error : any, setErrorMessage : React.Dispatch<React.SetStateAction<string[]>> ) {
+  console.log(error);
   if (error.message === "Network Error") return setErrorMessage(error.message);
   if (error.response?.data === "DuplicatedEmail") return setErrorMessage(["Email já cadastrado"]);
   if (error.response?.data?.details) return messageTranslateInglesToPortuguese(error.response.data.details, setErrorMessage);
   if (error?.detail === "As senhas não são iguais" ) return setErrorMessage(error.detail);
   if (error.response?.data === "InvalidCredentials") return setErrorMessage(["Usuário ou senha incorretos..."]);
-  if (error.response.data?.name==="InvalidDataError") setErrorMessage(["Informações Inválidas"]);
-  if (error.response.data?.detail==="GameAlreadyExist") setErrorMessage(["Jogo já existe"]);
-  if (error.response.data ==="UserWithoutEnrollment") setErrorMessage(["Finalize seu cadastro para continuar"]);
-  if (error.response.statusText ==="Unauthorized") setErrorMessage(["Seu Login expirou, refaça o login"]);
+  if (error.response.data?.name==="InvalidDataError") return setErrorMessage(["Informações Inválidas"]);
+  if (error.response.data?.detail==="GameAlreadyExist") return setErrorMessage(["Jogo já existe"]);
+  if (error.response.data ==="UserWithoutEnrollment") return setErrorMessage(["Finalize seu cadastro para continuar"]);
+  if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);
-  if (error.response.data?.detail==="ItemAlreadyExist") setErrorMessage(["Jogo já existe"]);
-  if (error.response.statusText ==="Unauthorized") setErrorMessage(["Seu Login expirou, refaça o login"]);
-  if (error.response.data ==="ServerNotFound") setErrorMessage(["Servidor não encontrado"]);
-  if (error.response.data ==="GameNotFound") setErrorMessage(["Jogo não encontrado"]);
+  if (error.response.data?.detail==="ItemAlreadyExist") return setErrorMessage(["Jogo já existe"]);
+  if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
+  if (error.response.data ==="ServerNotFound") return setErrorMessage(["Servidor não encontrado"]);
+  if (error.response.data ==="GameNotFound") return setErrorMessage(["Jogo não encontrado"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);
   if (error.response.data.detail==="CPFAlreadyExists") return setErrorMessage(["CPF já cadastrado!"]);
   if (error.response.data==="InvalidCPF") return setErrorMessage(["CPF inválido!"]);
   if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);
-  if (error.response?.data==="GameNameDoesntExist") setErrorMessage(["Jogo não cadastrado"]);
-  if (error.response?.data==="ServerAlreadyExist") setErrorMessage(["Server já existe"]);
-  if (error.response.statusText ==="Unauthorized") setErrorMessage(["Seu Login expirou, refaça o login"]);
+  if (error.response?.data==="GameNameDoesntExist") return setErrorMessage(["Jogo não cadastrado"]);
+  if (error.response?.data==="ServerAlreadyExist") return setErrorMessage(["Server já existe"]);
+  if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);
+  if (error.response?.data === "InsuficientBalance") return setErrorMessage(["Saldo insuficiente..."]);
+  if (error.response?.data === "UserCantBuyFromHimself") return setErrorMessage(["Usuário nao pode comprar de si mesmo..."]);
   setErrorMessage(["Erro desconhecido, tente mais tarde ou refaça o login..."]);
 }
 

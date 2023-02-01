@@ -13,7 +13,7 @@
     "test:watch": "jest --watchAll --passWithNoTests --runInBand",
     "test:load-envs": "dotenv -e .env.test",
     "test:seed": "npm run test:load-envs prisma db seed",
-    "start": "NODE_ENV=development node dist/server.js",
+    "start": "NODE_ENV=development npx prisma migrate dev && node dist/server.js",
     "dev": "NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/server.ts' -e ts",
     "dev:load-envs": "dotenv -e .env.development",
     "db:dump": "sudo su -c 'pg_dump itemtrade --inserts --no-owner' postgres > dump.sql",

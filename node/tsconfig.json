@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
       "target": "es2020",
-      "module": "commonjs",
+      "module": "CommonJS",
+      "moduleResolution": "node",
       "outDir": "dist",
       "noImplicitAny": true,
       "emitDecoratorMetadata": true,
@@ -23,8 +24,11 @@
         }
       ]
     },
+    "ts-node": {
+      "esm": true
+    },
     "include": [
       "src",
       "tests"
-    ]
+, "assets"    ]
   }

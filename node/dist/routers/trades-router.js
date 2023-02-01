@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tradesRouter = void 0;
+const express_1 = require("express");
+const schemas_1 = require("../schemas");
+const middlewares_1 = require("../middlewares");
+const controllers_1 = require("../controllers");
+const authentication_middleware_1 = require("../middlewares/authentication-middleware");
+const tradesRouter = (0, express_1.Router)();
+exports.tradesRouter = tradesRouter;
+tradesRouter.post("/purchase", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.tradeSchema), controllers_1.postTrade);
+tradesRouter.put("/complete/:tradeId", authentication_middleware_1.authenticateToken, controllers_1.updateTradeStatus);
+tradesRouter.get("/:tradeType", authentication_middleware_1.authenticateToken, controllers_1.getTradesByUserIdOrEnrollId);
+tradesRouter.get("/specific/:tradeId", authentication_middleware_1.authenticateToken, controllers_1.getTrade);
+tradesRouter.get("/avaliations", authentication_middleware_1.authenticateToken, controllers_1.getTradeAvaliations);

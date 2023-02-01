@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.messagesRouter = void 0;
+const express_1 = require("express");
+const schemas_1 = require("../schemas");
+const middlewares_1 = require("../middlewares");
+const controllers_1 = require("../controllers");
+const authentication_middleware_1 = require("../middlewares/authentication-middleware");
+const messagesRouter = (0, express_1.Router)();
+exports.messagesRouter = messagesRouter;
+messagesRouter.get("/:tradeId", authentication_middleware_1.authenticateToken, controllers_1.getTradeMessages);
+messagesRouter.post("/", (0, middlewares_1.validateBody)(schemas_1.messagesSchema), authentication_middleware_1.authenticateToken, controllers_1.postMessage);

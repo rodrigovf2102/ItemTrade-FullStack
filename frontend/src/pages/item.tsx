@@ -7,6 +7,7 @@ import usePostTrade from "../hooks/api/usePostTrade";
 import useTrades from "../hooks/api/useTrades";
 import useToken from "../hooks/useToken";
 import { TradeInfo, TradePost } from "../protocols";
+import errorMessagesAll from "../usefull/errorMessages";
 import { ErrorMessage } from "./games";
 
 export default function ItemPage() {
@@ -55,7 +56,7 @@ export default function ItemPage() {
       setErrorMessage([""]);
       navigate(`/trade/${trade.id}`);
     } catch (error) {
-      setErrorMessage([error?.response?.data?.detail]);
+      errorMessagesAll(error, setErrorMessage);
     }
   }
 

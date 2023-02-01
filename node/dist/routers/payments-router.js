@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.paymentRouter = void 0;
+const express_1 = require("express");
+const middlewares_1 = require("../middlewares");
+const controllers_1 = require("../controllers");
+const authentication_middleware_1 = require("../middlewares/authentication-middleware");
+const schemas_1 = require("../schemas");
+const paymentRouter = (0, express_1.Router)();
+exports.paymentRouter = paymentRouter;
+paymentRouter.post("/", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.PaymentSchema), controllers_1.postPayment);
