@@ -8,13 +8,15 @@ import { Item, ITEMTYPE } from "@prisma/client";
 
 export async function getItems(serverId: number, itemType: string, filter: string, itemId: number): Promise<Item[]> {
   let items : Item[];
-  if(!isNaN(itemId) && itemId!==0) {
+  if(serverId===0) serverId = undefined;
+  if(!isNaN(itemId) && itemId!==0 && itemId) {
     items = await itemRepository.findItemsById(itemId);
     return items;
   }
   if (isNaN(serverId) || serverId===undefined) throw defaultError("ServerNotFound");
   if(!itemType || itemType==="undefined" || itemType==="Todos") itemType = "";
   if(filter==="undefined") filter="";
+  if(!filter) filter="";
   filter = filter.toUpperCase();
   const itemCategories = ["Dinheiro", "Equipamento", "Recurso", "Utilizavel","Raros", "Outros", "Todos"];
   let itemTypeExist : ITEMTYPE;

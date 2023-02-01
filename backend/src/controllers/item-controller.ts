@@ -1,5 +1,5 @@
 import { AuthenticatedRequest } from "@/middlewares/authentication-middleware";
-import { ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName, ItemWithNoIdNoEnrollIdNoGameId } from "@/protocols";
+import { ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName } from "@/protocols";
 import itemsService from "@/services/items-service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";

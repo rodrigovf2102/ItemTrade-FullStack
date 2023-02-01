@@ -7,6 +7,7 @@ import { Server } from "@prisma/client";
 
 export async function getServers(gameId:number, filter:string): Promise<Server[]> {
   if(filter==="undefined") filter="";
+  if(!filter) filter="";
   filter = filter.toUpperCase();
   if(isNaN(gameId)) throw defaultError("Invalid gameId");
   if(gameId===0) gameId=undefined;

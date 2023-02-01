@@ -6,6 +6,7 @@ import { Game } from "@prisma/client";
 
 export async function getGames(filter:string): Promise<Game[]> {
   if(filter==="undefined") filter="";
+  if(!filter) filter = "";
   filter = filter.toUpperCase();
   const games = await gameRepository.findGames(filter);
   return games;
