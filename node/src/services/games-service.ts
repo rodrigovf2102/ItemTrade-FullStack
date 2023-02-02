@@ -9,6 +9,7 @@ export async function getGames(filter:string): Promise<Game[]> {
   if(!filter) filter = "";
   filter = filter.toUpperCase();
   const games = await gameRepository.findGames(filter);
+  if(games.length===0) throw defaultError("GamesNotFound");
   return games;
 }
 

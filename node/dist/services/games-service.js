@@ -14,6 +14,8 @@ async function getGames(filter) {
         filter = "";
     filter = filter.toUpperCase();
     const games = await game_repository_1.default.findGames(filter);
+    if (games.length === 0)
+        throw (0, errors_1.defaultError)("GamesNotFound");
     return games;
 }
 exports.getGames = getGames;
