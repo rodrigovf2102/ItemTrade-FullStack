@@ -9,6 +9,7 @@ import UserContext from "../contexts/UserContext";
 import { signInToken } from "../services/userApi";
 import isEmptyObject from "../usefull/usefull";
 import errorMessagesAll from "../usefull/errorMessages";
+import { device } from "../mediaqueries/devices";
 
 export default function Signin() {
   const [signin, setSignin] = useState<UserWithNoId>({ email: "", password: "" });
@@ -82,18 +83,36 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
+  flex-wrap: wrap;
+  @media ${device.mobileM} {
+    flex-direction: column-reverse;
+    height: 100%;
+  }
 `;
 
 const LeftContainer = styled.div`
-  width: 60%;
+  width: 55%;
+  min-width: 250px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  img{
+    width: 100%;
+    max-width: 500px;
+  }
+  @media ${device.mobileM} {
+    width: 100%;
+    height: 50%;
+    img{
+      width: 70%;
+    }
+  }
 `;
 
 const RightContainer = styled.div`
-  width: 30%;
+  width: 40%;
+  min-width: 250px;
   min-height: 50%;
   display: flex;
   flex-direction: column;
@@ -101,6 +120,11 @@ const RightContainer = styled.div`
   align-items: center;
   background-color: #111111;
   border-radius: 20px;
+  @media ${device.mobileM} {
+    width: 90%;
+    height: 50%;
+    margin-top: 25px;
+  }
 `;
 
 const Form = styled.form`
@@ -108,6 +132,7 @@ const Form = styled.form`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  
 `;
 
 const Input = styled.input`
@@ -168,6 +193,7 @@ const GoToSingUp = styled.div`
   display: flex;
   justify-content: center;
   cursor: pointer;
+  text-align: center;
 `;
 
 const FormTitle = styled.div`

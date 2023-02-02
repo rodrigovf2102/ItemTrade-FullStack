@@ -11,6 +11,7 @@ import UserContext from "../contexts/UserContext";
 import { Grid } from "react-loader-spinner";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
+import { device } from "../mediaqueries/devices";
 
 export default function GamePage() {
   const { games, getGames, gamesLoading } = useGames();
@@ -113,6 +114,7 @@ const Form = styled.form`
   display: flex;
   width: 100%;
   align-items: flex-start;
+  flex-wrap: wrap;
 `;
 
 const FormPostGame = styled.form`
@@ -202,6 +204,12 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   height: 400px;
   background:  linear-gradient(#333333,#000000,#333333);
   border-radius: 10px;
+  @media ${device.mobileM} {
+    left: 10px;
+    font-size: 15px;
+    width: 90%;
+    text-align: center;
+  }
 `;
 
 const GamesContainer = styled.div`

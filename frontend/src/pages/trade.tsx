@@ -12,6 +12,7 @@ import usePostMessage from "../hooks/api/usePostMessage";
 import useTradeMessages from "../hooks/api/useTradeMessages";
 import { MessagePost } from "../protocols";
 import useToken from "../hooks/useToken";
+import { device } from "../mediaqueries/devices";
 
 export default function TradePage() {
   const { tradeId } = useParams();
@@ -146,8 +147,8 @@ export default function TradePage() {
 }
 
 const MessageBox = styled.div`
-    width: 90%;
-    height: 70%;
+    width: 100%;
+    height: 300px;
     background-color: #ffffff;
     border-radius: 10px;
     border: 5px solid gray;
@@ -164,27 +165,36 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;
 `;
 
 const TradeInfo = styled.div`
-  height: 45%;
+  height: auto;
   width: 96%;
-  margin: 20px;
+  margin: 15px;
+  padding: 20px;
   border-radius: 15px;
   background: linear-gradient(#333333,#000000,#333333);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  @media ${device.mobileM} {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  }
 `;
 
 const TypeMessageBox = styled.form`
-  width: 90%;
-  height: 15%;
+  width: 100%;
+  height: 50px;
   display: flex;
   button{
     background-color: white;
     border-radius: 10px;
-    width: 5%;
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,16 +207,15 @@ const TypeMessageBox = styled.form`
 
 const TypeBox = styled.input`
   background: white;
-  width: 95%;
+  width: 100%;
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
 `;
 
 const MessageInfo = styled.div`
-   height: 45%;
-  width: 96%;
-  margin: 20px;
+  height: 45%;
+  width: 95%;
   border-radius: 15px;
   background: linear-gradient(#333333,#000000,#333333);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
@@ -214,6 +223,13 @@ const MessageInfo = styled.div`
   flex-direction: column;
   justify-content: center; 
   align-items: center;
+  margin: 15px;
+  padding: 20px;
+  @media ${device.mobileM} {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
 `;
 
 const TradeContainer = styled.div`
@@ -235,41 +251,59 @@ export const EnrollmentContainer = styled.div`
   align-items: center;
   color: gray;
   background: linear-gradient(90deg,#222222,#111111,#222222);
+  @media ${device.mobileM} {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  }
 `;
 
 const EnrollmentInfos = styled.div`
-  height: auto;
-  width: 50%;
+  height: 300px;
+  width: 40%;
+  min-width: 340px;
   display: flex;
   flex-direction: column;
  align-items: center;
  justify-content: center;
- margin: 30px;
  background: linear-gradient(#000000,#222222,#000000);
  box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
  border-radius: 20px;
+ text-align: center;
  div{
   margin: 5px;
-  font-size: 20px;
+  font-size: 17px;
  }
+ @media ${device.mobileM} {
+  div{
+    font-size: 14px;
+  }
+}
 `;
 
 const ItemInfos = styled.div`
-  height: auto;
+  height: 300px;
   background: linear-gradient(#000000,#222222,#000000);
- box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
- border-radius: 20px;
+  box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  margin: 30px;
+  width: 40%;
+  min-width: 340px;
+  margin-left: 10px;
+  text-align: center;
   img{
     width: 200px;
     height: 50%;
     object-fit: cover;
     margin: 20px;
   }
-  font-size: 20px;
+  font-size: 17px;
+  @media ${device.mobileM} {
+  div{
+    font-size: 14px;
+  }
+}
 `;

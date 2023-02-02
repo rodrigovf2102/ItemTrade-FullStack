@@ -14,6 +14,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import useToken from "../hooks/useToken";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
+import { device } from "../mediaqueries/devices";
 
 export default function ProfilePage() {
   const { enrollment, getEnrollment } = useEnrollment();
@@ -146,9 +147,9 @@ export default function ProfilePage() {
             <InputPostGame value={postNewEnroll?.name} type="text" placeholder=" Digite o seu nome aqui..." onChange={(e) => {setPostNewEnroll({ ...postNewEnroll, name: e.target.value });}}/>
             <InputPostGame value={postNewEnroll?.CPF} type="text" placeholder=" Digite o seu CPF aqui..." onChange={(e) => {setPostNewEnroll({ ...postNewEnroll, CPF: e.target.value });}}/>
             <InputPostGame value={postNewEnroll?.enrollmentUrl} type="text" placeholder=" Digite a URL da imagem de seu perfil aqui..." onChange={(e) => {setPostNewEnroll({ ...postNewEnroll, enrollmentUrl: e.target.value });}}/>
-            <Entrar disabled={postEnrollmentLoading} onClick={postEnroll} type="submit">
+            <Button disabled={postEnrollmentLoading} onClick={postEnroll} type="submit">
               {postEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Alterar cadastro"}
-            </Entrar>
+            </Button>
             {postEnrollErrorMsg.map((msg) => <ErrorMessage color={colorMsg}>{msg}</ErrorMessage>) }
           </FormPostEnroll> : <FormPostEnroll>"Faça login para liberar essa área.."</FormPostEnroll>}
           <EnrollPayment display={displayBalance}>
@@ -191,7 +192,7 @@ export default function ProfilePage() {
 
 const Container = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,34 +201,43 @@ const Container = styled.div`
 export const EnrollmentContainer = styled.div`
   width: 80% ;
   height: 80%;
-  background-color: gray;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
+  margin-top: 45px;
   object-fit: cover;
   display: flex;
   justify-content: space-around;
   align-items: center;
   color: gray;
   background: linear-gradient(#222222,#101010,#222222);
+  flex-wrap: wrap;
+  @media ${device.mobileM} {
+    width: 90%;
+  }
 `;
 
 const FormPostEnroll = styled.form`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 45%;
+  min-width: 300px;
   align-items: center;
   justify-content: center;
-  height: 90%;
-  margin: 50px;
+  height: 600px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   border-radius: 15px;
   background: linear-gradient(#000000,#444444,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   font-size: 22px;
+  @media ${device.mobileM} {
+    width: 90%;
+  }
 `;
 
 const ImgContainer = styled.div`
-  width: 60%;
+  width: 50%;
   img{
     width: 100%;
     object-fit: cover;
@@ -236,7 +246,9 @@ const ImgContainer = styled.div`
 `;
 
 const Button = styled.button`
-  min-width: 300px;
+  width: 80%;
+  min-width: 200px;
+  max-width: 350px;
   height: 45px;
   background: linear-gradient(#555555,#000000,#555555);
   display: flex;
@@ -248,7 +260,7 @@ const Button = styled.button`
   font-size: 20px;
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  margin: 5px;
+  margin-top: 15px;
   cursor: pointer;
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
@@ -272,6 +284,7 @@ const ErrorMessage = styled.div.attrs((props: ColorMsg) => ({
 const EnrollInfoDiv = styled.div`
     font-size: 22px;
     margin: 10px;
+    text-align: center;
 `;
 
 export type Display = { display:string}
@@ -279,16 +292,21 @@ export type Display = { display:string}
 const EnrollPayment = styled.div.attrs((props: Display) => ({
   display: props.display
 }))`
-  width: 50%;
-  height: 90%;
+  width: 45%;
+  min-width: 300px;
+  height: 600px;
   display: ${props => props.display};
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px;
   border-radius: 15px;
   background: linear-gradient(#000000,#444444,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  @media ${device.mobileM} {
+    width: 90%;
+  }
 `;
 
 const InputCreditAmount = styled.input`
@@ -306,5 +324,6 @@ const FormInfo = styled.div`
   width: 80%;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 

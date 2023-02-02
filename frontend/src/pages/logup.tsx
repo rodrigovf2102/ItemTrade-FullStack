@@ -17,6 +17,7 @@ import {
 import useSignUp from "../hooks/api/useSignUp";
 import { defaultError } from "../errors/default-error";
 import errorMessagesAll from "../usefull/errorMessages";
+import { device } from "../mediaqueries/devices";
 
 export default function Signup() {
   const [signup, setSignup] = useState<UserWithNoIdSignUp>({ email: "", password: "", confirmPassword: "" });
@@ -118,4 +119,9 @@ const RightContainer = styled.div`
   align-items: center;
   background-color: #111111;
   border-radius: 20px;
+  @media ${device.mobileM} {
+    width: 90%;
+    height: 50%;
+    margin-top: 25px;
+  }
 `;

@@ -2,6 +2,7 @@ import TopBar from "../components/TopBar";
 import styled from "styled-components";
 import icon from "../assets/images/action.gif";
 import BottomBar from "../components/BottomBar";
+import { device } from "../mediaqueries/devices";
 
 export default function MainPage() {
   return(
@@ -30,17 +31,19 @@ export default function MainPage() {
 
 const Container = styled.div`
   width: 100%;
-  height: 80vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  
   img{
     width: 30%;
+    padding-bottom: 60px;
   }
 `;
 
 const Instrucoes = styled.div`
+  width: 60%;
   font-size: 20px;
   margin: 10px;
   background: linear-gradient(#222222,#000000,#222222);
@@ -50,13 +53,23 @@ const Instrucoes = styled.div`
   div{
     padding: 10px;
   }
+  @media ${device.mobileM} {
+    width: 90%;
+    font-size: 15px;
+  }
 `;
 
 const Tittle = styled.div`
   font-size: 40px;
+  @media ${device.mobileM} {
+    font-size: 30px;
+  }
 `;
 
 const Subtitle = styled.div`
   font-size: 30px;
+  @media ${device.mobileM} {
+    font-size: 25px;
+  }
 `;
 

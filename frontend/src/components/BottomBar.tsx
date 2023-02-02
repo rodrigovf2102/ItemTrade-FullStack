@@ -3,11 +3,14 @@ import img from "../assets/images/action.jpg";
 
 export default function BottomBar() {
   return(
-    <Container>
-      <Itens>
-        <img alt="" src={img}/><div>@ 2023 ITEMTRADE. Todos os direitos reservados...</div>
-      </Itens>
-    </Container>
+    <>
+      <Espace></Espace>
+      <Container>
+        <Itens>
+          <img alt="" src={img}/><div>@ 2023 ITEMTRADE. Todos os direitos reservados...</div>
+        </Itens>
+      </Container>
+    </>
   );
 }
 
@@ -33,5 +36,12 @@ const Itens = styled.div`
     width: 25px;
     margin-right: 20px;
   }
+  div{
+    text-align: center;
+  }
+`;
+
+const Espace = styled.div`
+  height: 60px;
 `;
 

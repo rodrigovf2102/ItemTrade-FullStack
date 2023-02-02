@@ -24,7 +24,7 @@ export default function errorMessagesAll(error : any, setErrorMessage : React.Di
   if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);
   if (error.response?.data === "InsuficientBalance") return setErrorMessage(["Saldo insuficiente..."]);
-  if (error.response?.data === "UserCantBuyFromHimself") return setErrorMessage(["Usuário nao pode comprar de si mesmo..."]);
+  if (error.response?.data?.detail === "UserCantBuyFromHimself") return setErrorMessage(["Usuário nao pode comprar de si mesmo..."]);
   setErrorMessage(["Erro desconhecido, tente mais tarde ou refaça o login..."]);
 }
 

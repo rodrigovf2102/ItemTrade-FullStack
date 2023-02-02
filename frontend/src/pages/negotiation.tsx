@@ -6,7 +6,7 @@ import useTrades from "../hooks/api/useTrades";
 import useToken from "../hooks/useToken";
 import { TradeInfo } from "../protocols";
 import { Container } from "./games";
-import { Button } from "./item";
+import styled from "styled-components";
 import { GameContainer, GameImage, GamesContainer } from "./items";
 
 export default function NegotiationPage() {
@@ -50,4 +50,27 @@ export default function NegotiationPage() {
     </>
   );
 }
+
+export const Button = styled.button`
+  width: 250px;
+  height: 60px;
+  font-size: 25px;
+  background: linear-gradient(#555555,#000000,#555555);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  :hover{
+    background: linear-gradient(#000000,#333333,#000000);
+  }
+  :active{
+    background: linear-gradient(#000000,#666666,#000000);
+  }
+`;
 

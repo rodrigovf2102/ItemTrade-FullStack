@@ -29,11 +29,10 @@ describe("GET /games", () => {
     expect(response.body[0]).toEqual(game);
   });
 
-  it("should respond with status 400 and games array", async () => {
+  it("should respond with status 400 when there is no games", async () => {
     const response = await server.get("/games");
 
     expect(response.status).toBe(httpStatus.NOT_FOUND);
   });
-
 
 });

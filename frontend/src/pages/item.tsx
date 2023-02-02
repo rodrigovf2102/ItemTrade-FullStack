@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import BottomBar from "../components/BottomBar";
 import TopBar from "../components/TopBar";
 import useItems from "../hooks/api/useItems";
 import usePostTrade from "../hooks/api/usePostTrade";
@@ -9,6 +10,7 @@ import useToken from "../hooks/useToken";
 import { TradeInfo, TradePost } from "../protocols";
 import errorMessagesAll from "../usefull/errorMessages";
 import { ErrorMessage } from "./games";
+import { device } from "../mediaqueries/devices";
 
 export default function ItemPage() {
   const { postTrade } = usePostTrade();
@@ -97,53 +99,70 @@ export default function ItemPage() {
           : 
           <div>Carregando...</div>}
       </Container>
+      <BottomBar></BottomBar>
     </>
   );
 }
 
 const Container = styled.div`
   width: 100%;
-  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 const ItemContainer = styled.div`
-  width: 50%;
+  margin-top: 30px;
+  padding: 30px;
+  width: 60%;
   height: 80%;
   background: linear-gradient(45deg,#333333,#111111,#333333);
   border-radius: 10px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  @media ${device.mobileM} {
+    width: 100%;
+  }
 `;
 
 const ItemInfo = styled.div`
-  width: 50%;
+  width: 43%;
+  min-width: 270px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 50px;
+  text-align: center;
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 25px;
+  @media ${device.mobileM} {
+    margin-bottom:0;
+  }
 `;
 
 const SellerInfo = styled.div`
-  width: 50%;
+  width: 43%;
+  min-width: 270px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 50px;
+  text-align: center;
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 25px;
 `;
 
 const ImageContainer = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   overflow: hidden;
   border-radius: 10px;
   img{

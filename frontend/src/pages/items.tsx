@@ -13,6 +13,7 @@ import styled from "styled-components";
 import usePostItem from "../hooks/api/usePostItem";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
+import { device } from "../mediaqueries/devices";
 
 export default function ItemsPage() {
   const { items, getItems, itemsLoading } = useItems();
@@ -148,15 +149,14 @@ export default function ItemsPage() {
 }
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 25px;
   padding: 15px;
   width: 100%;
 `;
 
 export const GameContainer = styled.div`
-  width:350px ;
-  height: 450px;
-  background-color: gray;
+  width: 280px ;
+  height: 350px;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -171,9 +171,12 @@ export const GameContainer = styled.div`
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
-    line-height: 35px;
+    line-height: 25px;
+  }
+  @media ${device.mobileM} {
+    font-size: 14px;
   }
 `;
 

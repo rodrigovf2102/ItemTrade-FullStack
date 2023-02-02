@@ -55,7 +55,7 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  margin-bottom: 10px;
   border-radius: 15px;
   cursor: pointer;
   :hover{
