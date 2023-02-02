@@ -1,9 +1,11 @@
-# Projeto completo com nginx + react + node + postgres
+# ItemTrade
 
-## Como executar o build
+## How to execute
 
-docker-compose up --build
+Go to /frontend/src/services/api.tsx and put your IP adress ( localhost if using in the same machine ) on baseURL;
 
-Lembre-se, antes de um novo build apague os volumes
+Create a .env based on .env.exemple in folder /node;
 
-docker-compose down -v
+Execute: docker-compose up --build
+
+To stop, use: docker-compose down -v
