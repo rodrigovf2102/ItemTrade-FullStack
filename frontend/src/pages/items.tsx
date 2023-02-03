@@ -217,11 +217,11 @@ const Button = styled.div`
 
 const SelectPostGame = styled.select`
   margin-top: 10px;
-  width: 300px;
+  width: 250px;
   height: 45px;
   background-color: white;
   border-radius: 6px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700; 
 `;
 
@@ -232,11 +232,18 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   display: ${props => props.display};
   align-items: flex-start;
   justify-content: center;
-  left: 35%;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   min-width: 575px;
   height: 700px;
   background:  linear-gradient(#333333,#000000,#333333);
   border-radius: 10px;
+  @media ${device.mobileM} {
+    min-width: 90%;
+    text-align: center;
+
+  }
 `;
 

@@ -140,9 +140,6 @@ const ItemInfo = styled.div`
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   margin-bottom: 25px;
-  @media ${device.mobileM} {
-    margin-bottom:0;
-  }
 `;
 
 const SellerInfo = styled.div`
@@ -216,14 +213,23 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  left: 35%;
   position: absolute;
   width: 600px;
   height: 260px;
   background:  linear-gradient(#333333,#000000,#333333);
   border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   div{
-    font-size: 20px;
+    font-size: 16px;
+  }
+  @media ${device.mobileM} {
+    width: 380px;
+    text-align: center;
+    div{
+      font-size: 13px;
+    }
   }
 `;
 

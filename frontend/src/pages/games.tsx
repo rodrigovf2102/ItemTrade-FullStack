@@ -195,17 +195,18 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
 }))`
   padding-top: 40px;
   display: ${props => props.display};
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  left: 35%;
   height: 100px;
   position: absolute;
   width: 600px;
   height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background:  linear-gradient(#333333,#000000,#333333);
   border-radius: 10px;
   @media ${device.mobileM} {
-    left: 10px;
     font-size: 15px;
     width: 90%;
     text-align: center;
@@ -250,8 +251,9 @@ const GameContainer = styled.div`
 const ErrorMessage = styled.div`
   margin-top: 3px;
   color: red;
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 3px;
+  display: flex;  
 `;
 
 export {

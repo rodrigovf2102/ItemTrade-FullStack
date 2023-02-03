@@ -231,6 +231,7 @@ const FormPostEnroll = styled.form`
   background: linear-gradient(#000000,#444444,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   font-size: 22px;
+  text-align: center;
   @media ${device.mobileM} {
     width: 90%;
   }
