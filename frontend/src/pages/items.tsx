@@ -103,13 +103,12 @@ export default function ItemsPage() {
         <Title>{gameInfo.gameName}{gameInfo.serverName}</Title>
         <GamesContainer>
           {items ? items.map(item => (
-            <GameContainer>
-              <div>{item.name}</div>
+            <GameContainer onClick={() => {navigateItem(item.id);}}>
               <GameImage><img alt={""} src={item.itemUrl}/></GameImage>
-              <div>R${(item.price/100).toFixed(2)}</div>
+              <div>{item.name}</div>
+              <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
               <div>Quantidade: {item.amount}</div>
               <div>Tipo: {item.itemType}</div>
-              <Button onClick={() => {navigateItem(item.id);}}>Clique para ver mais</Button>
             </GameContainer>)) : ""}
           <GameContainer  onClick={openModal}>
             <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
@@ -155,25 +154,29 @@ const Title = styled.div`
 `;
 
 export const GameContainer = styled.div`
-  width: 280px ;
-  height: 350px;
+  width: 230px ;
+  height: 300px;
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
   margin: 10px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  color: gray;
+  color: white;
   background: linear-gradient(#333333,#000000,#333333);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
     font-size: 16px;
-    text-align: center;
-    line-height: 25px;
+    line-height: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    width: 100%;
+    overflow: auto;
   }
   @media ${device.mobileM} {
     font-size: 14px;
@@ -186,32 +189,19 @@ export const GamesContainer = styled.div`
   justify-content: center;
 `;
 
+export const GamePrice = styled.div`
+  font-weight: 700;
+  color: green;
+`;
+
 export const GameImage = styled.div`
   width: 90%;
   overflow: hidden;
-  height: 45%;
+  height: 50%;
   img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-`;
-
-const Button = styled.div`
-  min-width: 100px;
-  height: 50px;
-  background: linear-gradient(#555555,#000000,#555555);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 15px;
-  cursor: pointer;
-  :hover{
-    background: linear-gradient(#000000,#333333,#000000);
-  }
-  :active{
-    background: linear-gradient(#000000,#666666,#000000);
   }
 `;
 

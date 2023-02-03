@@ -155,8 +155,8 @@ export default function ProfilePage() {
           <EnrollPayment display={displayBalance}>
             {enrollment ? <><EnrollInfoDiv>Imagem de perfil:</EnrollInfoDiv>
               <ImgContainer><img alt="" src={enrollment.enrollmentUrl}/></ImgContainer>
-              <EnrollInfoDiv>Balanço: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDiv>
-              <EnrollInfoDiv>Balanço Congelado: R${(enrollment?.freezedBalance/100).toFixed(2)}</EnrollInfoDiv>
+              <EnrollInfoDivGreen>Balanço: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDivGreen>
+              <EnrollInfoDivGreen>Balanço Congelado: R${(enrollment?.freezedBalance/100).toFixed(2)}</EnrollInfoDivGreen>
               <Button onClick={() => {displayChanges("addCredit");}}>Adicionar crédito</Button>
               <Button onClick={() => {displayChanges("withdrawCredit");}}>Retirar crédito</Button> </>
               :
@@ -173,7 +173,7 @@ export default function ProfilePage() {
             {postPaymentErrorMsg[0]==="OK" ? <Button>Depósito Realizado!<AiFillCheckCircle color="green" size="55px"></AiFillCheckCircle></Button> : ""}       
           </EnrollPayment>
           <EnrollPayment display={displayWithdraw}>
-            <EnrollInfoDiv>Saldo disponivel para saque: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDiv>
+            <EnrollInfoDivGreen>Saldo disponivel para saque: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDivGreen>
             <InputCreditAmount  type="text" placeholder=" Digite sua chave PIX" onChange={(e) => {setKeyPIX(e.target.value);}}/>
             <InputCreditAmount  type="text" placeholder=" Digite o valor a ser sacado..." onChange={(e) => {setCreditAmount({ ...creditAmount, amount: Number(e.target.value)*(-100) });}}/>
             {postPaymentErrorMsg.map((msg) => ( msg!=="OK"?<ErrorMessage color={colorMsg}>{msg}</ErrorMessage>:"") )}
@@ -286,6 +286,14 @@ const EnrollInfoDiv = styled.div`
     font-size: 22px;
     margin: 10px;
     text-align: center;
+`;
+
+const EnrollInfoDivGreen = styled.div`
+    font-size: 22px;
+    margin: 10px;
+    text-align: center;
+    color: green;
+    font-weight: 700;
 `;
 
 export type Display = { display:string}

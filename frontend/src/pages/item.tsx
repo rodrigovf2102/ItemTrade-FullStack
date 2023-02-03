@@ -74,7 +74,7 @@ export default function ItemPage() {
             <Info>Jogo: {items[0].Game.name}</Info>
             <Info>Servidor: {items[0].Server.name}</Info>
             <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
-            <Info>Preço: R${(items[0].price/100).toFixed(2)}</Info>
+            <InfoDone>Preço: R${(items[0].price/100).toFixed(2)}</InfoDone>
             <Info>Quantidade: {items[0].amount}</Info>
             <Button onClick={openModal}>Comprar Item</Button>
           </ItemInfo>
@@ -83,8 +83,8 @@ export default function ItemPage() {
               <ImageContainer><img alt="" src={items[0].Enrollment.enrollmentUrl}/></ImageContainer>
               <Info>Nome: {items[0].Enrollment.name}</Info> 
               <Info>Total de vendas: {trades?.length}</Info>
-              <Info>Concluídas: {trades?.filter((trade) => trade.tradeStatus==="COMPLETE").length}</Info>
-              <Info>Em andamento: {trades?.filter((trade) => trade.tradeStatus==="INCOMPLETE").length}</Info> </>:
+              <InfoDone>Concluídas: {trades?.filter((trade) => trade.tradeStatus==="COMPLETE").length}</InfoDone>
+              <InfoIncomplete>Em andamento: {trades?.filter((trade) => trade.tradeStatus==="INCOMPLETE").length}</InfoIncomplete> </>:
               "Faça login para ver essa área..."}
           </SellerInfo>
           <Modal display={displayModal}>
@@ -201,6 +201,20 @@ const Title = styled.div`
 const Info = styled.div`
   font-size: 20px;
   padding: 10px;
+`;
+
+export const InfoDone = styled.div`
+  font-size: 20px;
+  padding: 10px;
+  color: green;
+  font-weight: 700;
+`;
+
+export const InfoIncomplete = styled.div`
+  font-size: 20px;
+  padding: 10px;
+  color: red;
+  font-weight: 700;
 `;
 
 export type DisplayModal = { display:string };

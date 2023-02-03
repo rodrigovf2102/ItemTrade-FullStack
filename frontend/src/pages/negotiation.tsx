@@ -7,7 +7,8 @@ import useToken from "../hooks/useToken";
 import { TradeInfo } from "../protocols";
 import { Container } from "./games";
 import styled from "styled-components";
-import { GameContainer, GameImage, GamesContainer } from "./items";
+import { GamesContainer, GamePrice } from "./items";
+import { device } from "../mediaqueries/devices";
 
 export default function NegotiationPage() {
   const { tradeType } = useParams();
@@ -34,14 +35,13 @@ export default function NegotiationPage() {
         {trades?.length===0 ? <div>Você ainda nao tem negociações do tipo: {tradeType}</div> : ""}
         {trades?.map(trade => (
           <GamesContainer>
-            <GameContainer>
-              <div>{trade.Item.name}</div>
+            <GameContainer  onClick={() => {navigate(`/trade/${trade.id}`);}}>
               <GameImage><img alt="" src={trade.Item.itemUrl}/></GameImage>
+              <div>{trade.Item.name}</div>
               <div>Comprador: {trade.EnrollmentBuyer.name}</div>
               <div>Vendedor: {trade.EnrollmentSeller.name}</div>
-              <div>Preço: R${(trade.Item.price/100).toFixed(2)}</div>
-              <div>Andamento: {trade.tradeStatus}</div>
-              <Button onClick={() => {navigate(`/trade/${trade.id}`);}}>Ver detalhes</Button>
+              <GamePrice>Preço: R${(trade.Item.price/100).toFixed(2)}</GamePrice>
+              {trade.tradeStatus ==="COMPLETE"? <GamePrice>Andamento: {trade.tradeStatus}</GamePrice> : <TradeStatus>Andamento: {trade.tradeStatus}</TradeStatus>}
             </GameContainer>
           </GamesContainer>
         ))}
@@ -52,9 +52,9 @@ export default function NegotiationPage() {
 }
 
 export const Button = styled.button`
-  width: 250px;
+  width: 200px;
   height: 60px;
-  font-size: 25px;
+  font-size: 20px;
   background: linear-gradient(#555555,#000000,#555555);
   display: flex;
   justify-content: center;
@@ -74,3 +74,48 @@ export const Button = styled.button`
   }
 `;
 
+export const GameContainer = styled.div`
+  width: 240px ;
+  height: 320px;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  background: linear-gradient(#333333,#000000,#333333);
+  :hover{
+    background: linear-gradient(#000000,#333333,#000000);
+  }
+  div{
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    width: 100%;
+    overflow: auto;
+  }
+  @media ${device.mobileM} {
+    font-size: 14px;
+  }
+`;
+
+export const GameImage = styled.div`
+  width: 90%;
+  overflow: hidden;
+  height: 40%;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const TradeStatus = styled.div`
+  font-weight: 700;
+  color: red;
+`;

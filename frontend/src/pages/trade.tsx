@@ -100,9 +100,18 @@ export default function TradePage() {
                 <EnrollmentInfos>
                   <div>Comprador: {trade.EnrollmentBuyer.name}</div>
                   <div>Vendedor: {trade.EnrollmentSeller.name}</div>
-                  <div>Status de venda do comprador: {trade.buyerStatus}</div>
-                  <div>Status de venda do vendedor: {trade.sellerStatus}</div>
-                  <div>Status da venda: {trade.tradeStatus}</div>
+                  {trade?.buyerStatus==="COMPLETE"?
+                    <InfoDone>Status de venda do comprador: {trade.buyerStatus}</InfoDone>
+                    :
+                    <InfoIncomplete>Status de venda do comprador: {trade.buyerStatus}</InfoIncomplete>}
+                  {trade?.sellerStatus==="COMPLETE"? 
+                    <InfoDone>Status de venda do vendedor: {trade.sellerStatus}</InfoDone>
+                    :
+                    <InfoIncomplete>Status de venda do vendedor: {trade.sellerStatus}</InfoIncomplete>}
+                  {trade?.tradeStatus==="COMPLETE"? 
+                    <InfoDone>Status de venda do vendedor: {trade.tradeStatus}</InfoDone>
+                    :
+                    <InfoIncomplete>Status da venda: {trade.tradeStatus}</InfoIncomplete>}
                   {enrollment?.id === trade.buyerEnrollmentId ? 
                     <Button onClick={confirmDelivery} disabled={updateTradeStatusLoading}>Confirmar Recebimento do item</Button> :
                     <Button onClick={confirmDelivery} disabled={updateTradeStatusLoading}>Confirmar Entrega do item</Button>}
@@ -154,6 +163,7 @@ const MessageBox = styled.div`
     border: 5px solid gray;
     padding: 10px;
     overflow: auto;
+    color: black;
     div{
       margin: 5px;
       font-size: 18px;
@@ -249,7 +259,7 @@ export const EnrollmentContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: gray;
+  color: white;
   background: linear-gradient(90deg,#222222,#111111,#222222);
   @media ${device.mobileM} {
   width: 100%;
@@ -306,4 +316,16 @@ const ItemInfos = styled.div`
     font-size: 14px;
   }
 }
+`;
+
+export const InfoDone = styled.div`
+  font-size: 20px;
+  color: green;
+  font-weight: 700;
+`;
+
+export const InfoIncomplete = styled.div`
+  font-size: 20px;
+  color: red;
+  font-weight: 700;
 `;

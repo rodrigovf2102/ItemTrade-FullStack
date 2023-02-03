@@ -228,7 +228,6 @@ const FormContainer = styled.div`
 const GameContainer = styled.div`
   width  :250px ;
   height: 300px;
-  background-color: gray;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -237,7 +236,7 @@ const GameContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  color: gray;
+  color: white;
   background: linear-gradient(#333333,#000000,#333333);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
