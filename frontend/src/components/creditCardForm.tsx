@@ -62,17 +62,6 @@ export default class PaymentForm extends React.Component {
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
             />
-            <InputCardCVC
-              type="tel"
-              name="cvc"
-              className="form-control"
-              placeholder="CVC"
-              pattern="\d{3,4}"
-              required
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-            />
-            <div>Exemplo : 49..., 51..., 36..., 37...</div>
             <InputCardName
               type="text"
               name="name"
@@ -92,6 +81,16 @@ export default class PaymentForm extends React.Component {
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
             />
+            <InputCardCVC
+              type="tel"
+              name="cvc"
+              className="form-control"
+              placeholder="CVC"
+              pattern="\d{3,4}"
+              required
+              onChange={this.handleInputChange}
+              onFocus={this.handleInputFocus}
+            />
           </Form>
         </CardContainer>
       </>
@@ -100,7 +99,7 @@ export default class PaymentForm extends React.Component {
 }
 
 const Form = styled.form`
-  margin-top: 15px;
+  margin-top: 16px;
   div {
     color: white;
     margin-left: 20px;
@@ -109,44 +108,45 @@ const Form = styled.form`
 `;
 
 const CardContainer = styled.div`
-  width: 90%;
-  height: 55%;
+  width: 100%;  
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
 `;
 
 const InputCardNumber = styled.input`
-  height: 40px;
-  width: 50%;
+  height: 35px;
+  width: 40%;
   margin-left: 20px;
+  margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const InputCardCVC = styled.input`
-  height: 40px;
+  height: 35px;
   width: 17%;
   margin-left: 20px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const InputCardName = styled.input`
-  height: 40px;
-  width: 50%;
+  height: 35px;
+  width: 40%;
   margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const InputCardDate = styled.input`
-  height: 40px;
+  height: 35px;
   width: 30%;
   margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
 `;

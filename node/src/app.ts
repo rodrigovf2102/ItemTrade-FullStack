@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { connectPostgresDb, loadEnv } from "@/config";
+import { connectPostgresDb, disconnectDB, loadEnv } from "@/config";
 import { usersRouter, gamesRouter, enrollmentRouter, serversRouter, itemsRouter, paymentRouter, tradesRouter, messagesRouter } from "@/routers";
 
 loadEnv();
@@ -21,6 +21,10 @@ app.use("/messages", messagesRouter);
 export function start(): Promise<Express> {
   connectPostgresDb();
   return Promise.resolve(app);
+}
+
+export async function close(): Promise<void> {
+  await disconnectDB();
 }
 
 export default app;

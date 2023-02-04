@@ -7,6 +7,6 @@ import { authenticateToken } from "@/middlewares/authentication-middleware";
 const gamesRouter = Router();
 
 gamesRouter.get("/", getGames);
-gamesRouter.post("/", validateBody(createGameSchema), authenticateToken, postGame);
+gamesRouter.post("/", authenticateToken, validateBody(createGameSchema),postGame);
 
 export { gamesRouter };

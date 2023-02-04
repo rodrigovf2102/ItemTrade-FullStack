@@ -19,6 +19,8 @@ async function getServers(gameId, filter) {
     if (gameId === 0)
         gameId = undefined;
     const servers = await server_repository_1.default.findServersByGameId(gameId, filter);
+    if (servers.length === 0)
+        throw (0, errors_1.defaultError)("ServersNotFound");
     return servers;
 }
 exports.getServers = getServers;

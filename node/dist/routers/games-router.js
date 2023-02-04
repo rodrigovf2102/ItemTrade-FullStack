@@ -9,4 +9,4 @@ const authentication_middleware_1 = require("../middlewares/authentication-middl
 const gamesRouter = (0, express_1.Router)();
 exports.gamesRouter = gamesRouter;
 gamesRouter.get("/", controllers_1.getGames);
-gamesRouter.post("/", (0, middlewares_1.validateBody)(schemas_1.createGameSchema), authentication_middleware_1.authenticateToken, controllers_1.postGame);
+gamesRouter.post("/", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.createGameSchema), controllers_1.postGame);

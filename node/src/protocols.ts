@@ -33,11 +33,19 @@ export type UpsertEnrollment = {
     enrollmentUrl?: string
 };
 
+export type EnrollmentWithNoId = Omit<Enrollment, "id">
+
 export type ServerWithNoId = Omit<Server, "id">;
 
 export type ServerNoIdName = {
     name: string,
     gameName: string
+}
+
+export type ServerWithGame = {
+    Game: Game,
+    id: number,
+    name: string
 }
 
 export type ItemWithNoId = Omit<Item, "id"|"inTrade">

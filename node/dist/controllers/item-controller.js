@@ -8,7 +8,7 @@ const items_service_1 = __importDefault(require("../services/items-service"));
 const http_status_1 = __importDefault(require("http-status"));
 async function getItems(req, res) {
     try {
-        const itemType = req.params.type;
+        const itemType = req.query.type;
         const serverId = Number(req.params.serverId);
         const filter = req.query.filter;
         const itemId = Number(req.query.itemId);

@@ -55,21 +55,22 @@ const Instrucoes = styled.div`
   }
   @media ${device.mobileM} {
     width: 90%;
-    font-size: 15px;
+    font-size: 14px;
   }
 `;
 
 const Tittle = styled.div`
   font-size: 40px;
   @media ${device.mobileM} {
-    font-size: 30px;
+    font-size: 24px;
+    text-align: center;
   }
 `;
 
 const Subtitle = styled.div`
   font-size: 30px;
   @media ${device.mobileM} {
-    font-size: 25px;
+    font-size: 20px;
   }
 `;
 

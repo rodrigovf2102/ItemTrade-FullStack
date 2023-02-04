@@ -151,6 +151,10 @@ const Title = styled.div`
   font-size: 25px;
   padding: 15px;
   width: 100%;
+  @media ${device.mobileM} {
+    font-size: 18px;
+    text-align: center;
+  }
 `;
 
 export const GameContainer = styled.div`
@@ -162,7 +166,7 @@ export const GameContainer = styled.div`
   object-fit: cover;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   color: white;
   background: linear-gradient(#333333,#000000,#333333);
@@ -179,7 +183,13 @@ export const GameContainer = styled.div`
     overflow: auto;
   }
   @media ${device.mobileM} {
-    font-size: 14px;
+    width: 150px;
+    height: 215px;
+    padding: 8px;
+    margin: 5px;
+    div{
+      font-size: 13px;
+    }
   }
 `;
 
@@ -213,12 +223,16 @@ const SelectPostGame = styled.select`
   border-radius: 6px;
   font-size: 18px;
   font-weight: 700; 
+  @media ${device.mobileM} {
+    font-size: 15px;
+  }
 `;
 
 const Modal = styled.div.attrs((props: DisplayModal) => ({
   display: props.display
 }))`
   padding-top: 20px;
+  padding-bottom: 15px;
   display: ${props => props.display};
   align-items: flex-start;
   justify-content: center;
@@ -227,13 +241,14 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 575px;
-  height: 700px;
+  height: auto;
   background:  linear-gradient(#333333,#000000,#333333);
   border-radius: 10px;
   @media ${device.mobileM} {
-    min-width: 90%;
+    width: 90%;
+    min-width: 0;
+    max-width: 450px;
     text-align: center;
-
   }
 `;
 

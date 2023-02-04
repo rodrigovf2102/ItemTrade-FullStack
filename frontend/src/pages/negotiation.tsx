@@ -33,8 +33,8 @@ export default function NegotiationPage() {
         {tradesLoading ? <div> Carregando...</div> : ""}
         {!trades && token ? <div>Finalize seu cadastro para ver esse área...</div>:""}
         {trades?.length===0 ? <div>Você ainda nao tem negociações do tipo: {tradeType}</div> : ""}
-        {trades?.map(trade => (
-          <GamesContainer>
+        <GamesContainer>
+          {trades?.map(trade => (
             <GameContainer  onClick={() => {navigate(`/trade/${trade.id}`);}}>
               <GameImage><img alt="" src={trade.Item.itemUrl}/></GameImage>
               <div>{trade.Item.name}</div>
@@ -43,8 +43,8 @@ export default function NegotiationPage() {
               <GamePrice>Preço: R${(trade.Item.price/100).toFixed(2)}</GamePrice>
               {trade.tradeStatus ==="COMPLETE"? <GamePrice>Andamento: {trade.tradeStatus}</GamePrice> : <TradeStatus>Andamento: {trade.tradeStatus}</TradeStatus>}
             </GameContainer>
-          </GamesContainer>
-        ))}
+          ))}
+        </GamesContainer>
       </Container>
       <BottomBar></BottomBar>
     </>
@@ -100,7 +100,14 @@ export const GameContainer = styled.div`
     overflow: auto;
   }
   @media ${device.mobileM} {
-    font-size: 14px;
+    width: 180px;
+    height: 250px;
+    padding: 8px;
+    margin: 6px;
+    div{
+      font-size: 13px;
+      line-height: 15px;
+    }
   }
 `;
 

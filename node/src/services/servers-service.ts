@@ -12,6 +12,7 @@ export async function getServers(gameId:number, filter:string): Promise<Server[]
   if(isNaN(gameId)) throw defaultError("Invalid gameId");
   if(gameId===0) gameId=undefined;
   const servers = await serverRepository.findServersByGameId(gameId,filter);
+  if(servers.length===0) throw defaultError("ServersNotFound");
   return servers;
 }
 

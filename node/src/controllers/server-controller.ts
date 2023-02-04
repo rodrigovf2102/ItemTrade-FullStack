@@ -10,7 +10,7 @@ export async function getServers(req: Request, res: Response) {
     const servers = await serversService.getServers(gameId, filter);
     return res.status(httpStatus.OK).send(servers);
   } catch (error) {
-    if (error.detail === "ServersNotFound") {"";
+    if (error.detail === "ServersNotFound") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
     }
     return res.status(httpStatus.BAD_REQUEST).send(error);

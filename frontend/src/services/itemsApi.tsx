@@ -2,7 +2,7 @@ import { Item, ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName } from "../protoco
 import api from "./api";
 
 export async function getItems(serverId: number, type:string, filter: string, itemId:string) : Promise<Item[]> {
-  const response = await api.get(`/items/${serverId}/${type}?filter=${filter}&itemId=${itemId}`);
+  const response = await api.get(`/items/${serverId}?filter=${filter}&itemId=${itemId}&type=${type}`);
   return response.data;
 };
 

@@ -7,6 +7,6 @@ import { authenticateToken } from "@/middlewares/authentication-middleware";
 const serversRouter = Router();
 
 serversRouter.get("/:gameId", getServers);
-serversRouter.post("/", validateBody(serverSchema), authenticateToken, postServer);
+serversRouter.post("/", authenticateToken,validateBody(serverSchema), postServer);
 
 export { serversRouter };

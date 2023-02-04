@@ -15,7 +15,6 @@ async function getServers(req, res) {
     }
     catch (error) {
         if (error.detail === "ServersNotFound") {
-            "";
             return res.status(http_status_1.default.NOT_FOUND).send(error.detail);
         }
         return res.status(http_status_1.default.BAD_REQUEST).send(error);

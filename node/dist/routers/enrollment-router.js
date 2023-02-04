@@ -9,5 +9,5 @@ const authentication_middleware_1 = require("../middlewares/authentication-middl
 const enrollmentRouter = (0, express_1.Router)();
 exports.enrollmentRouter = enrollmentRouter;
 enrollmentRouter.get("/", authentication_middleware_1.authenticateToken, controllers_1.getEnrollment);
-enrollmentRouter.post("/", (0, middlewares_1.validateBody)(schemas_1.upsertEnrollmentSchema), authentication_middleware_1.authenticateToken, controllers_1.upsertEnrollment);
+enrollmentRouter.post("/", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.upsertEnrollmentSchema), controllers_1.upsertEnrollment);
 enrollmentRouter.put("/balance", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.updateEnrollmentSchema), controllers_1.updateBalance);

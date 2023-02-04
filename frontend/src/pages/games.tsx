@@ -72,7 +72,7 @@ export default function GamePage() {
               <div>{game.name}</div>
             </GameContainer>)) : ""}
           <GameContainer onClick={openModal}>
-            <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
+            <IoMdAddCircleOutline size={"140px"}></IoMdAddCircleOutline>
             <div>Adicione um Jogo</div>
           </GameContainer>
         </GamesContainer>
@@ -81,7 +81,7 @@ export default function GamePage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do jogo:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"35px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"30px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do jogo aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, name: e.target.value });}}/>
               <InputPostGame type="text" placeholder=" Digite o link da imagem aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, gameUrl: e.target.value });}}/>
@@ -115,6 +115,9 @@ const Form = styled.form`
   width: 100%;
   align-items: flex-start;
   flex-wrap: wrap;
+  @media ${device.mobileM} {
+  justify-content  :center ;
+  }
 `;
 
 const FormPostGame = styled.form`
@@ -127,23 +130,34 @@ const FormPostGame = styled.form`
 
 const Input = styled.input`
   margin-top: 10px;
-  width: 400px;
-  height: 45px;
-  background-color: white;
-  border-radius: 6px;
-  font-size: 20px;
-  font-weight: 700;
-  margin-right: 50px;
-`;
-
-const InputPostGame = styled.input`
-  margin-top: 20px;
-  width: 60%;
+  width: 350px;
   height: 45px;
   background-color: white;
   border-radius: 6px;
   font-size: 18px;
-  font-weight: 700; 
+  font-weight: 700;
+  margin-right: 50px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  @media ${device.mobileM} {
+  font-size: 15px;
+  margin: 5px;
+  }
+`;
+
+const InputPostGame = styled.input`
+  margin-top: 20px;
+  width: 75%;
+  height: 45px;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  @media ${device.mobileM} {
+    width: 80%;
+    font-size: 14px;
+  }
+
 `;
 
 const GameImage = styled.div`
@@ -159,25 +173,29 @@ const GameImage = styled.div`
 
 const FormInfo = styled.div`
   display: flex;
-  font-size: 22px;
-  width: 80%;
+  font-size: 20px;
+  width: 85%;
   justify-content: space-between;
   align-items: center;
+  @media ${device.mobileM} {
+    width: 90%;
+    font-size: 15px;
+  }
 `;
 
 export type DisplayModal = { display:string };
 
 const Entrar = styled.button`
-  min-width: 300px;
-  height: 50px;
+  height: 55px;
+  width: 60%;
   background: linear-gradient(#555555,#000000,#555555);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 20px;
   border-radius: 15px;
   color: white;
-  font-size: 22px;
+  font-size: 18px;
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   margin: 20px;
   overflow: hidden;
@@ -188,19 +206,26 @@ const Entrar = styled.button`
   :active{
     background: linear-gradient(#000000,#666666,#000000);
   }
+  @media ${device.mobileM} {
+    font-size: 15px;
+    max-width: 350px;
+    width: 60%;
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+  }
 `;
 
 const Modal = styled.div.attrs((props: DisplayModal) => ({
   display: props.display
 }))`
-  padding-top: 40px;
+  padding: 10px;
   display: ${props => props.display};
   align-items: center;
-  justify-content: center;
-  height: 100px;
+  justify-content: space-between;
   position: absolute;
-  width: 600px;
-  height: 400px;
+  width: 500px;
+  height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -208,6 +233,7 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   border-radius: 10px;
   @media ${device.mobileM} {
     font-size: 15px;
+    max-width: 420px;
     width: 90%;
     text-align: center;
   }
@@ -226,8 +252,8 @@ const FormContainer = styled.div`
 `;
 
 const GameContainer = styled.div`
-  width  :250px ;
-  height: 300px;
+  width  :200px ;
+  height: 260px;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -242,8 +268,16 @@ const GameContainer = styled.div`
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
+  }
+  @media ${device.mobileM} {
+    width: 150px;
+    height: 180px;
+    margin: 5px;
+    div{
+      font-size: 14px;
+    }
   }
 `;
 
@@ -252,7 +286,10 @@ const ErrorMessage = styled.div`
   color: red;
   font-size: 15px;
   margin-bottom: 3px;
-  display: flex;  
+  display: flex; 
+  @media ${device.mobileM} {
+    font-size: 14px;
+  }
 `;
 
 export {

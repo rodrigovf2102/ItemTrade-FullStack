@@ -9,4 +9,4 @@ const authentication_middleware_1 = require("../middlewares/authentication-middl
 const serversRouter = (0, express_1.Router)();
 exports.serversRouter = serversRouter;
 serversRouter.get("/:gameId", controllers_1.getServers);
-serversRouter.post("/", (0, middlewares_1.validateBody)(schemas_1.serverSchema), authentication_middleware_1.authenticateToken, controllers_1.postServer);
+serversRouter.post("/", authentication_middleware_1.authenticateToken, (0, middlewares_1.validateBody)(schemas_1.serverSchema), controllers_1.postServer);

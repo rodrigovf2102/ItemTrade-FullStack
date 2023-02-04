@@ -6,11 +6,10 @@ import httpStatus from "http-status";
 
 export async function getItems(req: Request, res: Response) {
   try {
-    const itemType = req.params.type;
+    const itemType = req.query.type as string;
     const serverId = Number(req.params.serverId);
     const filter = req.query.filter as string;
     const itemId = Number(req.query.itemId);
-
     const items = await itemsService.getItems(serverId, itemType, filter, itemId);
     return res.status(httpStatus.OK).send(items);
   } catch (error) {

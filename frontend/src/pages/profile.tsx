@@ -5,7 +5,6 @@ import TopBar from "../components/TopBar";
 import useEnrollment from "../hooks/api/useEnrollment";
 import usePostEnrollment from "../hooks/api/usePostEnrollment";
 import { Amount, CreditCard, EnrollmentPost, PaymentPost } from "../protocols";
-import { InputPostGame, Entrar  } from "./games";
 import PaymentCreditCardPage from "../components/creditCardForm";
 import { getCardInfo } from "../usefull/creditCardInfo";
 import useUpdateEnrollment from "../hooks/api/useUpdateEnrollment";
@@ -164,13 +163,15 @@ export default function ProfilePage() {
           </EnrollPayment>
           <EnrollPayment display={displayAddCredit}>
             <PaymentCreditCardPage />
-            <InputCreditAmount type="text" placeholder=" Digite o valor a ser creditado..." onChange={(e) => {setCreditAmount({ ...creditAmount, amount: Number(e.target.value)*100 });}}/>
-            <Button disabled={updateEnrollmentLoading} onClick={addCredit}>
-              {updateEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Finalizar Pagamento"}
-            </Button>    
-            {postPaymentErrorMsg.map((msg) => ( msg!=="OK"?<ErrorMessage color={colorMsg}>{msg}</ErrorMessage>:"") )}
-            <Button onClick={() => {displayChanges("balance");}}>Voltar</Button>
-            {postPaymentErrorMsg[0]==="OK" ? <Button>Depósito Realizado!<AiFillCheckCircle color="green" size="55px"></AiFillCheckCircle></Button> : ""}       
+            <PaymentDiv>
+              <InputCreditAmount type="text" placeholder=" Digite o valor a ser creditado..." onChange={(e) => {setCreditAmount({ ...creditAmount, amount: Number(e.target.value)*100 });}}/>
+              <Button disabled={updateEnrollmentLoading} onClick={addCredit}>
+                {updateEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Finalizar Pagamento"}
+              </Button>    
+              {postPaymentErrorMsg.map((msg) => ( msg!=="OK"?<ErrorMessage color={colorMsg}>{msg}</ErrorMessage>:"") )}
+              <Button onClick={() => {displayChanges("balance");}}>Voltar</Button>
+              {postPaymentErrorMsg[0]==="OK" ? <Button>Depósito Realizado!<AiFillCheckCircle color="green" size="55px"></AiFillCheckCircle></Button> : ""}       
+            </PaymentDiv>
           </EnrollPayment>
           <EnrollPayment display={displayWithdraw}>
             <EnrollInfoDivGreen>Saldo disponivel para saque: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDivGreen>
@@ -199,40 +200,39 @@ const Container = styled.div`
 `;
 
 export const EnrollmentContainer = styled.div`
-  width: 80% ;
-  height: 80%;
+  width: auto ;
+  height: auto;
   border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
   margin-top: 45px;
   object-fit: cover;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: gray;
+  color: white;
   background: linear-gradient(#222222,#101010,#222222);
   flex-wrap: wrap;
   @media ${device.mobileM} {
-    width: 90%;
+
   }
 `;
 
 const FormPostEnroll = styled.form`
   display: flex;
   flex-direction: column;
-  width: 45%;
-  min-width: 300px;
+  min-width: 500px;
   align-items: center;
   justify-content: center;
-  height: 600px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  height: 550px;
+  margin: 20px;
   border-radius: 15px;
   background: linear-gradient(#000000,#444444,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
-  font-size: 22px;
   text-align: center;
   @media ${device.mobileM} {
+    min-width: unset;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
     width: 90%;
   }
 `;
@@ -247,27 +247,30 @@ const ImgContainer = styled.div`
 `;
 
 const Button = styled.button`
-  width: 80%;
+  width: 50%;
   min-width: 200px;
   max-width: 350px;
-  height: 45px;
+  height: 52px;
   background: linear-gradient(#555555,#000000,#555555);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px;
   border-radius: 15px;
   color: white;
-  font-size: 20px;
+  font-size: 17px;
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  margin-top: 15px;
+  margin-top: 10px;
   cursor: pointer;
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   :active{
     background: linear-gradient(#000000,#666666,#000000);
+  }
+  @media ${device.mobileM} {
+    height: 45px;
+    font-size: 14px;
   }
 `;
 
@@ -280,12 +283,19 @@ const ErrorMessage = styled.div.attrs((props: ColorMsg) => ({
   color: ${props => props.color};
   font-size: 16px;
   margin-bottom: 5px;
+  @media ${device.mobileM} {
+    margin-top: 10px;
+    font-size: 13px;
+  }
 `;
 
 const EnrollInfoDiv = styled.div`
     font-size: 22px;
     margin: 10px;
     text-align: center;
+    @media ${device.mobileM} {
+    font-size: 15px;
+  }
 `;
 
 const EnrollInfoDivGreen = styled.div`
@@ -294,6 +304,9 @@ const EnrollInfoDivGreen = styled.div`
     text-align: center;
     color: green;
     font-weight: 700;
+    @media ${device.mobileM} {
+    font-size: 15px;
+  }
 `;
 
 export type Display = { display:string}
@@ -301,30 +314,41 @@ export type Display = { display:string}
 const EnrollPayment = styled.div.attrs((props: Display) => ({
   display: props.display
 }))`
-  width: 45%;
-  min-width: 300px;
-  height: 600px;
+  width: 500px;
+  height: 550px;
   display: ${props => props.display};
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
+  margin: 20px;
   background: linear-gradient(#000000,#444444,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
-  margin-top: 50px;
-  margin-bottom: 50px;
+  overflow: auto;
   @media ${device.mobileM} {
     width: 90%;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 `;
 
 const InputCreditAmount = styled.input`
   height: 40px;
-  width: 50%;
-  margin-left: 20px;
+  width: 60%;
   border-radius: 5px;
-  font-size: 18px;
-  margin-bottom: 15px;
+  font-size: 17px;
+  @media ${device.mobileM} {
+    font-size: 15px;
+  }
+`;
+
+const PaymentDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
 const FormInfo = styled.div`
@@ -334,5 +358,23 @@ const FormInfo = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media ${device.mobileM} {
+    font-size: 17px;
+  }
 `;
+
+const InputPostGame = styled.input`
+  margin-top: 20px;
+  width: 75%;
+  max-width: 400px;
+  height: 45px;
+  background-color: white;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  @media ${device.mobileM} {
+    width: 80%;
+    font-size: 14px;
+  }
+  `;
 

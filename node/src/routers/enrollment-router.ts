@@ -7,7 +7,7 @@ import { authenticateToken } from "@/middlewares/authentication-middleware";
 const enrollmentRouter = Router();
 
 enrollmentRouter.get("/", authenticateToken , getEnrollment);
-enrollmentRouter.post("/", validateBody(upsertEnrollmentSchema), authenticateToken, upsertEnrollment);
+enrollmentRouter.post("/", authenticateToken, validateBody(upsertEnrollmentSchema), upsertEnrollment);
 enrollmentRouter.put("/balance", authenticateToken, validateBody(updateEnrollmentSchema), updateBalance );
 
 export { enrollmentRouter };

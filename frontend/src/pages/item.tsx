@@ -69,20 +69,20 @@ export default function ItemPage() {
         
         {items ? <ItemContainer>
           <ItemInfo>
+            <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
             <Title>Informações sobre o Item:</Title>
             <Info>{items[0].name}</Info>
             <Info>Jogo: {items[0].Game.name}</Info>
-            <Info>Servidor: {items[0].Server.name}</Info>
-            <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
+            <Info>Servidor: {items[0].Server.name}</Info> 
             <InfoDone>Preço: R${(items[0].price/100).toFixed(2)}</InfoDone>
             <Info>Quantidade: {items[0].amount}</Info>
-            <Button onClick={openModal}>Comprar Item</Button>
+            <ButtonContainer><Button onClick={openModal}>Comprar Item</Button></ButtonContainer>
           </ItemInfo>
           <SellerInfo>
+            <ImageContainer><img alt="" src={items[0].Enrollment.enrollmentUrl}/></ImageContainer>
             {token ? <><Title>Informações sobre o vendedor:</Title>
-              <ImageContainer><img alt="" src={items[0].Enrollment.enrollmentUrl}/></ImageContainer>
               <Info>Nome: {items[0].Enrollment.name}</Info> 
-              <Info>Total de vendas: {trades?.length}</Info>
+              <InfoTotal>Total de vendas: {trades?.length}</InfoTotal>
               <InfoDone>Concluídas: {trades?.filter((trade) => trade.tradeStatus==="COMPLETE").length}</InfoDone>
               <InfoIncomplete>Em andamento: {trades?.filter((trade) => trade.tradeStatus==="INCOMPLETE").length}</InfoIncomplete> </>:
               "Faça login para ver essa área..."}
@@ -114,7 +114,7 @@ const Container = styled.div`
 const ItemContainer = styled.div`
   margin-top: 30px;
   padding: 30px;
-  width: 60%;
+  width: 80%;
   height: 80%;
   background: linear-gradient(45deg,#333333,#111111,#333333);
   border-radius: 10px;
@@ -129,11 +129,12 @@ const ItemContainer = styled.div`
 
 const ItemInfo = styled.div`
   width: 43%;
-  min-width: 270px;
+  min-width: 350px;
+  max-width: 450px;
   height: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   text-align: center;
   border-radius: 15px;
@@ -144,12 +145,12 @@ const ItemInfo = styled.div`
 
 const SellerInfo = styled.div`
   width: 43%;
-  min-width: 270px;
+  min-width: 350px;
+  max-width: 450px;
   height: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   text-align: center;
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
@@ -158,7 +159,8 @@ const SellerInfo = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 250px;
+  width: 100%;
+  padding: 15px;
   height: 250px;
   overflow: hidden;
   border-radius: 10px;
@@ -166,6 +168,7 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 15px;
   }
 `;
 
@@ -193,13 +196,13 @@ export const Button = styled.button`
 `;
 
 const Title = styled.div`
-  font-size: 25px;
+  font-size: 22px;
   padding:15px;
   text-align: center;
 `;
 
 const Info = styled.div`
-  font-size: 20px;
+  font-size: 17px;
   padding: 10px;
 `;
 
@@ -214,6 +217,13 @@ export const InfoIncomplete = styled.div`
   font-size: 20px;
   padding: 10px;
   color: red;
+  font-weight: 700;
+`;
+
+export const InfoTotal = styled.div`
+  font-size: 20px;
+  padding: 10px;
+  color: blue;
   font-weight: 700;
 `;
 
@@ -245,5 +255,11 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
       font-size: 13px;
     }
   }
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
