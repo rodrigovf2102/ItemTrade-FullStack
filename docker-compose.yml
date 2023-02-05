@@ -3,8 +3,8 @@ services:
   app_react:
     build: ./frontend
     container_name: app_react
-    volumes:
-      - build_react:/var/www/html
+    ports: 
+     - 3000:3000
     depends_on:
       - app_node
 
@@ -39,10 +39,9 @@ services:
     ports:
       - 80:80
     volumes:
-      - build_react:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - app_react
 
 volumes:
-  build_react:
   volume_banco:
