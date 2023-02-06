@@ -16,13 +16,15 @@ async function getEnrollment(userId) {
 }
 exports.getEnrollment = getEnrollment;
 async function upsertEnrollment(newEnrollment, userId) {
+    newEnrollment.name = newEnrollment.name.trim();
     if (!(0, brazilian_utils_1.isValidCPF)(newEnrollment.CPF))
         throw (0, errors_1.defaultError)("InvalidCPF");
     let enrollment = await enrollment_repository_1.default.findEnrollmentByCPF(newEnrollment.CPF);
-    if (enrollment)
+    const enrollmentCPF = await enrollment_repository_1.default.findEnrollmentByUserId(userId);
+    if (enrollment && enrollment.id !== enrollmentCPF.id)
         throw (0, errors_1.defaultError)("CPFAlreadyExists");
     if (!newEnrollment.enrollmentUrl)
-        newEnrollment.enrollmentUrl = "../assets/images/action.jpg";
+        newEnrollment.enrollmentUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png";
     enrollment = await enrollment_repository_1.default.upsertEnrollment(newEnrollment, userId);
     return enrollment;
 }
