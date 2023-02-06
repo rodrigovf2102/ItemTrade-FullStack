@@ -1,6 +1,5 @@
 FROM node:19
 
-# pasta para aonde vai o build
 ENV NODE_OPTIONS="--max-old-space-size=2048"
 WORKDIR /app
 
