@@ -58,10 +58,7 @@ export default function ProfilePage() {
         cardName: cardInfo.name,
         value: creditAmount.amount
       };
-      const payInfo = await postPayment(payment, "");
-      creditAmount.paymentHash = payInfo.paymentHash;
-      await updateEnrollment(creditAmount, "");
-      creditAmount.amount=0;
+      await postPayment(payment, "");
       await getEnrollment();
       setPostPaymentErrorMsg(["OK"]);
     } catch (error) {
@@ -150,7 +147,7 @@ export default function ProfilePage() {
               {postEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Alterar cadastro"}
             </Button>
             {postEnrollErrorMsg.map((msg) => <ErrorMessage color={colorMsg}>{msg}</ErrorMessage>) }
-          </FormPostEnroll> : <FormPostEnroll>"Faça login para liberar essa área.."</FormPostEnroll>}
+          </FormPostEnroll> : <FormPostEnroll>Faça login para liberar essa área..</FormPostEnroll>}
           <EnrollPayment display={displayBalance}>
             {enrollment ? <><EnrollInfoDiv>Imagem de perfil:</EnrollInfoDiv>
               <ImgContainer><img alt="" src={enrollment.enrollmentUrl}/></ImgContainer>
@@ -203,7 +200,7 @@ export const EnrollmentContainer = styled.div`
   width: auto ;
   height: auto;
   border-radius: 10px;
-  margin-top: 45px;
+  margin-top: 15px;
   object-fit: cover;
   display: flex;
   justify-content: space-around;
@@ -238,11 +235,13 @@ const FormPostEnroll = styled.form`
 `;
 
 const ImgContainer = styled.div`
-  width: 50%;
+  width: 200px;
+  height: 200px;
   img{
     width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 50px;
+    border-radius: 50%;
   }
 `;
 
@@ -290,7 +289,7 @@ const ErrorMessage = styled.div.attrs((props: ColorMsg) => ({
 `;
 
 const EnrollInfoDiv = styled.div`
-    font-size: 22px;
+    font-size: 17px;
     margin: 10px;
     text-align: center;
     @media ${device.mobileM} {

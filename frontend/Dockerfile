@@ -1,16 +1,11 @@
 FROM node:19
 
-# pasta para aonde vai o build
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 WORKDIR /app
 
 COPY . .
 RUN npm i -force
-RUN npm run build
+EXPOSE 3000
 
-RUN mkdir -p /var/www/html
-RUN mv build/* /var/www/html
+CMD ["npm", "start"]
 
-WORKDIR /
-
-RUN rm -rf /app
