@@ -70,7 +70,7 @@ export default function ItemPage() {
         {items ? <ItemContainer>
           <ItemInfo>
             <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
-            <Title>Informações sobre o Item:</Title>
+            <Title>Informações do Item:</Title>
             <Info>{items[0].name}</Info>
             <Info>Jogo: {items[0].Game.name}</Info>
             <Info>Servidor: {items[0].Server.name}</Info> 
@@ -80,7 +80,7 @@ export default function ItemPage() {
           </ItemInfo>
           <SellerInfo>
             <ImageContainer><img alt="" src={items[0].Enrollment.enrollmentUrl}/></ImageContainer>
-            {token ? <><Title>Informações sobre o vendedor:</Title>
+            {token ? <><Title>Informações do vendedor:</Title>
               <Info>Nome: {items[0].Enrollment.name}</Info> 
               <InfoTotal>Total de vendas: {trades?.length}</InfoTotal>
               <InfoDone>Concluídas: {trades?.filter((trade) => trade.tradeStatus==="COMPLETE").length}</InfoDone>
@@ -112,7 +112,7 @@ const Container = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 30px;
   width: 80%;
   height: 80%;
@@ -124,38 +124,48 @@ const ItemContainer = styled.div`
   align-items: center;
   @media ${device.mobileM} {
     width: 100%;
+    padding: 5px;
   }
 `;
 
 const ItemInfo = styled.div`
   width: 43%;
-  min-width: 350px;
   max-width: 450px;
-  height: 600px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: start;
   text-align: center;
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   margin-bottom: 25px;
+  @media ${device.mobileM} {
+    width: 50%;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
 `;
 
 const SellerInfo = styled.div`
   width: 43%;
-  min-width: 350px;
   max-width: 450px;
-  height: 600px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: center;
+  justify-content: start;
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   margin-bottom: 25px;
+  @media ${device.mobileM} {
+    width: 50%;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -175,7 +185,7 @@ const ImageContainer = styled.div`
 export const Button = styled.button`
   width: 250px;
   height: 60px;
-  font-size: 25px;
+  font-size: 20px;
   background: linear-gradient(#555555,#000000,#555555);
   display: flex;
   justify-content: center;
@@ -193,17 +203,32 @@ export const Button = styled.button`
   :active{
     background: linear-gradient(#000000,#666666,#000000);
   }
+  @media ${device.mobileM} {
+    font-size: 15px;
+    height: 50px;
+  }
 `;
 
 const Title = styled.div`
   font-size: 22px;
   padding:15px;
   text-align: center;
+  @media ${device.mobileM} {
+    font-size: 17px;
+    padding: 8px;
+  }
 `;
 
 const Info = styled.div`
   font-size: 17px;
   padding: 10px;
+  display: flex;
+  justify-content: start;
+  text-align: start;
+  @media ${device.mobileM} {
+    font-size: 14px;
+    padding: 5px;
+  }
 `;
 
 export const InfoDone = styled.div`
@@ -211,6 +236,10 @@ export const InfoDone = styled.div`
   padding: 10px;
   color: green;
   font-weight: 700;
+  @media ${device.mobileM} {
+    font-size: 15px;
+    padding: 5px;
+  }
 `;
 
 export const InfoIncomplete = styled.div`
@@ -218,6 +247,10 @@ export const InfoIncomplete = styled.div`
   padding: 10px;
   color: red;
   font-weight: 700;
+  @media ${device.mobileM} {
+    font-size: 15px;
+    padding: 5px;
+  }
 `;
 
 export const InfoTotal = styled.div`
@@ -225,6 +258,10 @@ export const InfoTotal = styled.div`
   padding: 10px;
   color: blue;
   font-weight: 700;
+  @media ${device.mobileM} {
+    font-size: 15px;
+    padding: 5px;
+  }
 `;
 
 export type DisplayModal = { display:string };

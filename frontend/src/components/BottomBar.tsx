@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import img from "../assets/images/action.jpg";
+import { device } from "../mediaqueries/devices";
 
 export default function BottomBar() {
   return(
@@ -7,7 +8,7 @@ export default function BottomBar() {
       <Espace></Espace>
       <Container>
         <Itens>
-          <img alt="" src={img}/><div>@ 2023 ITEMTRADE. Todos os direitos reservados...</div>
+          <img alt="" src={img}/><div>@ 2023 ITEMTRADE. Todos os direitos reservados.</div>
         </Itens>
       </Container>
     </>
@@ -38,6 +39,12 @@ const Itens = styled.div`
   }
   div{
     text-align: center;
+    font-size: 14px;
+  }
+  @media ${device.mobileM} {
+    div{
+      font-size: 11px;
+    }
   }
 `;
 

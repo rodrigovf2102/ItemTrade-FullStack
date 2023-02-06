@@ -14,6 +14,7 @@ export async function getTradeMessages(tradeId: number, userId: number): Promise
 }
 
 export async function postMessage(userId: number, tradeId: number, text: string): Promise<Message> {
+  text = text.trim();
   if (isNaN(tradeId)) throw defaultError("TradeNoutFound");
   const enrollment = await enrollmentRepository.findEnrollmentByUserId(userId);
   if (!enrollment) throw defaultError("EnrollmentNotFound");

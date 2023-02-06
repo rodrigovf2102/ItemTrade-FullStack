@@ -32,6 +32,7 @@ export async function getItems(serverId: number, itemType: string, filter: strin
 }
 
 export async function postItem(newItem: ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName, userId: number): Promise<Item> {
+  newItem.name = newItem.name.trim();
   const enrollment = await enrollmentRepository.findEnrollmentByUserId(userId);
   if (!enrollment) throw defaultError("UserWithoutEnrollment");
   const game = await gameRepository.findGameByName(newItem.gameName.toUpperCase());

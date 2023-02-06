@@ -104,7 +104,6 @@ export default function GamePage() {
 const Container = styled.div`
   width: 100%;
   display: flex;
-  padding: 20px;
   flex-wrap: wrap;
   justify-content: start;
   align-items: flex-start;
@@ -286,7 +285,9 @@ const ErrorMessage = styled.div`
   color: red;
   font-size: 15px;
   margin-bottom: 3px;
-  display: flex; 
+  display: flex;
+  text-align: center;
+  justify-content: center;
   @media ${device.mobileM} {
     font-size: 14px;
   }

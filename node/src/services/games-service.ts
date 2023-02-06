@@ -14,7 +14,7 @@ export async function getGames(filter:string): Promise<Game[]> {
 }
 
 export async function postGame({name,gameUrl}: GameWithNoId, userId: number) : Promise<Game>{
-  name=name.toUpperCase();
+  name=name.toUpperCase().trim();
   const enrollment = await enrollmentRepository.findEnrollmentByUserId(userId);
   if(!enrollment) throw defaultError("UserWithoutEnrollment");
   const game = await gameRepository.findGameByName(name);

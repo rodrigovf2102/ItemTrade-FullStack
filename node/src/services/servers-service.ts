@@ -18,13 +18,14 @@ export async function getServers(gameId:number, filter:string): Promise<Server[]
 
 export async function postServer({name,gameName}: ServerNoIdName, userId:number) : Promise<Server>{
   gameName=gameName.toUpperCase();
-  name=name.toUpperCase();
+  name=name.toUpperCase().trim();
   const enrollment = await enrollmentRepository.findEnrollmentByUserId(userId);
   if(!enrollment) throw defaultError("UserWithoutEnrollment");
-  const server = await serverRepository.findServerByName(name);
-  if(server) throw defaultError("ServerAlreadyExist");
   const game = await gameRepository.findGameByName(gameName);
   if(!game) throw defaultError("GameNameDoesntExist");
+  const server = await serverRepository.findServerByNameAndGameId(name, game.id);
+  if(server) throw defaultError("ServerAlreadyExist");
+
   const createdServer = await serverRepository.postServer({name, gameId: game.id});
   return createdServer;
 }
