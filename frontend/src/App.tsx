@@ -10,6 +10,7 @@ import ItemPage from "./pages/item";
 import ProfilePage from "./pages/profile";
 import TradePage from "./pages/trade";
 import NegotiationPage from "./pages/negotiation";
+import NotFoundPage from "./pages/notFound";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/profile/:userId" element={<ProfilePage/>}/>
           <Route path="/trade/:tradeId" element={<TradePage/>}/>
           <Route path="/negotiations/:tradeType" element={<NegotiationPage/>}/>
+          <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
       </Router>
     </UserProvider>

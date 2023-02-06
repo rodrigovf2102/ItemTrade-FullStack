@@ -17,7 +17,7 @@ export async function upsertEnrollment(newEnrollment: UpsertEnrollment, userId:n
   let enrollment = await enrollmentRepository.findEnrollmentByCPF(newEnrollment.CPF);
   const enrollmentCPF = await enrollmentRepository.findEnrollmentByUserId(userId);
   if(enrollment && enrollment.id!== enrollmentCPF.id) throw defaultError("CPFAlreadyExists");
-  if(!newEnrollment.enrollmentUrl) newEnrollment.enrollmentUrl = "../assets/images/action.jpg";
+  if(!newEnrollment.enrollmentUrl) newEnrollment.enrollmentUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png";
   enrollment = await enrollmentRepository.upsertEnrollment(newEnrollment,userId);
   return enrollment;
 }

@@ -16,6 +16,7 @@ async function getTradeMessages(tradeId, userId) {
 }
 exports.getTradeMessages = getTradeMessages;
 async function postMessage(userId, tradeId, text) {
+    text = text.trim();
     if (isNaN(tradeId))
         throw (0, errors_1.defaultError)("TradeNoutFound");
     const enrollment = await enrollment_repository_1.default.findEnrollmentByUserId(userId);

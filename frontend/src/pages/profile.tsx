@@ -150,7 +150,8 @@ export default function ProfilePage() {
           </FormPostEnroll> : <FormPostEnroll>Faça login para liberar essa área..</FormPostEnroll>}
           <EnrollPayment display={displayBalance}>
             {enrollment ? <><EnrollInfoDiv>Imagem de perfil:</EnrollInfoDiv>
-              <ImgContainer><img alt="" src={enrollment.enrollmentUrl}/></ImgContainer>
+              <ImgContainer><img alt="" src={enrollment.enrollmentUrl?.toString()}/></ImgContainer>
+              {console.log(enrollment.enrollmentUrl)}
               <EnrollInfoDivGreen>Balanço: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDivGreen>
               <EnrollInfoDivGreen>Balanço Congelado: R${(enrollment?.freezedBalance/100).toFixed(2)}</EnrollInfoDivGreen>
               <Button onClick={() => {displayChanges("addCredit");}}>Adicionar crédito</Button>

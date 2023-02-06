@@ -20,7 +20,7 @@ async function getGames(filter) {
 }
 exports.getGames = getGames;
 async function postGame({ name, gameUrl }, userId) {
-    name = name.toUpperCase();
+    name = name.toUpperCase().trim();
     const enrollment = await enrollment_repository_1.default.findEnrollmentByUserId(userId);
     if (!enrollment)
         throw (0, errors_1.defaultError)("UserWithoutEnrollment");

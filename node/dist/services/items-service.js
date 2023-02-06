@@ -44,6 +44,7 @@ async function getItems(serverId, itemType, filter, itemId) {
 }
 exports.getItems = getItems;
 async function postItem(newItem, userId) {
+    newItem.name = newItem.name.trim();
     const enrollment = await enrollment_repository_1.default.findEnrollmentByUserId(userId);
     if (!enrollment)
         throw (0, errors_1.defaultError)("UserWithoutEnrollment");

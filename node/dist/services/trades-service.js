@@ -20,12 +20,12 @@ async function postTrade(sellerEnrollmentId, userId, itemId) {
         throw (0, errors_1.defaultError)("ItemNotFound");
     if (buyerEnrollment.balance < item[0].price)
         throw (0, errors_1.defaultError)("InsuficientBalance");
+    if (buyerEnrollment.id === sellerEnrollmentId)
+        throw (0, errors_1.defaultError)("UserCantBuyFromHimself");
     const newBuyerBalance = buyerEnrollment.balance - item[0].price;
     const newSellerFreezeBalance = sellerEnrollment.freezedBalance + item[0].price;
     await enrollment_repository_1.default.updateEnrollmentBalance(newBuyerBalance, buyerEnrollment.id);
     await enrollment_repository_1.default.updateEnrollmentFreezedBalance(newSellerFreezeBalance, sellerEnrollment.id);
-    if (buyerEnrollment.id === sellerEnrollmentId)
-        throw (0, errors_1.defaultError)("UserCantBuyFromHimself");
     const tradeTypeBuyer = client_1.OPERATIONTYPE.PURCHASE;
     const tradeTypeSeller = client_1.OPERATIONTYPE.SALE;
     await tradeAvaliation_1.default.postTradeAvaliation(tradeTypeBuyer, buyerEnrollment.id);
