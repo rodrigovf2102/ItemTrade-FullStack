@@ -8,7 +8,7 @@ EXPOSE 5000
 
 RUN npm i
 
-COPY . ./usr/src
+COPY . .
 
 RUN npx prisma generate
 

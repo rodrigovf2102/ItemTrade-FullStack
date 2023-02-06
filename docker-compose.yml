@@ -27,7 +27,7 @@ services:
       - ./node/.env
     volumes:
       - ./node:/usr/src
-      - ./node/node_modules:/usr/src/node_modules
+      - /usr/src/node_modules
     entrypoint: dockerize -wait tcp://banco:5432 -timeout 40s docker-entrypoint.sh
     command: "npm run start"
     depends_on:
