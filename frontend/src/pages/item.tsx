@@ -11,6 +11,7 @@ import { TradeInfo, TradePost } from "../protocols";
 import errorMessagesAll from "../usefull/errorMessages";
 import { ErrorMessage } from "./games";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
 
 export default function ItemPage() {
   const { postTrade } = usePostTrade();
@@ -21,6 +22,7 @@ export default function ItemPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState([""]);
   const token = useToken();
+  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
 
   useEffect(() => {
     async function LoadItems() {
@@ -65,8 +67,7 @@ export default function ItemPage() {
   return (
     <>
       <TopBar></TopBar>
-      <Container>
-        
+      <Container randomImage={image}>
         {items ? <ItemContainer>
           <ItemInfo>
             <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
@@ -104,19 +105,27 @@ export default function ItemPage() {
   );
 }
 
-const Container = styled.div`
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   width: 100%;
+  min-height: calc(100vh - 130px);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
 `;
 
 const ItemContainer = styled.div`
   margin-top: 10px;
   padding: 30px;
-  width: 80%;
+  width: auto;
   height: 80%;
   background: linear-gradient(45deg,#333333,#111111,#333333);
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -125,6 +134,7 @@ const ItemContainer = styled.div`
   @media ${device.mobileM} {
     width: 100%;
     padding: 5px;
+    background: black;
   }
 `;
 
@@ -145,6 +155,7 @@ const ItemInfo = styled.div`
     width: 50%;
     border-radius: 0;
     margin-bottom: 0;
+    background: linear-gradient(#222222,#111111,#222222);
   }
 `;
 
@@ -165,6 +176,7 @@ const SellerInfo = styled.div`
     width: 50%;
     border-radius: 0;
     margin-bottom: 0;
+    background: linear-gradient(#222222,#111111,#222222);
   }
 `;
 

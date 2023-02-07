@@ -78,7 +78,7 @@ describe("POST /servers", () => {
     it("should respond with status 400 when body is not valid", async () => {
       const token = await generateValidToken();
       const body = { [faker.lorem.word()]: faker.lorem.word() };
-
+      faker.image.avatar;
       const response = await server.post("/servers").set("Authorization", `Bearer ${token}`).send(body);
 
       expect(response.status).toBe(httpStatus.BAD_REQUEST);

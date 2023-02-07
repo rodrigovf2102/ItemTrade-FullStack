@@ -24,6 +24,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media ${device.mobileM} {
+    min-height: unset;
+    max-height: 45px;
+  }
 `;
 
 const Itens = styled.div`
@@ -50,5 +54,8 @@ const Itens = styled.div`
 
 const Espace = styled.div`
   height: 60px;
+  @media ${device.mobileM} {
+    height: 45px;
+  }
 `;
 

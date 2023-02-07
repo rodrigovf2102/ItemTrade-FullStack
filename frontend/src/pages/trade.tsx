@@ -5,14 +5,14 @@ import TopBar from "../components/TopBar";
 import useEnrollment from "../hooks/api/useEnrollment";
 import useTrade from "../hooks/api/useTrade";
 import useUpdateTradeStatus from "../hooks/api/useUpdateTradeStatus";
-import { Button } from "./item";
-import { ErrorMessage } from "./login";
 import { FiSend } from "react-icons/fi";
 import usePostMessage from "../hooks/api/usePostMessage";
 import useTradeMessages from "../hooks/api/useTradeMessages";
 import { MessagePost } from "../protocols";
 import useToken from "../hooks/useToken";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
+import BottomBar from "../components/BottomBar";
 
 export default function TradePage() {
   const { tradeId } = useParams();
@@ -24,6 +24,7 @@ export default function TradePage() {
   const [ errorMessage, setErrorMessage ] = useState([""]);
   const [ message, setMessage ] = useState("");
   const [ iteratorInterval, setIteratorIterval ] = useState(0);
+  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
   const defaultElemet = document.querySelector("div") as HTMLDivElement;
   const messageBox = useRef<HTMLDivElement>(defaultElemet);
   const token = useToken();
@@ -41,7 +42,7 @@ export default function TradePage() {
     const intervalGetTradeMessages = setInterval(() => {
       setIteratorIterval(iteratorInterval+1);
       getTradeMessages(Number(tradeId), "");
-    }, 5000);
+    }, 10000);
     return () => clearInterval(intervalGetTradeMessages);
   }, [iteratorInterval]);
 
@@ -91,15 +92,15 @@ export default function TradePage() {
   return (
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
         <EnrollmentContainer>
           {tradeLoading ? "Carregando..." : ""}
           {trade && token ? 
             <TradeContainer>
               <TradeInfo>
                 <EnrollmentInfos>
-                  <div>Comprador: {trade.EnrollmentBuyer.name}</div>
-                  <div>Vendedor: {trade.EnrollmentSeller.name}</div>
+                  <BuyerName>Comprador: {trade.EnrollmentBuyer.name}</BuyerName>
+                  <SellerName>Vendedor: {trade.EnrollmentSeller.name}</SellerName>
                   {trade?.buyerStatus==="COMPLETE"?
                     <InfoDone>Status de venda do comprador: {trade.buyerStatus}</InfoDone>
                     :
@@ -118,9 +119,10 @@ export default function TradePage() {
                   {errorMessage.map((msg) => ( msg!=="OK"?<ErrorMessage>{msg}</ErrorMessage>:"") )}
                 </EnrollmentInfos>
                 <ItemInfos>
-                  <div>Item: {trade.Item.name}</div>
-                  <div>Quantidade: {trade.Item.amount}, Preço pago: R${(trade.Item.price/100).toFixed(2)}</div>
+                  <SellerName>Item: {trade.Item.name}</SellerName>
                   <img alt="" src={trade.Item.itemUrl}/>
+                  <BuyerName>Quantidade: {trade.Item.amount}</BuyerName>
+                  <InfoDone>Preço: R${(trade.Item.price/100).toFixed(2)}</InfoDone>
                 </ItemInfos>
               </TradeInfo>
               <MessageInfo>
@@ -128,13 +130,13 @@ export default function TradePage() {
                   <div>Combine a troca do item com seu negociador por aqui!</div>
                   <div>{tradeMessages?.map((tradeMessage) => (
                     (tradeMessage.Message.enrollmentId === trade.buyerEnrollmentId ? 
-                      (<div>
+                      (<BuyerName>
                         ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentBuyer.name} disse: {tradeMessage.Message.text}
-                      </div>)
+                      </BuyerName>)
                       :
-                      (<div>
+                      (<SellerName>
                         ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentSeller.name} disse: {tradeMessage.Message.text}
-                      </div>)
+                      </SellerName>)
                     )
                   ))}</div>
                 </MessageBox>
@@ -150,7 +152,8 @@ export default function TradePage() {
             !trade && token ?  <div>Esse trade não está relacionado com seu cadastro...</div>:
               <div>Faça seu login para visualizar conteudo...</div>}
         </EnrollmentContainer>
-      </Container>   
+      </Container>
+      <BottomBar></BottomBar>
     </>
   );
 }
@@ -171,10 +174,17 @@ const MessageBox = styled.div`
     }
   `;
 
-const Container = styled.div`
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
+  min-height: calc(100vh - 130px);
 `;
 
 const TradeInfo = styled.div`
@@ -190,10 +200,11 @@ const TradeInfo = styled.div`
   align-items: center;
   flex-wrap: wrap;
   @media ${device.mobileM} {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  margin-top: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+    background: none;
   }
 `;
 
@@ -237,8 +248,8 @@ const MessageInfo = styled.div`
   padding: 20px;
   @media ${device.mobileM} {
   width: 100%;
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   }
 `;
 
@@ -260,31 +271,38 @@ export const EnrollmentContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   color: white;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.5);
   background: linear-gradient(90deg,#222222,#111111,#222222);
   @media ${device.mobileM} {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    background: none;
   }
 `;
 
 const EnrollmentInfos = styled.div`
-  height: 300px;
+  max-height: 300px;
   width: 40%;
-  min-width: 340px;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
- align-items: center;
- justify-content: center;
- background: linear-gradient(#000000,#222222,#000000);
- box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
- border-radius: 20px;
- text-align: center;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#000000,#222222,#000000);
+  box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
  div{
-  margin: 5px;
+  padding: 5px;
   font-size: 17px;
+  height: auto;
  }
  @media ${device.mobileM} {
+  width: 100%;
+  margin-bottom: 15px;
   div{
     font-size: 14px;
   }
@@ -292,7 +310,7 @@ const EnrollmentInfos = styled.div`
 `;
 
 const ItemInfos = styled.div`
-  height: 300px;
+  max-height: 350px;
   background: linear-gradient(#000000,#222222,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -304,16 +322,24 @@ const ItemInfos = styled.div`
   min-width: 340px;
   margin-left: 10px;
   text-align: center;
+  padding: 10px;
   img{
-    width: 200px;
-    height: 50%;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    margin: 20px;
+    margin-top: 5px;
   }
-  font-size: 17px;
+  div{
+    font-size: 17px;
+    line-height: 23px;
+  }
   @media ${device.mobileM} {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 15px;
   div{
     font-size: 14px;
+    line-height: 18px;
   }
 }
 `;
@@ -328,4 +354,47 @@ export const InfoIncomplete = styled.div`
   font-size: 20px;
   color: red;
   font-weight: 700;
+`;
+
+const BuyerName = styled.div`
+  font-size: 20px;
+  color: blue;
+`;
+
+const SellerName = styled.div`
+  color: purple;
+  font-size: 20px;
+`;
+
+export const Button = styled.button`
+  width: 250px;
+  height: 55px;
+  background: linear-gradient(#555555,#000000,#555555);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+  :hover{
+    background: linear-gradient(#000000,#333333,#000000);
+  }
+  :active{
+    background: linear-gradient(#000000,#666666,#000000);
+  }
+  @media ${device.mobileM} {
+    font-size: 13px;
+    height: 50px;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 5px;
+  color: red;
+  font-size: 14px;
+  height: auto;
 `;

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "../components/TopBar";
 import { GameInfo, ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName, ItemWithNameAndType } from "../protocols";
-import { Container, FormContainer, Form, Input, 
+import { FormContainer, Form, Input, 
   FormPostGame, FormInfo, InputPostGame, Entrar, ErrorMessage, DisplayModal } from "./games";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -14,6 +14,7 @@ import usePostItem from "../hooks/api/usePostItem";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
 
 export default function ItemsPage() {
   const { items, getItems, itemsLoading } = useItems();
@@ -29,6 +30,7 @@ export default function ItemsPage() {
   ({ name: "", price: 0, amount: 0, itemUrl: "", gameName: "", serverName: "", itemType: "" });
   const itemCategories = ["Selecione um tipo...", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
   const itemCategoriesGet = ["Todos", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
+  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
 
   useEffect(() => {
     async function refreshItems() {
@@ -91,7 +93,7 @@ export default function ItemsPage() {
   return(
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
         <FormContainer>
           <Form>
             <Input readOnly={itemsLoading} type="text" placeholder=" Procure um item aqui..."  onChange={(e) => {setItemName({ ...itemName, name: e.target.value  });}}/>
@@ -105,10 +107,11 @@ export default function ItemsPage() {
           {items ? items.map(item => (
             <GameContainer onClick={() => {navigateItem(item.id);}}>
               <GameImage><img alt={""} src={item.itemUrl}/></GameImage>
-              <div>{item.name}</div>
-              <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
+              <ItemName>{item.name}</ItemName>
+              <GameName>{item.Game.name}</GameName>
+              <GameServer>Servidor: {item.Server.name}</GameServer>
               <div>Quantidade: {item.amount}</div>
-              <div>Tipo: {item.itemType}</div>
+              <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
             </GameContainer>)) : ""}
           <GameContainer  onClick={openModal}>
             <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
@@ -147,10 +150,28 @@ export default function ItemsPage() {
   );
 }
 
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
+  width: 100%;
+  min-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: flex-start;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
+`;
+
 const Title = styled.div`
   font-size: 25px;
   padding: 15px;
   width: 100%;
+  color: black;
+  font-weight: 700;
   @media ${device.mobileM} {
     font-size: 18px;
     text-align: center;
@@ -169,18 +190,19 @@ export const GameContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   color: white;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
   background: linear-gradient(#333333,#000000,#333333);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
   }
   @media ${device.mobileM} {
     width: 150px;
@@ -188,7 +210,7 @@ export const GameContainer = styled.div`
     padding: 8px;
     margin: 5px;
     div{
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 `;
@@ -224,7 +246,8 @@ const SelectPostGame = styled.select`
   font-size: 18px;
   font-weight: 700; 
   @media ${device.mobileM} {
-    font-size: 15px;
+    font-size: 13px;
+    height: 30px;
   }
 `;
 
@@ -252,3 +275,14 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   }
 `;
 
+const GameName = styled.div`
+  color: blue;
+`;
+
+const GameServer = styled.div`
+  color: purple;
+`;
+
+const ItemName = styled.div`
+  color: yellow;
+`;
