@@ -4,7 +4,7 @@ import { Enrollment } from "@prisma/client";
 import { isValidCPF } from "@brazilian-utils/brazilian-utils";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import paymentRepository from "@/repositories/payment-repository";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
 export async function getEnrollment(userId:number): Promise<Enrollment> {
   const enrollment = await enrollmentRepository.findEnrollmentByUserId(userId);

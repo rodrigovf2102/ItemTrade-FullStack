@@ -8,6 +8,7 @@ const errors_1 = require("../errors");
 const brazilian_utils_1 = require("@brazilian-utils/brazilian-utils");
 const enrollment_repository_1 = __importDefault(require("../repositories/enrollment-repository"));
 const payment_repository_1 = __importDefault(require("../repositories/payment-repository"));
+const faker_1 = require("@faker-js/faker");
 async function getEnrollment(userId) {
     const enrollment = await enrollment_repository_1.default.findEnrollmentByUserId(userId);
     if (!enrollment)
@@ -24,7 +25,7 @@ async function upsertEnrollment(newEnrollment, userId) {
     if (enrollment && enrollment.id !== enrollmentCPF.id)
         throw (0, errors_1.defaultError)("CPFAlreadyExists");
     if (!newEnrollment.enrollmentUrl)
-        newEnrollment.enrollmentUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png";
+        newEnrollment.enrollmentUrl = faker_1.faker.image.image(undefined, undefined, true);
     enrollment = await enrollment_repository_1.default.upsertEnrollment(newEnrollment, userId);
     return enrollment;
 }

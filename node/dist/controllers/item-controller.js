@@ -16,6 +16,7 @@ async function getItems(req, res) {
         return res.status(http_status_1.default.OK).send(items);
     }
     catch (error) {
+        console.log(error);
         if (error.detail === "ItemsNotFound") {
             return res.status(http_status_1.default.NOT_FOUND).send(error.detail);
         }
