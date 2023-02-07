@@ -24,7 +24,7 @@ export default function TradePage() {
   const [ errorMessage, setErrorMessage ] = useState([""]);
   const [ message, setMessage ] = useState("");
   const [ iteratorInterval, setIteratorIterval ] = useState(0);
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
   const defaultElemet = document.querySelector("div") as HTMLDivElement;
   const messageBox = useRef<HTMLDivElement>(defaultElemet);
   const token = useToken();

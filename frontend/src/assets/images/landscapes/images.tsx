@@ -22,6 +22,11 @@ import img21 from "./21.jpg";
 import img22 from "./22.jpg";
 import img23 from "./23.jpg";
 import img24 from "./24.jpg";
+import img25 from "./25.jpg";
+import img26 from "./26.jpg";
+import img27 from "./27.jpg";
+import img28 from "./28.jpg";
+import img29 from "./29.jpg";
 
 const images : { [key: number] : string }= {
   1: img1,
@@ -48,6 +53,12 @@ const images : { [key: number] : string }= {
   22: img22,
   23: img23,
   24: img24,
+  25: img25,
+  26: img26,
+  27: img27,
+  28: img28,
+  29: img29,
+
 };
 
 export default images;

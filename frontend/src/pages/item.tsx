@@ -22,7 +22,7 @@ export default function ItemPage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState([""]);
   const token = useToken();
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   useEffect(() => {
     async function LoadItems() {

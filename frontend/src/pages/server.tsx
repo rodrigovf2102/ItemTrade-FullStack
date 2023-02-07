@@ -25,7 +25,7 @@ export default function ServerPage() {
   const [ postServerErrorMessage, setPostServerErrorMessage] = useState<string[]>([]);
   const { postServerLoading, postServer } = usePostServer();
   const navigate = useNavigate();
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   useEffect(() => {
     async function refreshServers() {

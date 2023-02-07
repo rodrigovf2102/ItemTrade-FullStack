@@ -15,7 +15,7 @@ export default function NegotiationPage() {
   const { trades, getTrades, tradesLoading } = useTrades();
   const navigate = useNavigate();
   const token = useToken();
-  let [ image, setImage ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  let [ image, setImage ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   useEffect(() => {
     image = images[Math.floor(Math.random() * 24) + 1];

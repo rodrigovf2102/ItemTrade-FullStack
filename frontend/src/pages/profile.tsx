@@ -31,7 +31,7 @@ export default function ProfilePage() {
   const [ displayWithdraw, setDisplayWithdraw ] = useState("none");
   const [ creditAmount, setCreditAmount ] = useState<Amount>({ amount: 0, paymentHash: "" });
   const [ keyPIX, setKeyPIX ] = useState("");
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   function postEnrollForm(event : any) {
     event.preventDefault();

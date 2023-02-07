@@ -8,7 +8,7 @@ export default function MainPage() {
   return(
     <>
       <TopBar></TopBar>
-      <Container randomImage={images[Math.floor(Math.random() * 24) + 1]}>
+      <Container randomImage={images[Math.floor(Math.random() * 29) + 1]}>
         <Instrucoes>
           <Tittle>Site de compra e venda de itens de jogos online!</Tittle>
           <Subtitle>Instruções:</Subtitle>

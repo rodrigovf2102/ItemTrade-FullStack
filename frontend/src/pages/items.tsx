@@ -30,7 +30,7 @@ export default function ItemsPage() {
   ({ name: "", price: 0, amount: 0, itemUrl: "", gameName: "", serverName: "", itemType: "" });
   const itemCategories = ["Selecione um tipo...", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
   const itemCategoriesGet = ["Todos", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   useEffect(() => {
     async function refreshItems() {

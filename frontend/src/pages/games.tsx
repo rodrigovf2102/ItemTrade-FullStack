@@ -23,7 +23,7 @@ export default function GamePage() {
   const navigate = useNavigate();
   const { postGame, postGameLoading } = usePostGame();
   const { userData } = useContext(UserContext);
-  const [ image ] = useState(images[Math.floor(Math.random() * 24) + 1]);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   async function inputOnChange(event : any) {
     gameName.name = event.target.value;
