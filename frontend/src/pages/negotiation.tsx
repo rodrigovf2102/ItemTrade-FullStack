@@ -44,33 +44,38 @@ export default function NegotiationPage() {
   }
 
   if(tradesLoading) {
-    <>
-      <TopBar></TopBar>
-      <ContainerMessages>
-        <div> Carregando...</div>
-      </ContainerMessages>
-      <BottomBar></BottomBar>
-    </>;
+    return (
+      <>
+        <TopBar></TopBar>
+        <ContainerMessages>
+          <div> Carregando...</div>
+        </ContainerMessages>
+        <BottomBar></BottomBar>
+      </> );
   }
 
   if(!trades && token) {
-    <>
-      <TopBar></TopBar>
-      <ContainerMessages>
-        <div>Finalize seu cadastro para ver esse área...</div>
-      </ContainerMessages>
-      <BottomBar></BottomBar>
-    </>;
+    return (
+      <>
+        <TopBar></TopBar>
+        <ContainerMessages>
+          <div>Finalize seu cadastro para ver esse área...</div>
+        </ContainerMessages>
+        <BottomBar></BottomBar>
+      </>
+    );
   }
 
   if(trades?.length===0) {
-    <>
-      <TopBar></TopBar>
-      <ContainerMessages>
-        <div>Você ainda nao tem negociações do tipo: {tradeType}</div>
-      </ContainerMessages>
-      <BottomBar></BottomBar>
-    </>;
+    return (
+      <>
+        <TopBar></TopBar>
+        <ContainerMessages>
+          <div>Você ainda nao tem negociações do tipo: {tradeType}</div>
+        </ContainerMessages>
+        <BottomBar></BottomBar>
+      </>
+    );
   }
 
   return(
