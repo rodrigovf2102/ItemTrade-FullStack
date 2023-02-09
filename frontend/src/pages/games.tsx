@@ -2,7 +2,7 @@ import TopBar from "../components/TopBar";
 import styled from "styled-components";
 import useGames from "../hooks/api/useGames";
 import { GameWithoutId, ObjectWithName } from "../protocols";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ import { Grid } from "react-loader-spinner";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
+import { Title, TitleContainer } from "./items";
 
 export default function GamePage() {
   const { games, getGames, gamesLoading } = useGames();
@@ -22,6 +24,7 @@ export default function GamePage() {
   const navigate = useNavigate();
   const { postGame, postGameLoading } = usePostGame();
   const { userData } = useContext(UserContext);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   async function inputOnChange(event : any) {
     gameName.name = event.target.value;
@@ -56,10 +59,16 @@ export default function GamePage() {
     window.scrollTo(0, 0);
   }
 
+  function closeModal() {
+    setPostGameErrorMessage([""]);
+    setModalStatus("none");
+  }
+
   return(
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
+        <TitleContainer><Title>Jogos Listados:</Title></TitleContainer>
         <FormContainer>
           <Form>
             <Input readOnly={gamesLoading} type="text" placeholder=" Procure um jogo aqui..." onChange={inputOnChange}/>
@@ -69,7 +78,7 @@ export default function GamePage() {
           {games ? games.map(game => (
             <GameContainer onClick={() => {goToServers(game.id);}}>
               <GameImage><img alt={""} src={game.gameUrl}/></GameImage>
-              <div>{game.name}</div>
+              <GameName>{game.name}</GameName>
             </GameContainer>)) : ""}
           <GameContainer onClick={openModal}>
             <IoMdAddCircleOutline size={"140px"}></IoMdAddCircleOutline>
@@ -81,7 +90,7 @@ export default function GamePage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do jogo:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"30px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={closeModal} size={"30px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do jogo aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, name: e.target.value });}}/>
               <InputPostGame type="text" placeholder=" Digite o link da imagem aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, gameUrl: e.target.value });}}/>
@@ -101,12 +110,20 @@ export default function GamePage() {
   );
 }
 
-const Container = styled.div`
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   width: 100%;
+  min-height: calc(100vh - 130px);
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: start;
   align-items: flex-start;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
 `;
 
 const Form = styled.form`
@@ -139,8 +156,10 @@ const Input = styled.input`
   margin-left: 15px;
   margin-bottom: 10px;
   @media ${device.mobileM} {
-  font-size: 15px;
-  margin: 5px;
+    width: 220px;
+    font-size: 14px;
+    margin: 5px;
+    height: 35px;
   }
 `;
 
@@ -243,6 +262,10 @@ const GamesContainer = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const FormContainer = styled.div`
@@ -251,8 +274,8 @@ const FormContainer = styled.div`
 `;
 
 const GameContainer = styled.div`
-  width  :200px ;
-  height: 260px;
+  width  :150px ;
+  height: 200px;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -262,17 +285,18 @@ const GameContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   color: white;
-  background: linear-gradient(#333333,#000000,#333333);
+  background: linear-gradient(#444444,#000000,#444444);
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
   }
   @media ${device.mobileM} {
-    width: 150px;
-    height: 180px;
+    width: 110px;
+    height: 140px;
     margin: 5px;
     div{
       font-size: 14px;
@@ -293,6 +317,10 @@ const ErrorMessage = styled.div`
   }
 `;
 
+const GameName = styled.div`
+  color: blueviolet;
+`;
+
 export {
   Container,
   ErrorMessage,
@@ -306,5 +334,5 @@ export {
   InputPostGame,
   Form,
   FormPostGame,
-  Input
+  Input,
 };

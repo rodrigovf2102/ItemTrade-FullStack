@@ -61,6 +61,7 @@ const Container = styled.div`
   width: 100%;
   min-height: 70px;
   background: linear-gradient(#555555,#000000,#555555);
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

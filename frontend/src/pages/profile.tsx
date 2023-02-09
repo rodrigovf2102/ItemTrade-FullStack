@@ -14,6 +14,7 @@ import useToken from "../hooks/useToken";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
 
 export default function ProfilePage() {
   const { enrollment, getEnrollment } = useEnrollment();
@@ -30,12 +31,14 @@ export default function ProfilePage() {
   const [ displayWithdraw, setDisplayWithdraw ] = useState("none");
   const [ creditAmount, setCreditAmount ] = useState<Amount>({ amount: 0, paymentHash: "" });
   const [ keyPIX, setKeyPIX ] = useState("");
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   function postEnrollForm(event : any) {
     event.preventDefault();
   }
 
   async function postEnroll() {
+    setPostPaymentErrorMsg([""]);
     try {
       if(postNewEnroll.enrollmentUrl==="")postNewEnroll.enrollmentUrl=undefined;
       await postEnrollment(postNewEnroll, "");
@@ -49,6 +52,7 @@ export default function ProfilePage() {
   }
 
   async function addCredit() {
+    setPostEnrollErrorMsg([""]);
     const cardInfo = getCardInfo();
     if (verifyCardData(cardInfo) === "invalid") return;
     try {
@@ -60,19 +64,24 @@ export default function ProfilePage() {
       };
       await postPayment(payment, "");
       await getEnrollment();
+      setColorMsg("green");
       setPostPaymentErrorMsg(["OK"]);
     } catch (error) {
+      setColorMsg("red");
       setPostPaymentErrorMsg(["Erro, digite as informações novamente.."]);
     }
   }
 
   async function addWithdraw() {
+    setPostEnrollErrorMsg([""]);
     if(keyPIX.length<=3) {
       setPostPaymentErrorMsg(["Chave PIX incorreta..."]);
+      setColorMsg("red");
       return;
     }
     if(creditAmount.amount===0) {
       setPostPaymentErrorMsg(["Digite um valor de saldo..."]);
+      setColorMsg("red");
       return;
     }
     try {
@@ -81,8 +90,10 @@ export default function ProfilePage() {
       creditAmount.amount=0;
       setKeyPIX("");
       await getEnrollment();
+      setColorMsg("green");
       setPostPaymentErrorMsg(["OK"]);
     } catch (error) {
+      setColorMsg("red");
       setPostPaymentErrorMsg(["Erro, digite as informações novamente..."]);
     }
   }
@@ -101,6 +112,7 @@ export default function ProfilePage() {
       isNaN(Number(cardInfo.cvc)) ||
       isNaN(Number(cardInfo.expiry));
     if (invalidCardData) {
+      setColorMsg("red");
       setPostPaymentErrorMsg(["Dados inválidos"]);
       return "invalid";
     }
@@ -134,7 +146,7 @@ export default function ProfilePage() {
   return (
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
         <EnrollmentContainer>
           { token ? <FormPostEnroll onSubmit={postEnrollForm}>
             <FormInfo>
@@ -144,16 +156,15 @@ export default function ProfilePage() {
             <InputPostGame value={postNewEnroll?.CPF} type="text" placeholder=" Digite o seu CPF aqui..." onChange={(e) => {setPostNewEnroll({ ...postNewEnroll, CPF: e.target.value });}}/>
             <InputPostGame value={postNewEnroll?.enrollmentUrl} type="text" placeholder=" Digite a URL da imagem de seu perfil aqui..." onChange={(e) => {setPostNewEnroll({ ...postNewEnroll, enrollmentUrl: e.target.value });}}/>
             <Button disabled={postEnrollmentLoading} onClick={postEnroll} type="submit">
-              {postEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Alterar cadastro"}
+              {postEnrollmentLoading ? <Grid color="white" width="72px" height="200px" radius="5"></Grid> : "Alterar cadastro"}
             </Button>
             {postEnrollErrorMsg.map((msg) => <ErrorMessage color={colorMsg}>{msg}</ErrorMessage>) }
           </FormPostEnroll> : <FormPostEnroll>Faça login para liberar essa área..</FormPostEnroll>}
           <EnrollPayment display={displayBalance}>
-            {enrollment ? <><EnrollInfoDiv>Imagem de perfil:</EnrollInfoDiv>
+            {enrollment ? <><EnrollImgInfo>Imagem de perfil:</EnrollImgInfo>
               <ImgContainer><img alt="" src={enrollment.enrollmentUrl?.toString()}/></ImgContainer>
-              {console.log(enrollment.enrollmentUrl)}
               <EnrollInfoDivGreen>Balanço: R${(enrollment?.balance/100).toFixed(2)}</EnrollInfoDivGreen>
-              <EnrollInfoDivGreen>Balanço Congelado: R${(enrollment?.freezedBalance/100).toFixed(2)}</EnrollInfoDivGreen>
+              <EnrollInfoDivBlue>Balanço Congelado: R${(enrollment?.freezedBalance/100).toFixed(2)}</EnrollInfoDivBlue>
               <Button onClick={() => {displayChanges("addCredit");}}>Adicionar crédito</Button>
               <Button onClick={() => {displayChanges("withdrawCredit");}}>Retirar crédito</Button> </>
               :
@@ -164,7 +175,7 @@ export default function ProfilePage() {
             <PaymentDiv>
               <InputCreditAmount type="text" placeholder=" Digite o valor a ser creditado..." onChange={(e) => {setCreditAmount({ ...creditAmount, amount: Number(e.target.value)*100 });}}/>
               <Button disabled={updateEnrollmentLoading} onClick={addCredit}>
-                {updateEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Finalizar Pagamento"}
+                {updateEnrollmentLoading ? <Grid color="white" width="72px" height="200px" radius="5"></Grid> : "Finalizar Pagamento"}
               </Button>    
               {postPaymentErrorMsg.map((msg) => ( msg!=="OK"?<ErrorMessage color={colorMsg}>{msg}</ErrorMessage>:"") )}
               <Button onClick={() => {displayChanges("balance");}}>Voltar</Button>
@@ -177,7 +188,7 @@ export default function ProfilePage() {
             <InputCreditAmount  type="text" placeholder=" Digite o valor a ser sacado..." onChange={(e) => {setCreditAmount({ ...creditAmount, amount: Number(e.target.value)*(-100) });}}/>
             {postPaymentErrorMsg.map((msg) => ( msg!=="OK"?<ErrorMessage color={colorMsg}>{msg}</ErrorMessage>:"") )}
             <Button disabled={updateEnrollmentLoading} onClick={addWithdraw}>
-              {updateEnrollmentLoading ? <Grid color="white" width="100px" height="200px" radius="8"></Grid> : "Finalizar saque"}
+              {updateEnrollmentLoading ? <Grid color="white" width="72px" height="200px" radius="5"></Grid> : "Finalizar saque"}
             </Button>  
             <Button onClick={() => {displayChanges("balance");}}>Voltar</Button> 
             {postPaymentErrorMsg[0]==="OK" ? <Button>Saque Realizado!<AiFillCheckCircle color="green" size="55px"></AiFillCheckCircle></Button> : ""}    
@@ -189,12 +200,18 @@ export default function ProfilePage() {
   );
 }
 
-const Container = styled.div`
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   width: 100%;
-  height: 100%;
+  min-height: calc(100vh - 130px);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
 `;
 
 export const EnrollmentContainer = styled.div`
@@ -208,6 +225,7 @@ export const EnrollmentContainer = styled.div`
   align-items: center;
   color: white;
   background: linear-gradient(#222222,#101010,#222222);
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.6);
   flex-wrap: wrap;
   @media ${device.mobileM} {
 
@@ -309,6 +327,17 @@ const EnrollInfoDivGreen = styled.div`
   }
 `;
 
+const EnrollInfoDivBlue = styled.div`
+    font-size: 22px;
+    margin: 10px;
+    text-align: center;
+    color: blue;
+    font-weight: 700;
+    @media ${device.mobileM} {
+    font-size: 15px;
+  }
+`;
+
 export type Display = { display:string}
 
 const EnrollPayment = styled.div.attrs((props: Display) => ({
@@ -378,3 +407,10 @@ const InputPostGame = styled.input`
   }
   `;
 
+const EnrollImgInfo = styled.div`
+    font-size: 24px;
+    padding-bottom: 15px;
+    @media ${device.mobileM} {
+      font-size: 17px;
+  }
+`;

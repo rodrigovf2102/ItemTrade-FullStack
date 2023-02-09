@@ -5,14 +5,14 @@ import TopBar from "../components/TopBar";
 import useEnrollment from "../hooks/api/useEnrollment";
 import useTrade from "../hooks/api/useTrade";
 import useUpdateTradeStatus from "../hooks/api/useUpdateTradeStatus";
-import { Button } from "./item";
-import { ErrorMessage } from "./login";
 import { FiSend } from "react-icons/fi";
 import usePostMessage from "../hooks/api/usePostMessage";
 import useTradeMessages from "../hooks/api/useTradeMessages";
 import { MessagePost } from "../protocols";
 import useToken from "../hooks/useToken";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
+import BottomBar from "../components/BottomBar";
 
 export default function TradePage() {
   const { tradeId } = useParams();
@@ -24,6 +24,7 @@ export default function TradePage() {
   const [ errorMessage, setErrorMessage ] = useState([""]);
   const [ message, setMessage ] = useState("");
   const [ iteratorInterval, setIteratorIterval ] = useState(0);
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
   const defaultElemet = document.querySelector("div") as HTMLDivElement;
   const messageBox = useRef<HTMLDivElement>(defaultElemet);
   const token = useToken();
@@ -41,7 +42,7 @@ export default function TradePage() {
     const intervalGetTradeMessages = setInterval(() => {
       setIteratorIterval(iteratorInterval+1);
       getTradeMessages(Number(tradeId), "");
-    }, 5000);
+    }, 10000);
     return () => clearInterval(intervalGetTradeMessages);
   }, [iteratorInterval]);
 
@@ -71,10 +72,10 @@ export default function TradePage() {
       text: message,
       tradeId: trade.id
     };
+    setMessage("");
     try {
       await postMessage(messagePost, "");
       await getTradeMessages(trade.id, "");
-      setMessage("");
     } catch (error) {
       alert(error.message);
     }
@@ -91,25 +92,25 @@ export default function TradePage() {
   return (
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
         <EnrollmentContainer>
           {tradeLoading ? "Carregando..." : ""}
           {trade && token ? 
             <TradeContainer>
               <TradeInfo>
                 <EnrollmentInfos>
-                  <div>Comprador: {trade.EnrollmentBuyer.name}</div>
-                  <div>Vendedor: {trade.EnrollmentSeller.name}</div>
+                  <BuyerName>Comprador: {trade.EnrollmentBuyer.name}</BuyerName>
+                  <SellerName>Vendedor: {trade.EnrollmentSeller.name}</SellerName>
                   {trade?.buyerStatus==="COMPLETE"?
-                    <InfoDone>Status de venda do comprador: {trade.buyerStatus}</InfoDone>
+                    <InfoDone>Status do comprador: {trade.buyerStatus}</InfoDone>
                     :
-                    <InfoIncomplete>Status de venda do comprador: {trade.buyerStatus}</InfoIncomplete>}
+                    <InfoIncomplete>Status  do comprador: {trade.buyerStatus}</InfoIncomplete>}
                   {trade?.sellerStatus==="COMPLETE"? 
-                    <InfoDone>Status de venda do vendedor: {trade.sellerStatus}</InfoDone>
+                    <InfoDone>Status do vendedor: {trade.sellerStatus}</InfoDone>
                     :
-                    <InfoIncomplete>Status de venda do vendedor: {trade.sellerStatus}</InfoIncomplete>}
+                    <InfoIncomplete>Status do vendedor: {trade.sellerStatus}</InfoIncomplete>}
                   {trade?.tradeStatus==="COMPLETE"? 
-                    <InfoDone>Status de venda do vendedor: {trade.tradeStatus}</InfoDone>
+                    <InfoDone>Status do vendedor: {trade.tradeStatus}</InfoDone>
                     :
                     <InfoIncomplete>Status da venda: {trade.tradeStatus}</InfoIncomplete>}
                   {enrollment?.id === trade.buyerEnrollmentId ? 
@@ -118,46 +119,47 @@ export default function TradePage() {
                   {errorMessage.map((msg) => ( msg!=="OK"?<ErrorMessage>{msg}</ErrorMessage>:"") )}
                 </EnrollmentInfos>
                 <ItemInfos>
-                  <div>Item: {trade.Item.name}</div>
-                  <div>Quantidade: {trade.Item.amount}, Preço pago: R${(trade.Item.price/100).toFixed(2)}</div>
+                  <SellerName>{trade.Item.name}</SellerName>
                   <img alt="" src={trade.Item.itemUrl}/>
+                  <BuyerName>Quantidade: {trade.Item.amount}</BuyerName>
+                  <InfoDone>Preço: R${(trade.Item.price/100).toFixed(2)}</InfoDone>
                 </ItemInfos>
               </TradeInfo>
-              <MessageInfo>
-                <MessageBox ref={messageBox}>
-                  <div>Combine a troca do item com seu negociador por aqui!</div>
-                  <div>{tradeMessages?.map((tradeMessage) => (
-                    (tradeMessage.Message.enrollmentId === trade.buyerEnrollmentId ? 
-                      (<div>
-                        ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentBuyer.name} disse: {tradeMessage.Message.text}
-                      </div>)
-                      :
-                      (<div>
-                        ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentSeller.name} disse: {tradeMessage.Message.text}
-                      </div>)
-                    )
-                  ))}</div>
-                </MessageBox>
-                <TypeMessageBox onSubmit={preventDefault}>
-                  <TypeBox value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Digite sua mensagem aqui..."></TypeBox>
-                  <button tabIndex={0} onKeyDown={handleKeyDown} disabled={tradeMessagesLoading || postMessageLoading} onClick={sendMessage}>
-                    <FiSend size="40px" color="black"></FiSend>
-                  </button>
-                </TypeMessageBox>
-                
-              </MessageInfo>
             </TradeContainer> :
             !trade && token ?  <div>Esse trade não está relacionado com seu cadastro...</div>:
               <div>Faça seu login para visualizar conteudo...</div>}
         </EnrollmentContainer>
-      </Container>   
+        <MessageInfo>
+          <MessageBox ref={messageBox}>
+            <div>Combine a troca do item com seu negociador por aqui!</div>
+            <div>{tradeMessages?.map((tradeMessage) => (
+              (tradeMessage.Message.enrollmentId === trade.buyerEnrollmentId ? 
+                (<BuyerName>
+                        ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentBuyer.name} disse: {tradeMessage.Message.text}
+                </BuyerName>)
+                :
+                (<SellerName>
+                        ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentSeller.name} disse: {tradeMessage.Message.text}
+                </SellerName>)
+              )
+            ))}</div>
+          </MessageBox>
+          <TypeMessageBox onSubmit={preventDefault}>
+            <TypeBox value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Digite sua mensagem aqui..."></TypeBox>
+            <button tabIndex={0} onKeyDown={handleKeyDown} disabled={tradeMessagesLoading || postMessageLoading} onClick={sendMessage}>
+              <FiSend size="40px" color="black"></FiSend>
+            </button>
+          </TypeMessageBox>          
+        </MessageInfo>
+      </Container>
+      <BottomBar></BottomBar>
     </>
   );
 }
 
 const MessageBox = styled.div`
     width: 100%;
-    height: 300px;
+    height: 200px;
     background-color: #ffffff;
     border-radius: 10px;
     border: 5px solid gray;
@@ -165,21 +167,32 @@ const MessageBox = styled.div`
     overflow: auto;
     color: black;
     div{
+      width: 98%;
       margin: 5px;
-      font-size: 18px;
-      line-height: 25px;
+      font-size: 16px;
+      line-height: 20px;
+      text-overflow: wrap;
+      word-wrap: break-word;
     }
   `;
 
-const Container = styled.div`
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
+  min-height: calc(100vh - 130px);
+  width: 100%;
 `;
 
 const TradeInfo = styled.div`
   height: auto;
-  width: 96%;
+  width: auto;
   margin: 15px;
   padding: 20px;
   border-radius: 15px;
@@ -190,10 +203,11 @@ const TradeInfo = styled.div`
   align-items: center;
   flex-wrap: wrap;
   @media ${device.mobileM} {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  margin-top: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+    background: none;
   }
 `;
 
@@ -225,7 +239,7 @@ const TypeBox = styled.input`
 
 const MessageInfo = styled.div`
   height: 45%;
-  width: 95%;
+  width: 75%;
   border-radius: 15px;
   background: linear-gradient(#333333,#000000,#333333);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
@@ -233,12 +247,11 @@ const MessageInfo = styled.div`
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  margin: 15px;
   padding: 20px;
   @media ${device.mobileM} {
   width: 100%;
-  padding: 0;
-  margin: 0;
+  padding: 0px;
+  margin: 0px;
   }
 `;
 
@@ -250,41 +263,39 @@ const TradeContainer = styled.div`
 `;
 
 export const EnrollmentContainer = styled.div`
-  width: 80% ;
-  height: 90%;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
-  object-fit: cover;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: white;
-  background: linear-gradient(90deg,#222222,#111111,#222222);
+  height: calc(100vh - 470px);
+  width: auto;
+  margin-top: 50px;
   @media ${device.mobileM} {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+    width: 100%;
+    margin-top: 0;
+    height: calc(100vh - 380px);
+    overflow-y: auto;
   }
 `;
 
 const EnrollmentInfos = styled.div`
-  height: 300px;
-  width: 40%;
-  min-width: 340px;
+  max-height: 300px;
+  width: auto;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
- align-items: center;
- justify-content: center;
- background: linear-gradient(#000000,#222222,#000000);
- box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
- border-radius: 20px;
- text-align: center;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#000000,#222222,#000000);
+  box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
  div{
-  margin: 5px;
-  font-size: 17px;
+  padding: 5px;
+  font-size: 16px;
+  height: auto;
  }
  @media ${device.mobileM} {
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 15px;
   div{
     font-size: 14px;
   }
@@ -292,7 +303,7 @@ const EnrollmentInfos = styled.div`
 `;
 
 const ItemInfos = styled.div`
-  height: 300px;
+  max-height: 350px;
   background: linear-gradient(#000000,#222222,#000000);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -300,20 +311,29 @@ const ItemInfos = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
-  min-width: 340px;
+  width: auto;
+  min-width: 200px;
   margin-left: 10px;
   text-align: center;
+  padding: 10px;
   img{
-    width: 200px;
-    height: 50%;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    margin: 20px;
+    margin-top: 5px;
   }
-  font-size: 17px;
+  div{
+    font-size: 16px;
+    line-height: 23px;
+  }
   @media ${device.mobileM} {
+    width: 100%;
+    max-width: 250px;
+    margin-left: 0;
+    margin-bottom: 15px;
   div{
     font-size: 14px;
+    line-height: 18px;
   }
 }
 `;
@@ -328,4 +348,47 @@ export const InfoIncomplete = styled.div`
   font-size: 20px;
   color: red;
   font-weight: 700;
+`;
+
+const BuyerName = styled.div`
+  font-size: 20px;
+  color: blue;
+`;
+
+const SellerName = styled.div`
+  color: purple;
+  font-size: 20px;
+`;
+
+export const Button = styled.button`
+  width: 250px;
+  height: 55px;
+  background: linear-gradient(#555555,#000000,#555555);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+  :hover{
+    background: linear-gradient(#000000,#333333,#000000);
+  }
+  :active{
+    background: linear-gradient(#000000,#666666,#000000);
+  }
+  @media ${device.mobileM} {
+    font-size: 13px;
+    height: 50px;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 5px;
+  color: red;
+  font-size: 14px;
+  height: auto;
 `;

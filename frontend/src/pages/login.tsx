@@ -64,7 +64,7 @@ export default function Signin() {
           <Entrar disabled={signInLoading} cor={corEntrar} onClick={userLogin} type="submit">
             {signInLoading ? (
               <div>
-                <Grid color="black" radius="10" height="90" width="90" />
+                <Grid color="white" radius="10" height="90" width="90" />
               </div>
             ) : (
               "Entrar"
@@ -100,6 +100,8 @@ const LeftContainer = styled.div`
   img{
     width: 100%;
     max-width: 500px;
+    border-radius: 20px;
+      box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.6);
   }
   @media ${device.mobileM} {
     width: 100%;
@@ -113,6 +115,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   width: 40%;
   min-width: 250px;
+  max-width: 600px;
   min-height: 50%;
   display: flex;
   flex-direction: column;
@@ -120,6 +123,7 @@ const RightContainer = styled.div`
   align-items: center;
   background-color: #111111;
   border-radius: 20px;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.6);
   @media ${device.mobileM} {
     width: 90%;
     height: 50%;

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "../components/TopBar";
 import { GameInfo, ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName, ItemWithNameAndType } from "../protocols";
-import { Container, FormContainer, Form, Input, 
+import { FormContainer, Form, Input, 
   FormPostGame, FormInfo, InputPostGame, Entrar, ErrorMessage, DisplayModal } from "./games";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -14,6 +14,7 @@ import usePostItem from "../hooks/api/usePostItem";
 import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import { device } from "../mediaqueries/devices";
+import images from "../assets/images/landscapes/images";
 
 export default function ItemsPage() {
   const { items, getItems, itemsLoading } = useItems();
@@ -29,6 +30,7 @@ export default function ItemsPage() {
   ({ name: "", price: 0, amount: 0, itemUrl: "", gameName: "", serverName: "", itemType: "" });
   const itemCategories = ["Selecione um tipo...", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
   const itemCategoriesGet = ["Todos", "Dinheiro", "Equipamento", "Recurso", "Utilizavel", "Raros"];
+  const [ image ] = useState(images[Math.floor(Math.random() * 29) + 1]);
 
   useEffect(() => {
     async function refreshItems() {
@@ -88,10 +90,15 @@ export default function ItemsPage() {
     window.scrollTo(0, 0);
   }
 
+  function closeModal() {
+    setModalStatus("none");
+    setPostItemErrorMessage([""]);
+  }
+
   return(
     <>
       <TopBar></TopBar>
-      <Container>
+      <Container randomImage={image}>
         <FormContainer>
           <Form>
             <Input readOnly={itemsLoading} type="text" placeholder=" Procure um item aqui..."  onChange={(e) => {setItemName({ ...itemName, name: e.target.value  });}}/>
@@ -100,18 +107,19 @@ export default function ItemsPage() {
             </SelectPostGame>
           </Form>
         </FormContainer>
-        <Title>{gameInfo.gameName}{gameInfo.serverName}</Title>
+        <TitleContainer><Title>{gameInfo.gameName}{gameInfo.serverName}</Title></TitleContainer>
         <GamesContainer>
           {items ? items.map(item => (
             <GameContainer onClick={() => {navigateItem(item.id);}}>
               <GameImage><img alt={""} src={item.itemUrl}/></GameImage>
-              <div>{item.name}</div>
+              <ItemName>{item.name}</ItemName>
+              <GameName>{item.Game.name}</GameName>
+              <GameServer>{item.Server.name}</GameServer>
+              <div>Quantia: {item.amount}</div>
               <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
-              <div>Quantidade: {item.amount}</div>
-              <div>Tipo: {item.itemType}</div>
             </GameContainer>)) : ""}
           <GameContainer  onClick={openModal}>
-            <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
+            <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
             <div>Adicione um Item</div>
           </GameContainer>
         </GamesContainer>
@@ -120,7 +128,7 @@ export default function ItemsPage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do jogo:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"35px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={closeModal} size={"35px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do item aqui..." onChange={(e) => {setPostNewItem({ ...postNewItem, name: e.target.value });}}/>
               <InputPostGame type="text" placeholder=" Digite o link da imagem aqui..." onChange={(e) => {setPostNewItem({ ...postNewItem, itemUrl: e.target.value });}}/>
@@ -147,48 +155,83 @@ export default function ItemsPage() {
   );
 }
 
-const Title = styled.div`
-  font-size: 25px;
-  padding: 15px;
+export type DisplayImage = { display:string };
+
+const Container = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   width: 100%;
+  min-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: flex-start;
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
+`;
+
+const Title = styled.div`
+  font-size: 18px;
+  padding: 10px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  width: auto;
+  border-radius: 6px;
+  color: black;
+  font-weight: 500;
+  color: orange;
+  background: linear-gradient(#444444,#000000,#444444);
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.6);
+  cursor: default;
   @media ${device.mobileM} {
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
+    margin-top: 8px;
   }
 `;
 
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 export const GameContainer = styled.div`
-  width: 230px ;
-  height: 300px;
+  width: 158px ;
+  height: 200px;
   border-radius: 10px;
-  padding: 15px;
-  margin: 10px;
+  padding: 8px;
+  margin: 8px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   color: white;
-  background: linear-gradient(#333333,#000000,#333333);
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(#444444,#000000,#444444);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 16px;
+    font-size: 15px;
     line-height: 20px;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
   }
   @media ${device.mobileM} {
-    width: 150px;
-    height: 215px;
-    padding: 8px;
-    margin: 5px;
+    width: 110px;
+    height: 130px;
+    padding: 4px;
+    margin: 4px;
     div{
-      font-size: 13px;
+      font-size: 11px;
     }
   }
 `;
@@ -197,6 +240,10 @@ export const GamesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const GamePrice = styled.div`
@@ -205,9 +252,9 @@ export const GamePrice = styled.div`
 `;
 
 export const GameImage = styled.div`
-  width: 90%;
+  width: 100%;
   overflow: hidden;
-  height: 50%;
+  height: 45%;
   img{
     width: 100%;
     height: 100%;
@@ -224,7 +271,8 @@ const SelectPostGame = styled.select`
   font-size: 18px;
   font-weight: 700; 
   @media ${device.mobileM} {
-    font-size: 15px;
+    font-size: 13px;
+    height: 30px;
   }
 `;
 
@@ -252,3 +300,19 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
   }
 `;
 
+const GameName = styled.div`
+  color: blue;
+`;
+
+const GameServer = styled.div`
+  color: purple;
+`;
+
+const ItemName = styled.div`
+  color: yellow;
+`;
+
+export {
+  Title,
+  TitleContainer
+};

@@ -13,6 +13,7 @@ export async function getItems(req: Request, res: Response) {
     const items = await itemsService.getItems(serverId, itemType, filter, itemId);
     return res.status(httpStatus.OK).send(items);
   } catch (error) {
+    console.log(error);
     if (error.detail === "ItemsNotFound") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
     }
