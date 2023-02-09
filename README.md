@@ -9,6 +9,7 @@ Sellers money is avaiable for withdraw only when both seller and buyer sets that
 To see more: http://itemtrade.trade/
 
 ## ItemTrade Website:
+![ezgif com-optimize](https://user-images.githubusercontent.com/106849328/217919660-52687d21-c211-4bdb-9230-4243445b0821.gif)
 
 
 
