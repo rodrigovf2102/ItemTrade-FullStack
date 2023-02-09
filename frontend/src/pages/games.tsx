@@ -13,6 +13,7 @@ import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import { device } from "../mediaqueries/devices";
 import images from "../assets/images/landscapes/images";
+import { Title, TitleContainer } from "./items";
 
 export default function GamePage() {
   const { games, getGames, gamesLoading } = useGames();
@@ -58,10 +59,16 @@ export default function GamePage() {
     window.scrollTo(0, 0);
   }
 
+  function closeModal() {
+    setPostGameErrorMessage([""]);
+    setModalStatus("none");
+  }
+
   return(
     <>
       <TopBar></TopBar>
       <Container randomImage={image}>
+        <TitleContainer><Title>Jogos Listados:</Title></TitleContainer>
         <FormContainer>
           <Form>
             <Input readOnly={gamesLoading} type="text" placeholder=" Procure um jogo aqui..." onChange={inputOnChange}/>
@@ -83,7 +90,7 @@ export default function GamePage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do jogo:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"30px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={closeModal} size={"30px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do jogo aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, name: e.target.value });}}/>
               <InputPostGame type="text" placeholder=" Digite o link da imagem aqui..." onChange={(e) => {setPostNewGame({ ...postNewGame, gameUrl: e.target.value });}}/>
@@ -255,6 +262,10 @@ const GamesContainer = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const FormContainer = styled.div`
@@ -263,8 +274,8 @@ const FormContainer = styled.div`
 `;
 
 const GameContainer = styled.div`
-  width  :200px ;
-  height: 260px;
+  width  :150px ;
+  height: 200px;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
@@ -274,18 +285,18 @@ const GameContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   color: white;
-  background: linear-gradient(#333333,#000000,#333333);
+  background: linear-gradient(#444444,#000000,#444444);
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
   }
   @media ${device.mobileM} {
-    width: 150px;
-    height: 180px;
+    width: 110px;
+    height: 140px;
     margin: 5px;
     div{
       font-size: 14px;
@@ -307,7 +318,7 @@ const ErrorMessage = styled.div`
 `;
 
 const GameName = styled.div`
-  color: blue;
+  color: blueviolet;
 `;
 
 export {

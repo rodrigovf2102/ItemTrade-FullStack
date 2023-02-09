@@ -6,9 +6,10 @@ import useTrades from "../hooks/api/useTrades";
 import useToken from "../hooks/useToken";
 import { TradeInfo } from "../protocols";
 import styled from "styled-components";
-import { GamesContainer, GamePrice } from "./items";
+import { GamesContainer, GamePrice, Title, TitleContainer } from "./items";
 import { device } from "../mediaqueries/devices";
 import images from "../assets/images/landscapes/images";
+import { useLocation } from "react-router-dom";
 
 export default function NegotiationPage() {
   const { tradeType } = useParams();
@@ -16,11 +17,12 @@ export default function NegotiationPage() {
   const navigate = useNavigate();
   const token = useToken();
   let [ image, setImage ] = useState(images[Math.floor(Math.random() * 29) + 1]);
+  const location = useLocation();
 
   useEffect(() => {
     image = images[Math.floor(Math.random() * 24) + 1];
     setImage(image);
-  }, [trades]);
+  }, [location]);
 
   useEffect(() => {
     const tradeTypeNotEmpty = tradeType as unknown as string;
@@ -35,7 +37,7 @@ export default function NegotiationPage() {
     return (
       <>
         <TopBar></TopBar>
-        <ContainerMessages>
+        <ContainerMessages randomImage={image}>
           <div>Faça login para ver essa área...</div>
         </ContainerMessages>
         <BottomBar></BottomBar>
@@ -47,7 +49,7 @@ export default function NegotiationPage() {
     return (
       <>
         <TopBar></TopBar>
-        <ContainerMessages>
+        <ContainerMessages randomImage={image}>
           <div> Carregando...</div>
         </ContainerMessages>
         <BottomBar></BottomBar>
@@ -58,7 +60,7 @@ export default function NegotiationPage() {
     return (
       <>
         <TopBar></TopBar>
-        <ContainerMessages>
+        <ContainerMessages randomImage={image}>
           <div>Finalize seu cadastro para ver esse área...</div>
         </ContainerMessages>
         <BottomBar></BottomBar>
@@ -70,7 +72,7 @@ export default function NegotiationPage() {
     return (
       <>
         <TopBar></TopBar>
-        <ContainerMessages>
+        <ContainerMessages randomImage={image}>
           <div>Você ainda nao tem negociações do tipo: {tradeType}</div>
         </ContainerMessages>
         <BottomBar></BottomBar>
@@ -82,15 +84,16 @@ export default function NegotiationPage() {
     <>
       <TopBar></TopBar>
       <Container randomImage={image}>
+        <TitleContainer><Title>Suas negociações de: {tradeType==="PURCHASE" ? <span>"COMPRA"</span> : <span>"VENDA"</span>}</Title></TitleContainer>
         <GamesContainer>
           {trades?.map(trade => (
             <GameContainer  onClick={() => {navigate(`/trade/${trade.id}`);}}>
               <GameImage><img alt="" src={trade.Item.itemUrl}/></GameImage>
               <ItemName>{trade.Item.name}</ItemName>
-              <GameName>Comprador: {trade.EnrollmentBuyer.name}</GameName>
-              <GameServer>Vendedor: {trade.EnrollmentSeller.name}</GameServer>
+              <GameName>{trade.EnrollmentBuyer.name}</GameName>
+              <GameServer>{trade.EnrollmentSeller.name}</GameServer>
               <GamePrice>Preço: R${(trade.Item.price/100).toFixed(2)}</GamePrice>
-              {trade.tradeStatus ==="COMPLETE"? <GamePrice>Andamento: {trade.tradeStatus}</GamePrice> : <TradeStatus>Andamento: {trade.tradeStatus}</TradeStatus>}
+              {trade.tradeStatus ==="COMPLETE"? <GamePrice>{trade.tradeStatus}</GamePrice> : <TradeStatus>{trade.tradeStatus}</TradeStatus>}
             </GameContainer>
           ))}
         </GamesContainer>
@@ -116,13 +119,27 @@ const Container = styled.div.attrs((props: any) => ({
   background-size: cover;
 `;
 
-const ContainerMessages = styled.div`
+const ContainerMessages = styled.div.attrs((props: any) => ({
+  randomImage: props.randomImage
+}))`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 83vh;
+  height: calc(100vh - 130px);
+  background-image: url(${props => props.randomImage});
+  background-size: cover;
+  div{
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    background: linear-gradient(#444444,#000000,#444444);
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.6);
+    cursor: default;
+  }
 `;
 
 export const Button = styled.button`
@@ -149,10 +166,10 @@ export const Button = styled.button`
 `;
 
 export const GameContainer = styled.div`
-  width: 240px ;
-  height: 320px;
+  width: 180px ;
+  height: 220px;
   border-radius: 10px;
-  padding: 15px;
+  padding: 8px;
   margin: 10px;
   object-fit: cover;
   display: flex;
@@ -166,19 +183,21 @@ export const GameContainer = styled.div`
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 15px;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
   }
   @media ${device.mobileM} {
-    width: 180px;
-    height: 250px;
-    padding: 8px;
-    margin: 6px;
+    width: 110px;
+    height: 160px;
+    padding: 5px;
+    margin: 5px;
     div{
       font-size: 13px;
       line-height: 15px;

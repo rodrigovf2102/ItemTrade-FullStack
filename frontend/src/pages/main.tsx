@@ -51,7 +51,8 @@ const Container = styled.div.attrs((props: any) => ({
 
 const Instrucoes = styled.div`
   width: 60%;
-  font-size: 20px;
+  max-width: 850px;
+  font-size: 18px;
   margin: 10px;
   background: linear-gradient(#222222,#000000,#222222);
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.5);
@@ -67,7 +68,7 @@ const Instrucoes = styled.div`
 `;
 
 const Tittle = styled.div`
-  font-size: 40px;
+  font-size: 32px;
   text-align: center;
   @media ${device.mobileM} {
     font-size: 24px;
@@ -76,7 +77,7 @@ const Tittle = styled.div`
 `;
 
 const Subtitle = styled.div`
-  font-size: 30px;
+  font-size: 26px;
   @media ${device.mobileM} {
     font-size: 20px;
   }

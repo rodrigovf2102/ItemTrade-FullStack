@@ -14,6 +14,7 @@ import BottomBar from "../components/BottomBar";
 import errorMessagesAll from "../usefull/errorMessages";
 import images from "../assets/images/landscapes/images";
 import styled from "styled-components";
+import { Title, TitleContainer } from "./items";
 
 export default function ServerPage() {
   const [ serverName, setServerName] = useState<ObjectWithName>({ name: "" });
@@ -66,11 +67,17 @@ export default function ServerPage() {
     setModalStatus("flex");
     window.scrollTo(0, 0);
   }
+
+  function closeModal() {
+    setModalStatus("none");
+    setPostServerErrorMessage([""]);
+  }
   
   return (
     <>
       <TopBar></TopBar>
       <Container randomImage={image}>
+        <TitleContainer><Title>Servidores Listados:</Title></TitleContainer>
         <FormContainer>
           <Form>
             <Input readOnly={serversLoading} type="text" placeholder=" Procure um server aqui..." onChange={inputOnChange}/>
@@ -93,7 +100,7 @@ export default function ServerPage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do server:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"35px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={closeModal} size={"35px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do server aqui..." 
                 onChange={(e) => {setPostNewServer({ ...postNewServer, name: e.target.value });}}/>
@@ -132,10 +139,10 @@ const Container = styled.div.attrs((props: any) => ({
 `;
 
 const GameName = styled.div`
-  color: blue;
+  color: blueviolet;
 `;
 
 const GameServer = styled.div`
-  color: green;
+  color: orange;
 `;
 

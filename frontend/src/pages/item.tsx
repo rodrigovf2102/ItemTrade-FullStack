@@ -47,6 +47,7 @@ export default function ItemPage() {
 
   function closeModal() {
     setDisplayModal("none");
+    setErrorMessage([""]);
   }
 
   async function confirmPurchase() {
@@ -72,8 +73,8 @@ export default function ItemPage() {
           <ItemInfo>
             <ImageContainer><img alt="" src={items[0].itemUrl}/></ImageContainer>
             <Title>Informações do Item:</Title>
-            <Info>{items[0].name}</Info>
-            <Info>Jogo: {items[0].Game.name}</Info>
+            <Info><Orange>{items[0].name}</Orange></Info>
+            <Info><Blue>Jogo: {items[0].Game.name}</Blue></Info>
             <Info>Servidor: {items[0].Server.name}</Info> 
             <InfoDone>Preço: R${(items[0].price/100).toFixed(2)}</InfoDone>
             <Info>Quantidade: {items[0].amount}</Info>
@@ -120,10 +121,9 @@ const Container = styled.div.attrs((props: any) => ({
 `;
 
 const ItemContainer = styled.div`
-  margin-top: 10px;
-  padding: 30px;
   width: auto;
   height: 80%;
+  padding: 10px;
   background: linear-gradient(45deg,#333333,#111111,#333333);
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -139,7 +139,7 @@ const ItemContainer = styled.div`
 `;
 
 const ItemInfo = styled.div`
-  width: 43%;
+  width: 48%;
   max-width: 450px;
   height: 550px;
   display: flex;
@@ -150,17 +150,16 @@ const ItemInfo = styled.div`
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
-  margin-bottom: 25px;
   @media ${device.mobileM} {
     width: 50%;
-    border-radius: 0;
+    max-width: 320px;
     margin-bottom: 0;
     background: linear-gradient(#222222,#111111,#222222);
   }
 `;
 
 const SellerInfo = styled.div`
-  width: 43%;
+  width: 48%;
   max-width: 450px;
   height: 550px;
   display: flex;
@@ -171,10 +170,9 @@ const SellerInfo = styled.div`
   border-radius: 15px;
   background: linear-gradient(#555555,#000000,#555555);
   box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, 0.5);
-  margin-bottom: 25px;
   @media ${device.mobileM} {
     width: 50%;
-    border-radius: 0;
+    max-width: 320px;
     margin-bottom: 0;
     background: linear-gradient(#222222,#111111,#222222);
   }
@@ -222,6 +220,7 @@ export const Button = styled.button`
 `;
 
 const Title = styled.div`
+  color: yellow;
   font-size: 22px;
   padding:15px;
   text-align: center;
@@ -232,6 +231,7 @@ const Title = styled.div`
 `;
 
 const Info = styled.div`
+  color: blueviolet;
   font-size: 17px;
   padding: 10px;
   display: flex;
@@ -241,6 +241,14 @@ const Info = styled.div`
     font-size: 14px;
     padding: 5px;
   }
+`;
+
+const Blue = styled.div`
+  color: blue;
+`;
+
+const Orange = styled.div`
+  color: orange;
 `;
 
 export const InfoDone = styled.div`

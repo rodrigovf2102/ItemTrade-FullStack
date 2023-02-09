@@ -90,6 +90,11 @@ export default function ItemsPage() {
     window.scrollTo(0, 0);
   }
 
+  function closeModal() {
+    setModalStatus("none");
+    setPostItemErrorMessage([""]);
+  }
+
   return(
     <>
       <TopBar></TopBar>
@@ -102,19 +107,19 @@ export default function ItemsPage() {
             </SelectPostGame>
           </Form>
         </FormContainer>
-        <Title>{gameInfo.gameName}{gameInfo.serverName}</Title>
+        <TitleContainer><Title>{gameInfo.gameName}{gameInfo.serverName}</Title></TitleContainer>
         <GamesContainer>
           {items ? items.map(item => (
             <GameContainer onClick={() => {navigateItem(item.id);}}>
               <GameImage><img alt={""} src={item.itemUrl}/></GameImage>
               <ItemName>{item.name}</ItemName>
               <GameName>{item.Game.name}</GameName>
-              <GameServer>Servidor: {item.Server.name}</GameServer>
-              <div>Quantidade: {item.amount}</div>
+              <GameServer>{item.Server.name}</GameServer>
+              <div>Quantia: {item.amount}</div>
               <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
             </GameContainer>)) : ""}
           <GameContainer  onClick={openModal}>
-            <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
+            <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
             <div>Adicione um Item</div>
           </GameContainer>
         </GamesContainer>
@@ -123,7 +128,7 @@ export default function ItemsPage() {
             <FormPostGame onSubmit={postForm}>
               <FormInfo>
                 <div>Adicione as informações do jogo:</div>
-                <AiOutlineCloseCircle onClick={() => {setModalStatus("none");}} size={"35px"}></AiOutlineCloseCircle>
+                <AiOutlineCloseCircle onClick={closeModal} size={"35px"}></AiOutlineCloseCircle>
               </FormInfo>
               <InputPostGame type="text" placeholder=" Digite o nome do item aqui..." onChange={(e) => {setPostNewItem({ ...postNewItem, name: e.target.value });}}/>
               <InputPostGame type="text" placeholder=" Digite o link da imagem aqui..." onChange={(e) => {setPostNewItem({ ...postNewItem, itemUrl: e.target.value });}}/>
@@ -167,23 +172,37 @@ const Container = styled.div.attrs((props: any) => ({
 `;
 
 const Title = styled.div`
-  font-size: 25px;
-  padding: 15px;
-  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  width: auto;
+  border-radius: 6px;
   color: black;
-  font-weight: 700;
+  font-weight: 500;
+  color: orange;
+  background: linear-gradient(#444444,#000000,#444444);
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.6);
+  cursor: default;
   @media ${device.mobileM} {
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
+    margin-top: 8px;
   }
 `;
 
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 export const GameContainer = styled.div`
-  width: 230px ;
-  height: 300px;
+  width: 158px ;
+  height: 200px;
   border-radius: 10px;
-  padding: 15px;
-  margin: 10px;
+  padding: 8px;
+  margin: 8px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
@@ -191,26 +210,28 @@ export const GameContainer = styled.div`
   align-items: center;
   color: white;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.6);
-  background: linear-gradient(#333333,#000000,#333333);
+  background: linear-gradient(#444444,#000000,#444444);
   :hover{
     background: linear-gradient(#000000,#333333,#000000);
   }
   div{
-    font-size: 14px;
+    font-size: 15px;
     line-height: 20px;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     width: 100%;
     overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
   }
   @media ${device.mobileM} {
-    width: 150px;
-    height: 215px;
-    padding: 8px;
-    margin: 5px;
+    width: 110px;
+    height: 130px;
+    padding: 4px;
+    margin: 4px;
     div{
-      font-size: 12px;
+      font-size: 11px;
     }
   }
 `;
@@ -219,6 +240,10 @@ export const GamesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const GamePrice = styled.div`
@@ -227,9 +252,9 @@ export const GamePrice = styled.div`
 `;
 
 export const GameImage = styled.div`
-  width: 90%;
+  width: 100%;
   overflow: hidden;
-  height: 50%;
+  height: 45%;
   img{
     width: 100%;
     height: 100%;
@@ -286,3 +311,8 @@ const GameServer = styled.div`
 const ItemName = styled.div`
   color: yellow;
 `;
+
+export {
+  Title,
+  TitleContainer
+};
