@@ -1,6 +1,6 @@
 # ItemTrade
 
-ItemTrade is a WEB Plataform that itermediates trades between persons who wants to sell or buy items of online games;
+ItemTrade is a WEB Plataform that mediates trades between persons who wants to sell or buy items of online games;
 
 ItemTrade goal is to safely complete buyer and seller transactions in a safe and far way;
 
