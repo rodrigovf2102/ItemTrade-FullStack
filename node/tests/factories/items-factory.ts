@@ -1,5 +1,5 @@
 import { ItemWithNoId } from "@/protocols";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { prisma } from "@/config";
 import { Item, ITEMTYPE } from "@prisma/client";
 
@@ -15,7 +15,7 @@ export async function createItem(serverId : number, enrollmentId : number, gameI
     serverId,
     enrollmentId,
     gameId,
-    itemUrl : faker.image.imageUrl(undefined,undefined,undefined,true,true),
+    itemUrl : faker.image.imageUrl(undefined,undefined,undefined,true),
     itemType : randomItemType
   };
 

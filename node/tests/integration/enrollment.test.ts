@@ -1,5 +1,5 @@
 import app, { start } from "@/app";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import httpStatus from "http-status";
 import supertest from "supertest";
 import { createUser } from "../factories";
@@ -118,7 +118,7 @@ describe("POST /enrollment", () => {
       const generateValidBody = () => ({
         name: faker.name.findName(),
         CPF: generateCPF(),
-        enrollmentUrl: faker.image.imageUrl(undefined, undefined, undefined, true, true),
+        enrollmentUrl: faker.image.imageUrl(undefined, undefined, undefined, true),
       });
 
       it("should respond with status 201 and create new enrollment if there is not any", async () => {

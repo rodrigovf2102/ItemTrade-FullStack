@@ -28,6 +28,7 @@ async function upsertEnrollment(req, res) {
         return res.status(http_status_1.default.OK).send(enrollment);
     }
     catch (error) {
+        console.log(error);
         if (error.detail === "EnrollmentNotFound") {
             return res.status(http_status_1.default.NOT_FOUND).send(error.detail);
         }

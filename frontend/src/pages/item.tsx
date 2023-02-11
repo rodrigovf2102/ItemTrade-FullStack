@@ -118,6 +118,9 @@ const Container = styled.div.attrs((props: any) => ({
   justify-content: center;
   background-image: url(${props => props.randomImage});
   background-size: cover;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const ItemContainer = styled.div`

@@ -1,7 +1,6 @@
 import { prisma } from "@/config";
 import { ItemWithNoId } from "@/protocols";
 import { Item, ITEMTYPE } from "@prisma/client";
-import { number } from "joi";
 
 export async function findItemsByServerIdAndItemType(
   serverId: number,
@@ -16,7 +15,7 @@ export async function findItemsByServerIdAndItemType(
       inTrade: false,
     },
     include: { Game: true, Server: true, Enrollment: true },
-    take: 30
+    take: 50
   });
 }
 
@@ -28,7 +27,7 @@ export async function findItemsByItemTypeAndFilter(itemType: ITEMTYPE, filter: s
       inTrade: false,
     },
     include: { Game: true, Server: true, Enrollment: true },
-    take: 30
+    take: 50
   });
 }
 
@@ -50,7 +49,7 @@ export async function findItemsByServerId(serverId: number, filter: string): Pro
       inTrade: false,
     },
     include: { Game: true, Server: true, Enrollment: true },
-    take: 30
+    take: 50
   });
 }
 
@@ -61,7 +60,7 @@ export async function findItems(filter: string): Promise<Item[]> {
       inTrade: false,
     },
     include: { Game: true, Server: true, Enrollment: true },
-    take: 30
+    take: 50
   });
 }
 

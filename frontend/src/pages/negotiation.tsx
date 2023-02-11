@@ -117,6 +117,9 @@ const Container = styled.div.attrs((props: any) => ({
   align-items: flex-start;
   background-image: url(${props => props.randomImage});
   background-size: cover;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const ContainerMessages = styled.div.attrs((props: any) => ({

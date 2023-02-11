@@ -1,5 +1,5 @@
 import app, { start } from "@/app";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import httpStatus from "http-status";
 import supertest from "supertest";
 import { createUser } from "../factories";

@@ -188,6 +188,9 @@ const Container = styled.div.attrs((props: any) => ({
   background-size: cover;
   min-height: calc(100vh - 130px);
   width: 100%;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const TradeInfo = styled.div`

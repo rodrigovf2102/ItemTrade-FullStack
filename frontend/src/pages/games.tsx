@@ -124,6 +124,9 @@ const Container = styled.div.attrs((props: any) => ({
   align-items: flex-start;
   background-image: url(${props => props.randomImage});
   background-size: cover;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const Form = styled.form`
@@ -132,7 +135,7 @@ const Form = styled.form`
   align-items: flex-start;
   flex-wrap: wrap;
   @media ${device.mobileM} {
-  justify-content  :center ;
+    justify-content: center ;
   }
 `;
 

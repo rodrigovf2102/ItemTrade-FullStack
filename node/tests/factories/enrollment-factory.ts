@@ -1,5 +1,5 @@
 import { EnrollmentWithNoId } from "@/protocols";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { prisma } from "@/config";
 import { Enrollment } from "@prisma/client";
 import { generateCPF } from "@brazilian-utils/brazilian-utils";
@@ -10,9 +10,10 @@ export async function createEnrollment(userId : number) : Promise<Enrollment>{
     CPF : generateCPF(),
     userId,
     balance: 0,
-    enrollmentUrl : faker.image.imageUrl(undefined,undefined,undefined,true,true),
+    enrollmentUrl : faker.image.imageUrl(undefined,undefined,undefined,true),
     freezedBalance: 0
   };
+
 
   return prisma.enrollment.create({
     data: enrollment
