@@ -1,7 +1,6 @@
 import { prisma } from "@/config";
 import { ItemWithNoId } from "@/protocols";
 import { Item, ITEMTYPE } from "@prisma/client";
-import { number } from "joi";
 
 export async function findItemsByServerIdAndItemType(
   serverId: number,
