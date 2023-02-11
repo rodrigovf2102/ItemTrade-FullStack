@@ -15,6 +15,7 @@ import errorMessagesAll from "../usefull/errorMessages";
 import images from "../assets/images/landscapes/images";
 import styled from "styled-components";
 import { Title, TitleContainer } from "./items";
+import { device } from "../mediaqueries/devices";
 
 export default function ServerPage() {
   const [ serverName, setServerName] = useState<ObjectWithName>({ name: "" });
@@ -136,6 +137,9 @@ const Container = styled.div.attrs((props: any) => ({
   align-items: flex-start;
   background-image: url(${props => props.randomImage});
   background-size: cover;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const GameName = styled.div`

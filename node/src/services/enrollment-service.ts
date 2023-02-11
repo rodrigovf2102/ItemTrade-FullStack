@@ -17,7 +17,7 @@ export async function upsertEnrollment(newEnrollment: UpsertEnrollment, userId:n
   if(!isValidCPF(newEnrollment.CPF)) throw defaultError("InvalidCPF");
   let enrollment = await enrollmentRepository.findEnrollmentByCPF(newEnrollment.CPF);
   const enrollmentCPF = await enrollmentRepository.findEnrollmentByUserId(userId);
-  if(enrollment && enrollment.id!== enrollmentCPF.id) throw defaultError("CPFAlreadyExists");
+  if(enrollment && enrollment?.id !== enrollmentCPF?.id) throw defaultError("CPFAlreadyExists");
   if(!newEnrollment.enrollmentUrl) newEnrollment.enrollmentUrl = faker.image.image(undefined,undefined,true);
   enrollment = await enrollmentRepository.upsertEnrollment(newEnrollment,userId);
   return enrollment;

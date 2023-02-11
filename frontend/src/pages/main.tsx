@@ -47,6 +47,9 @@ const Container = styled.div.attrs((props: any) => ({
     min-width: 280px;
     border-radius: 20px;
   }
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const Instrucoes = styled.div`

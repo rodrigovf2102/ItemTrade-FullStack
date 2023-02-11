@@ -24,6 +24,7 @@ export async function upsertEnrollment(req: AuthenticatedRequest, res: Response)
     const enrollment = await enrollmentService.upsertEnrollment(newEnrollment, userId);
     return res.status(httpStatus.OK).send(enrollment);
   } catch (error) {
+    console.log(error);
     if (error.detail === "EnrollmentNotFound") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
     }

@@ -11,7 +11,7 @@ async function findItemsByServerIdAndItemType(serverId, itemType, filter) {
             inTrade: false,
         },
         include: { Game: true, Server: true, Enrollment: true },
-        take: 30
+        take: 50
     });
 }
 exports.findItemsByServerIdAndItemType = findItemsByServerIdAndItemType;
@@ -23,7 +23,7 @@ async function findItemsByItemTypeAndFilter(itemType, filter) {
             inTrade: false,
         },
         include: { Game: true, Server: true, Enrollment: true },
-        take: 30
+        take: 50
     });
 }
 exports.findItemsByItemTypeAndFilter = findItemsByItemTypeAndFilter;
@@ -45,7 +45,7 @@ async function findItemsByServerId(serverId, filter) {
             inTrade: false,
         },
         include: { Game: true, Server: true, Enrollment: true },
-        take: 30
+        take: 50
     });
 }
 exports.findItemsByServerId = findItemsByServerId;
@@ -56,7 +56,7 @@ async function findItems(filter) {
             inTrade: false,
         },
         include: { Game: true, Server: true, Enrollment: true },
-        take: 30
+        take: 50
     });
 }
 exports.findItems = findItems;

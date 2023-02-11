@@ -22,7 +22,7 @@ async function upsertEnrollment(newEnrollment, userId) {
         throw (0, errors_1.defaultError)("InvalidCPF");
     let enrollment = await enrollment_repository_1.default.findEnrollmentByCPF(newEnrollment.CPF);
     const enrollmentCPF = await enrollment_repository_1.default.findEnrollmentByUserId(userId);
-    if (enrollment && enrollment.id !== enrollmentCPF.id)
+    if (enrollment && enrollment?.id !== enrollmentCPF?.id)
         throw (0, errors_1.defaultError)("CPFAlreadyExists");
     if (!newEnrollment.enrollmentUrl)
         newEnrollment.enrollmentUrl = faker_1.faker.image.image(undefined, undefined, true);

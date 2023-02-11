@@ -169,6 +169,9 @@ const Container = styled.div.attrs((props: any) => ({
   align-items: flex-start;
   background-image: url(${props => props.randomImage});
   background-size: cover;
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+  }
 `;
 
 const Title = styled.div`
@@ -227,10 +230,11 @@ export const GameContainer = styled.div`
   }
   @media ${device.mobileM} {
     width: 110px;
-    height: 130px;
+    height: 150px;
     padding: 4px;
     margin: 4px;
     div{
+      line-height: 14px;
       font-size: 11px;
     }
   }
@@ -256,6 +260,7 @@ export const GameImage = styled.div`
   overflow: hidden;
   height: 45%;
   img{
+    border-radius: 5px;
     width: 100%;
     height: 100%;
     object-fit: cover;

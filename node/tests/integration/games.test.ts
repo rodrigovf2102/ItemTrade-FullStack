@@ -1,5 +1,5 @@
 import app, { start } from "@/app";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import httpStatus from "http-status";
 import supertest from "supertest";
 import { createGame, createUser } from "../factories";
@@ -89,7 +89,7 @@ describe("POST /games", () => {
           gameUrl: "undefined",
         };
         if (bodyType <= 4) body.gameUrl = faker.image.dataUri();
-        if (bodyType > 4) body.gameUrl = faker.image.imageUrl(undefined, undefined, undefined, true, true);
+        if (bodyType > 4) body.gameUrl = faker.image.imageUrl(undefined, undefined, undefined, true);
         return body;
       }
 

@@ -1,5 +1,5 @@
 import { ServerWithGame, ServerWithNoId } from "@/protocols";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { prisma } from "@/config";
 import { Server } from "@prisma/client";
 
