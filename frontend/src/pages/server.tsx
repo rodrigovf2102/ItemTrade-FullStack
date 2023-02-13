@@ -85,16 +85,18 @@ export default function ServerPage() {
           </Form>
         </FormContainer>
         <GamesContainer>
-          {servers ? servers.map(server => (
-            <GameContainer onClick={() => {goToItems(server.id);}}>
-              <GameName>{server.Game.name}</GameName>
-              <GameImage><img alt={""} src={server.Game.gameUrl}/></GameImage>
-              <GameServer>{server.name}</GameServer>
-            </GameContainer>)) : ""}
-          <GameContainer onClick={openModal}>
-            <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
-            <div>Adicione um Server</div>
-          </GameContainer>
+          {servers ? servers.map((server, index) => (
+            <>
+              <GameContainer onClick={() => {goToItems(server.id);}}>
+                <GameName>{server.Game.name}</GameName>
+                <GameImage><img alt={""} src={server.Game.gameUrl}/></GameImage>
+                <GameServer>{server.name}</GameServer>
+              </GameContainer>
+              {servers.length-1 === index ? <GameContainer onClick={openModal}>
+                <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
+                <div>Adicione um Server</div>
+              </GameContainer> : ""}
+            </>)) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>

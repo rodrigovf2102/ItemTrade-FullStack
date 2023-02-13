@@ -2,7 +2,7 @@ import TopBar from "../components/TopBar";
 import styled from "styled-components";
 import useGames from "../hooks/api/useGames";
 import { GameWithoutId, ObjectWithName } from "../protocols";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -75,15 +75,19 @@ export default function GamePage() {
           </Form>
         </FormContainer>
         <GamesContainer>
-          {games ? games.map(game => (
-            <GameContainer onClick={() => {goToServers(game.id);}}>
-              <GameImage><img alt={""} src={game.gameUrl}/></GameImage>
-              <GameName>{game.name}</GameName>
-            </GameContainer>)) : ""}
-          <GameContainer onClick={openModal}>
-            <IoMdAddCircleOutline size={"140px"}></IoMdAddCircleOutline>
-            <div>Adicione um Jogo</div>
-          </GameContainer>
+          {games ? games.map((game, index) => (
+            <>
+              <GameContainer onClick={() => {goToServers(game.id);}}>
+                <GameImage><img alt={""} src={game.gameUrl}/></GameImage>
+                <GameName>{game.name}</GameName>
+              </GameContainer>
+              { games.length-1 === index ? 
+                <GameContainer onClick={openModal}>
+                  <IoMdAddCircleOutline size={"140px"}></IoMdAddCircleOutline>
+                  <div>Adicione um Jogo</div>
+                </GameContainer> : ""}
+            </>
+          )) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>
@@ -261,6 +265,7 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
 `;
 
 const GamesContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
