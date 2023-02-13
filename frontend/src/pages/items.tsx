@@ -107,21 +107,22 @@ export default function ItemsPage() {
             </SelectPostGame>
           </Form>
         </FormContainer>
-        <TitleContainer><Title>{gameInfo.gameName}{gameInfo.serverName}</Title></TitleContainer>
+        {gameInfo.gameName ? <TitleContainer><Title>{gameInfo.gameName}{gameInfo.serverName}</Title></TitleContainer> : ""}
         <GamesContainer>
-          {items ? items.map(item => (
-            <GameContainer onClick={() => {navigateItem(item.id);}}>
+          {items ? items.map((item, index) => (
+            <><GameContainer onClick={() => {navigateItem(item.id);}}>
               <GameImage><img alt={""} src={item.itemUrl}/></GameImage>
               <ItemName>{item.name}</ItemName>
               <GameName>{item.Game.name}</GameName>
               <GameServer>{item.Server.name}</GameServer>
               <div>Quantia: {item.amount}</div>
               <GamePrice>R${(item.price/100).toFixed(2)}</GamePrice>
-            </GameContainer>)) : ""}
-          <GameContainer  onClick={openModal}>
-            <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
-            <div>Adicione um Item</div>
-          </GameContainer>
+            </GameContainer>
+            {index===items.length-1?
+              <GameContainer  onClick={openModal}>
+                <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
+                <div>Adicione um Item</div>
+              </GameContainer>:""}</>)) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>
@@ -248,6 +249,7 @@ export const GamesContainer = styled.div`
   height: calc(100vh - 250px);
   overflow-y: auto;
   overflow-x: hidden;
+  width: 100%;
 `;
 
 export const GamePrice = styled.div`

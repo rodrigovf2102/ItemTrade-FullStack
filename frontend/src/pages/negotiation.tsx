@@ -143,6 +143,12 @@ const ContainerMessages = styled.div.attrs((props: any) => ({
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.6);
     cursor: default;
   }
+  @media ${device.mobileM} {
+    min-height: calc(100vh - 115px);
+    div{
+      font-size: 13px;
+    }
+  }
 `;
 
 export const Button = styled.button`
