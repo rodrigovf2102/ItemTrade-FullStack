@@ -1,6 +1,6 @@
 import useAsync from "../useAsync";
 import * as serversApi from "../../services/serversApi";
-import { Server, ServerWithGame } from "../../protocols";
+import { ServerWithGameAndItem } from "../../protocols";
 
 export default function useServers() {
   const {
@@ -19,8 +19,8 @@ export default function useServers() {
 }
 
 type UseServers = {
-  servers: ServerWithGame[],
+  servers: ServerWithGameAndItem[],
   serversLoading: boolean,
   serversError: any,
-  getServers(gameId: number, filter: string) : Promise<ServerWithGame[]>
+  getServers(gameId: number, filter: string) : Promise<ServerWithGameAndItem[]>
 }

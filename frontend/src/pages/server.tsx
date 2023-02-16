@@ -91,6 +91,7 @@ export default function ServerPage() {
                 <GameName>{server.Game.name}</GameName>
                 <GameImage><img alt={""} src={server.Game.gameUrl}/></GameImage>
                 <GameServer>{server.name}</GameServer>
+                <GameItem>Items: {server.Item.length}</GameItem>
               </GameContainer>
               {servers.length-1 === index ? <GameContainer onClick={openModal}>
                 <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
@@ -145,10 +146,14 @@ const Container = styled.div.attrs((props: any) => ({
 `;
 
 const GameName = styled.div`
-  color: blueviolet;
+  color: blue;
 `;
 
 const GameServer = styled.div`
-  color: orange;
+  color: yellow;
+`;
+
+const GameItem = styled.div`
+  color: green;
 `;
 

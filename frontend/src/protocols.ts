@@ -6,6 +6,14 @@ export type Game = {
   gameUrl: string
 }
 
+export type GameWithServersAndItems= {
+  Server: Server[],
+  Item: Item[]
+  id: number,
+  name: string,
+  gameUrl: string
+}
+
 export type Server = {
   id: number,
   gameId: number,
@@ -64,6 +72,14 @@ export type GameWithoutId = Omit<Game, "id">;
 export type ServerWithNoId = Omit<Server, "id">
 
 export type ServerWithGame = {
+  Game: Game,
+  id: number,
+  gameId: number,
+  name: string
+}
+
+export type ServerWithGameAndItem = {
+  Item: Item[],
   Game: Game,
   id: number,
   gameId: number,
