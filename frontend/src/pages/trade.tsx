@@ -133,7 +133,7 @@ export default function TradePage() {
         <MessageInfo>
           <MessageBox ref={messageBox}>
             <div>Combine a troca do item com seu negociador por aqui!</div>
-            { tradeLoading  && trade!==null ? <div>{tradeMessages?.map((tradeMessage) => (
+            { !tradeLoading  && (trade!== null) ? <div>{tradeMessages?.map((tradeMessage) => (
               (tradeMessage.Message.enrollmentId === trade.buyerEnrollmentId ? 
                 (<BuyerName>
                         ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentBuyer.name} disse: {tradeMessage.Message.text}
