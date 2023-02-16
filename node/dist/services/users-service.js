@@ -48,7 +48,7 @@ async function validatePassword(password, userPassword) {
         throw (0, errors_1.defaultError)("PasswordInvalid");
 }
 async function createSession(userId) {
-    const token = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "10h" });
+    const token = jsonwebtoken_1.default.sign({ userId }, process.env.JWT_SECRET);
     await session_repository_1.default.createSession({ token, userId });
     return token;
 }

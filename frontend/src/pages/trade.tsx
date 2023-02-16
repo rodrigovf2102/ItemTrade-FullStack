@@ -126,13 +126,14 @@ export default function TradePage() {
                 </ItemInfos>
               </TradeInfo>
             </TradeContainer> :
-            !trade && token ?  <div>Esse trade não está relacionado com seu cadastro...</div>:
-              <div>Faça seu login para visualizar conteudo...</div>}
+            !tradeLoading && !trade && token ?  <div>Esse trade não está relacionado com seu cadastro...</div>:
+              ""}
+          {!token ? <div>Faça seu login para visualizar conteudo...</div> : "" }
         </EnrollmentContainer>
         <MessageInfo>
           <MessageBox ref={messageBox}>
             <div>Combine a troca do item com seu negociador por aqui!</div>
-            <div>{tradeMessages?.map((tradeMessage) => (
+            { tradeLoading  && trade!==null ? <div>{tradeMessages?.map((tradeMessage) => (
               (tradeMessage.Message.enrollmentId === trade.buyerEnrollmentId ? 
                 (<BuyerName>
                         ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentBuyer.name} disse: {tradeMessage.Message.text}
@@ -142,7 +143,7 @@ export default function TradePage() {
                         ({tradeMessage.Message.date.slice(0, 10)} - {tradeMessage.Message.date.slice(11, 19)}) - {trade.EnrollmentSeller.name} disse: {tradeMessage.Message.text}
                 </SellerName>)
               )
-            ))}</div>
+            ))}</div> : ""}
           </MessageBox>
           <TypeMessageBox onSubmit={preventDefault}>
             <TypeBox value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Digite sua mensagem aqui..."></TypeBox>
@@ -252,7 +253,7 @@ const MessageInfo = styled.div`
   align-items: center;
   padding: 20px;
   @media ${device.mobileM} {
-  width: 100%;
+  width: 98%;
   padding: 0px;
   margin: 0px;
   }
