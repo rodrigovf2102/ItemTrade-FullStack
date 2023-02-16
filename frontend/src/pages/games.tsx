@@ -89,7 +89,13 @@ export default function GamePage() {
                   <div>Adicione um Jogo</div>
                 </GameContainer> : ""}
             </>
-          )) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
+          )) : ""}
+          {gamesLoading ?  <TitleContainer><Title>Carregando...</Title></TitleContainer> : ""}
+          {games === null && !gamesLoading ? 
+            <GameContainer onClick={openModal}>
+              <IoMdAddCircleOutline size={"140px"}></IoMdAddCircleOutline>
+              <div>Adicione um Jogo</div>
+            </GameContainer> : ""}
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>

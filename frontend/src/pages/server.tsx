@@ -97,7 +97,14 @@ export default function ServerPage() {
                 <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
                 <div>Adicione um Server</div>
               </GameContainer> : ""}
-            </>)) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
+            </>)) : ""}
+          {servers === null  && !serversLoading ?
+            <GameContainer onClick={openModal}>
+              <IoMdAddCircleOutline size={"180px"}></IoMdAddCircleOutline>
+              <div>Adicione um Server</div>
+            </GameContainer>
+            : "" }
+          {serversLoading ? <TitleContainer><Title>Carregando...</Title></TitleContainer> : ""}
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>

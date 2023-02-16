@@ -123,6 +123,11 @@ export default function ItemsPage() {
                 <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
                 <div>Adicione um Item</div>
               </GameContainer>:""}</>)) : <TitleContainer><Title>Carregando...</Title></TitleContainer>}
+          {items?.length === 0 ?
+            <GameContainer  onClick={openModal}>
+              <IoMdAddCircleOutline size={"150px"}></IoMdAddCircleOutline>
+              <div>Adicione um Item</div>
+            </GameContainer> :"" }
         </GamesContainer>
         <Modal display={modalStatus}>
           <FormContainer>
