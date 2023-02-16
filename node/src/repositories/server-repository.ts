@@ -5,7 +5,7 @@ import { Server } from "@prisma/client";
 export async function findServersByGameId(gameId : number, filter: string): Promise<Server[]> {
   return prisma.server.findMany({
     where: { gameId, name: { contains: filter } },
-    include: {Game:true, Item:true},
+    include: {Game:true, Item: { where: { inTrade: false }}},
     take: 30
   });
 }
