@@ -5,7 +5,7 @@ const config_1 = require("../config");
 async function findServersByGameId(gameId, filter) {
     return config_1.prisma.server.findMany({
         where: { gameId, name: { contains: filter } },
-        include: { Game: true },
+        include: { Game: true, Item: true },
         take: 30
     });
 }
