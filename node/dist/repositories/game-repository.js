@@ -5,7 +5,7 @@ const config_1 = require("../config");
 async function findGames(filter) {
     return config_1.prisma.game.findMany({
         where: { name: { contains: filter } },
-        include: { Server: true, Item: true },
+        include: { Server: true, Item: { where: { inTrade: false } } },
         take: 30
     });
 }
