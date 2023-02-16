@@ -80,6 +80,8 @@ export default function GamePage() {
               <GameContainer onClick={() => {goToServers(game.id);}}>
                 <GameImage><img alt={""} src={game.gameUrl}/></GameImage>
                 <GameName>{game.name}</GameName>
+                <GameServer>Servidores: {game.Server.length}</GameServer>
+                <GameItems>Itens: {game.Item.length}</GameItems>
               </GameContainer>
               { games.length-1 === index ? 
                 <GameContainer onClick={openModal}>
@@ -326,7 +328,15 @@ const ErrorMessage = styled.div`
 `;
 
 const GameName = styled.div`
-  color: blueviolet;
+  color: blue;
+`;
+
+const GameServer = styled.div`
+  color: yellow;
+`;
+
+const GameItems = styled.div`
+  color: green;
 `;
 
 export {

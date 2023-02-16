@@ -1,6 +1,6 @@
 import useAsync from "../useAsync";
 import * as gamesApi from "../../services/gamesApi";
-import { Game } from "../../protocols";
+import { GameWithServersAndItems } from "../../protocols";
 
 export default function useGames() {
   const {
@@ -19,8 +19,8 @@ export default function useGames() {
 }
 
 type UseGames = {
-  games: Game[],
+  games: GameWithServersAndItems[],
   gamesLoading: boolean,
   gamesError: any,
-  getGames(filter: string) : Promise<Game[]>
+  getGames(filter: string) : Promise<GameWithServersAndItems[]>
 }
