@@ -1,3 +1,5 @@
+# Repository created based on repositories: https://github.com/rodrigovf2102/itemtrade-back (back-end) , https://github.com/rodrigovf2102/itemtrade-front (front-end)
+
 # ItemTrade
 
 ItemTrade is a WEB Plataform that mediates trades between persons who wants to sell or buy items of online games;
