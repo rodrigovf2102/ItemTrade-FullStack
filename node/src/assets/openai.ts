@@ -9,7 +9,7 @@ const openai = new OpenAIApi(config);
 async function filterSwearword(message: string) : Promise<string> {
   let response;
 
-  const swearwords = ["PUTA QUE PARIU", "VAI CAGAR", "TRANSAR", "SEXO", "MASTURBAÇÃO", "VAI PRO INFERNO", "PIROCA"];
+  const swearwords : string[] = JSON.parse(process.env.SWEARWORDS);
   const messages : ChatCompletionRequestMessage[] = [];
   swearwords.map(swearword => (
     messages.push({role:"user",content:`Answer with one word ( yes or no ). Can the expression ${swearword} be a swearword or a intimate body part or a inappropriate action to do in public?`}),
