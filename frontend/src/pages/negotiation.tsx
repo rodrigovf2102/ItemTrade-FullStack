@@ -6,7 +6,7 @@ import useTrades from "../hooks/api/useTrades";
 import useToken from "../hooks/useToken";
 import { TradeInfo } from "../protocols";
 import styled from "styled-components";
-import { GamesContainer, GamePrice, Title, TitleContainer } from "./items";
+import { GamePrice, Title, TitleContainer } from "./items";
 import { device } from "../mediaqueries/devices";
 import images from "../assets/images/landscapes/images";
 import { useLocation } from "react-router-dom";
@@ -174,6 +174,26 @@ export const Button = styled.button`
   }
 `;
 
+export const GamesContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-template-rows: repeat(auto-fill, 220px);
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  @media ${device.mobileM} {
+    grid-template-columns: repeat(auto-fill, 130px);
+    grid-template-rows: repeat(auto-fill, 160px);
+    gap: 15px;
+  }
+`;
+
 export const GameContainer = styled.div`
   width: 180px ;
   height: 220px;
@@ -203,7 +223,7 @@ export const GameContainer = styled.div`
     cursor: pointer;
   }
   @media ${device.mobileM} {
-    width: 110px;
+    width: 130px;
     height: 160px;
     padding: 5px;
     margin: 5px;
