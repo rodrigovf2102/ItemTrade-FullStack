@@ -1,3 +1,4 @@
+import filterSwearword from "@/assets/openai";
 import { defaultError } from "@/errors";
 import { GameWithNoId } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
@@ -20,6 +21,13 @@ export async function postGame({name,gameUrl}: GameWithNoId, userId: number) : P
   const game = await gameRepository.findGameByName(name);
   if(game) throw defaultError("GameAlreadyExist");
   name = name.toUpperCase();
+
+  const message = `online game "${name}" exists? answer with one word ( yes or no )`;
+  const response = await filterSwearword(message);
+  if(!response?.includes("Yes") && response) {
+    throw defaultError("InvalidGameName");
+  }
+
   const createdGame = await gameRepository.postGame({name,gameUrl});
   return createdGame;
 }

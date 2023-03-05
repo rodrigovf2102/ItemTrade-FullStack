@@ -1,3 +1,4 @@
+import filterSwearword from "@/assets/openai";
 import { defaultError } from "@/errors";
 import { ItemNoIdNoEnrollIdNoGameIdNoServerIdServerName, ItemWithNoId } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
@@ -49,6 +50,14 @@ export async function postItem(newItem: ItemNoIdNoEnrollIdNoGameIdNoServerIdServ
     gameId: server.gameId,
     itemType: newItem.itemType
   };
+
+  const message = `Answer with one word ( yes or no ). Can the expression "${newItem.name}" be a swearword or a intimate body part or a inappropriate action to do in public?`;
+  const response = await filterSwearword(message);
+
+  if(response?.includes("Yes") && response) {
+    throw defaultError("InvalidServerName");
+  }
+
   const createdItem = await itemRepository.postItem(item);
   return createdItem;
 }
