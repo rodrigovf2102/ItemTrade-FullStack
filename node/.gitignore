@@ -3,4 +3,3 @@ node_modules
 !.env.example
 coverage
 dump.sql
-dist
