@@ -18,6 +18,7 @@ async function filterSwearword(message: string) : Promise<string> {
     messages.push({role:"assistant",content:"Yes"})
   ));
   messages.push({role: "user", content: message});
+  
   // eslint-disable-next-line no-console
   console.log(message, messages);
 
