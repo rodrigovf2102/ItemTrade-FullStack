@@ -16,7 +16,6 @@ async function getItems(req, res) {
         return res.status(http_status_1.default.OK).send(items);
     }
     catch (error) {
-        console.log(error);
         if (error.detail === "ItemsNotFound") {
             return res.status(http_status_1.default.NOT_FOUND).send(error.detail);
         }
@@ -49,6 +48,9 @@ async function postItem(req, res) {
         }
         if (error.detail === "GameNotFound") {
             return res.status(http_status_1.default.NOT_FOUND).send(error.detail);
+        }
+        if (error.detail === "InvalidItemName") {
+            return res.status(http_status_1.default.BAD_REQUEST).send(error.detail);
         }
         return res.status(http_status_1.default.BAD_REQUEST).send(error);
     }
