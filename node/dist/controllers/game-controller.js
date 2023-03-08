@@ -34,6 +34,9 @@ async function postGame(req, res) {
         if (error.detail === "UserWithoutEnrollment") {
             return res.status(http_status_1.default.CONFLICT).send(error.detail);
         }
+        if (error.detail === "InvalidGameName") {
+            return res.status(http_status_1.default.BAD_REQUEST).send(error.detail);
+        }
         return res.status(http_status_1.default.BAD_REQUEST).send(error);
     }
 }

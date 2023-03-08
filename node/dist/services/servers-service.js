@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postServer = exports.getServers = void 0;
+const openai_1 = __importDefault(require("../assets/openai"));
 const errors_1 = require("../errors");
 const enrollment_repository_1 = __importDefault(require("../repositories/enrollment-repository"));
 const game_repository_1 = __importDefault(require("../repositories/game-repository"));
@@ -36,6 +37,11 @@ async function postServer({ name, gameName }, userId) {
     const server = await server_repository_1.default.findServerByNameAndGameId(name, game.id);
     if (server)
         throw (0, errors_1.defaultError)("ServerAlreadyExist");
+    const message = `Answer with one word ( yes or no ). Can the expression "${name}" be a swearword or a intimate body part or a inappropriate action to do in public?`;
+    const response = await (0, openai_1.default)(message);
+    if (response?.includes("Yes") && response) {
+        throw (0, errors_1.defaultError)("InvalidServerName");
+    }
     const createdServer = await server_repository_1.default.postServer({ name, gameId: game.id });
     return createdServer;
 }

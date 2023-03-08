@@ -1,3 +1,4 @@
+import { defaultError } from "@/errors";
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
 const config = new Configuration({
@@ -29,6 +30,7 @@ async function filterSwearword(message: string) : Promise<string> {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error.response.statusText);
+    throw defaultError(`${error.message}`);
   }
   return response;
 }

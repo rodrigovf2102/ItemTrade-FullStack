@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postItem = exports.getItems = void 0;
+const openai_1 = __importDefault(require("../assets/openai"));
 const errors_1 = require("../errors");
 const enrollment_repository_1 = __importDefault(require("../repositories/enrollment-repository"));
 const game_repository_1 = __importDefault(require("../repositories/game-repository"));
@@ -64,6 +65,11 @@ async function postItem(newItem, userId) {
         gameId: server.gameId,
         itemType: newItem.itemType
     };
+    const message = `Answer with one word ( yes or no ). Can the expression "${newItem.name}" be a swearword or a intimate body part or a inappropriate action to do in public?`;
+    const response = await (0, openai_1.default)(message);
+    if (response?.includes("Yes") && response) {
+        throw (0, errors_1.defaultError)("InvalidServerName");
+    }
     const createdItem = await item_repository_1.default.postItem(item);
     return createdItem;
 }
