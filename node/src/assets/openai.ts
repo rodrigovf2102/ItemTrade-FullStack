@@ -12,7 +12,8 @@ async function filterSwearword(message: string) : Promise<string> {
   const swearwords : string[] = JSON.parse(process.env.SWEARWORDS);
   const messages : ChatCompletionRequestMessage[] = [];
   swearwords.map(swearword => (
-    messages.push({role:"user",content:`Answer with one word ( yes or no ). Can the expression ${swearword} be a swearword or a intimate body part or a inappropriate action to do in public?`}),
+    messages.push({role:"user",content:`Answer with one word ( yes or no ).
+      Can the expression ${swearword} be a swearword or a intimate body part or a inappropriate action to do in public?`}),
     messages.push({role:"assistant",content:"Yes"})
   ));
   messages.push({role: "user", content: message});
