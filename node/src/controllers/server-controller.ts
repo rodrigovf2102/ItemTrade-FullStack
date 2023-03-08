@@ -33,6 +33,9 @@ export async function postServer(req: AuthenticatedRequest, res: Response) {
     if (error.detail === "GameNameDoesntExist") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
     }
+    if (error.detail === "InvalidServerName") {
+      return res.status(httpStatus.BAD_REQUEST).send(error.detail);
+    }
     return res.status(httpStatus.BAD_REQUEST).send(error);
   }
 }

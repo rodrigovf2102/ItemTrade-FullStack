@@ -211,7 +211,6 @@ export const GameContainer = styled.div`
   height: 200px;
   border-radius: 10px;
   padding: 8px;
-  margin: 8px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
@@ -238,7 +237,6 @@ export const GameContainer = styled.div`
     width: 110px;
     height: 150px;
     padding: 4px;
-    margin: 4px;
     div{
       line-height: 14px;
       font-size: 11px;
@@ -247,14 +245,23 @@ export const GameContainer = styled.div`
 `;
 
 export const GamesContainer = styled.div`
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 158px);
+  grid-template-rows: repeat(auto-fill, 200px);
+  gap: 20px;
+  align-items: flex-start;
   flex-wrap: wrap;
-  justify-content: center;
   align-content: flex-start;
+  justify-content: center;
   height: calc(100vh - 250px);
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
+  @media ${device.mobileM} {
+    grid-template-columns: repeat(auto-fill, 110px);
+    grid-template-rows: repeat(auto-fill, 150px);
+    gap: 15px;
+  }
 `;
 
 export const GamePrice = styled.div`

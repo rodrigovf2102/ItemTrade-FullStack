@@ -7,6 +7,9 @@ export default function errorMessagesAll(error : any, setErrorMessage : React.Di
   if (error.response?.data === "InvalidCredentials") return setErrorMessage(["Usuário ou senha incorretos..."]);
   if (error.response.data?.name==="InvalidDataError") return setErrorMessage(["Informações Inválidas"]);
   if (error.response.data?.detail==="GameAlreadyExist") return setErrorMessage(["Jogo já existe"]);
+  if (error.response.data==="InvalidGameName") return setErrorMessage(["Nome de jogo inválido"]);
+  if (error.response.data==="InvalidServerName") return setErrorMessage(["Servidor inválido, vou lavar sua boca com sabão!"]);
+  if (error.response.data==="InvalidItemName") return setErrorMessage(["Item inválido, vou lavar sua boca com sabão!"]);
   if (error.response.data ==="UserWithoutEnrollment") return setErrorMessage(["Finalize seu cadastro para continuar"]);
   if (error.response.statusText ==="Unauthorized") return setErrorMessage(["Seu Login expirou, refaça o login"]);
   if (error.response?.data?.clientVersion ==="4.9.0") return setErrorMessage(["Imagem muito grande, pegue outra..."]);

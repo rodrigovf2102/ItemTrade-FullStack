@@ -274,14 +274,22 @@ const Modal = styled.div.attrs((props: DisplayModal) => ({
 
 const GamesContainer = styled.div`
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  grid-template-rows: repeat(auto-fill, 200px);
+  gap: 20px;
   align-items: flex-start;
   flex-wrap: wrap;
-  justify-content: center;
   align-content: flex-start;
+  justify-content: center;
   height: calc(100vh - 250px);
   overflow-y: auto;
   overflow-x: hidden;
+  @media ${device.mobileM} {
+    grid-template-columns: repeat(auto-fill, 110px);
+    grid-template-rows: repeat(auto-fill, 140px);
+    gap: 15px;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -294,7 +302,6 @@ const GameContainer = styled.div`
   height: 200px;
   border-radius: 10px;
   padding: 10px;
-  margin: 10px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
@@ -313,7 +320,6 @@ const GameContainer = styled.div`
   @media ${device.mobileM} {
     width: 110px;
     height: 140px;
-    margin: 5px;
     div{
       font-size: 14px;
     }

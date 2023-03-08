@@ -13,7 +13,6 @@ export async function getItems(req: Request, res: Response) {
     const items = await itemsService.getItems(serverId, itemType, filter, itemId);
     return res.status(httpStatus.OK).send(items);
   } catch (error) {
-    console.log(error);
     if (error.detail === "ItemsNotFound") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
     }
@@ -45,6 +44,9 @@ export async function postItem(req: AuthenticatedRequest, res: Response) {
     }
     if (error.detail === "GameNotFound") {
       return res.status(httpStatus.NOT_FOUND).send(error.detail);
+    }
+    if (error.detail === "InvalidItemName") {
+      return res.status(httpStatus.BAD_REQUEST).send(error.detail);
     }
     return res.status(httpStatus.BAD_REQUEST).send(error);
   }
