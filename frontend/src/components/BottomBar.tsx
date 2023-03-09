@@ -8,7 +8,10 @@ export default function BottomBar() {
       <Espace></Espace>
       <Container>
         <Itens>
-          <img alt="" src={img}/><div>@ 2023 ITEMTRADE. Todos os direitos reservados.</div>
+          <img alt="" src={img}/>
+          <div>@ 2023 ITEMTRADE. Desenvolvido por Rodrigo Vieira Fonseca, mais informações:
+            <a href="https://github.com/rodrigovf2102"> Github</a>
+          </div>
         </Itens>
       </Container>
     </>
@@ -17,7 +20,7 @@ export default function BottomBar() {
 
 const Container = styled.div`
   width: 100%;
-  min-height: 60px;
+  height: 60px;
   background: linear-gradient(#111111,#000000,#111111);
   position: fixed;
   bottom: 0;
@@ -25,14 +28,15 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   @media ${device.mobileM} {
-    min-height: unset;
-    max-height: 45px;
+    height: unset;
+    height: 45px;
   }
 `;
 
 const Itens = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
   margin: 10px;
@@ -42,12 +46,17 @@ const Itens = styled.div`
     margin-right: 20px;
   }
   div{
-    text-align: center;
     font-size: 14px;
   }
   @media ${device.mobileM} {
+    margin: 0;
+    height: 100%;
+    text-align: center;
     div{
       font-size: 11px;
+    }
+    img{
+      display: none;
     }
   }
 `;

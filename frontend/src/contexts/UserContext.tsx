@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext } from "react";
 import { ChildrenProps } from "../protocols";
 
 import useLocalStorage from "../hooks/useLocalStorage";

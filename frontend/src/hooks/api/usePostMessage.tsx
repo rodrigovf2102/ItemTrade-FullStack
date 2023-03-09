@@ -1,6 +1,6 @@
 import useAsync from "../useAsync";
 import * as messagesApi from "../../services/messageApi";
-import { Message, MessagePost, MessageText } from "../../protocols";
+import { Message, MessagePost } from "../../protocols";
 import useToken from "../useToken";
 
 export default function usePostMessage() {

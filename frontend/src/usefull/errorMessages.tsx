@@ -1,4 +1,5 @@
 export default function errorMessagesAll(error : any, setErrorMessage : React.Dispatch<React.SetStateAction<string[]>> ) {
+  // eslint-disable-next-line no-console
   console.log(error);
   if (error.message === "Network Error") return setErrorMessage(error.message);
   if (error.response?.data === "DuplicatedEmail") return setErrorMessage(["Email já cadastrado"]);
