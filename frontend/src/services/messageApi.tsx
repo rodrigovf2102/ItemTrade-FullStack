@@ -1,4 +1,4 @@
-import { Message, MessagePost, MessageText, TradeMessage } from "../protocols";
+import { Message, MessagePost, TradeMessage } from "../protocols";
 import api from "./api";
 
 export async function getTradeMessages(tradeId:number, token: string) : Promise<TradeMessage[]> {

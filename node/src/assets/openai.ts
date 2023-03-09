@@ -18,9 +18,6 @@ async function filterSwearword(message: string) : Promise<string> {
     messages.push({role:"assistant",content:"Yes"})
   ));
   messages.push({role: "user", content: message});
-  
-  // eslint-disable-next-line no-console
-  console.log(message, messages);
 
   try {
     const completion = await openai.createChatCompletion({
@@ -31,8 +28,6 @@ async function filterSwearword(message: string) : Promise<string> {
     });
     response = completion.data.choices[0].message.content.trim();
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error.response.statusText);
     throw defaultError(`${error.message}`);
   }
   return response;
